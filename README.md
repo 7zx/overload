@@ -1,7 +1,7 @@
 
 <h1 align="center">Overload</h1>  
 
-## Denial-of-service
+## DDOS TOOL
 Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
 
 ## Instalação
