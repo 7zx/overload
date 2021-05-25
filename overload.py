@@ -18,12 +18,12 @@ except ImportError as err:
     sys.exit(1)
 
 # Parse args
-parser = argparse.ArgumentParser(description="Denial-of-service ToolKit")
+parser = argparse.ArgumentParser(description="Overload HTTP Attack")
 parser.add_argument(
     "--target",
     type=str,
-    metavar="<IP:PORT, URL, PHONE>",
-    help="Target ip:port, url or phone",
+    metavar="<URL>",
+    help="Target URL",
 )
 parser.add_argument(
     "--method",
@@ -32,10 +32,10 @@ parser.add_argument(
     help="Attack method",
 )
 parser.add_argument(
-    "--time", type=int, default=10, metavar="<time>", help="time in secounds"
+    "--time", type=int, default=1200, metavar="<time>", help="time in secounds"
 )
 parser.add_argument(
-    "--threads", type=int, default=3, metavar="<threads>", help="threads count (1-200)"
+    "--threads", type=int, default=100, metavar="<threads>", help="threads count (1-200)"
 )
 
 # Get args
