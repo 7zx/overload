@@ -14,6 +14,7 @@ Para instalar use os seguintes comandos no terminal
 ```sh
 git clone https://github.com/goncalopolido/overload.git
 cd overload
+pip install -r requirements.txt
 python3 overload.py
 ```
 
