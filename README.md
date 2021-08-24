@@ -32,5 +32,5 @@ Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
 Uso:
 
 ```sh
-python3 overload.py --time 540 --threads 200 --target <url> --method HTTP
+python3 overload.py --time XXX --threads XXX --target <url> --method HTTP
 ```
