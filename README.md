@@ -7,7 +7,7 @@
 ## DDOS TOOL
 Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
 
-# 🌙: Instalação:
+# 🌙 Instalação:
 * Windows:
   * Instala Python 3.8 aqui [here](https://www.python.org/downloads/release/python-38)
   * Abre o installer e clicla em: `add python to PATH`
