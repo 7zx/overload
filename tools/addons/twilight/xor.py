@@ -1,4 +1,4 @@
-# Import modules
+# Importa os modulos
 from base64 import b64encode
 from base64 import b64decode
 
