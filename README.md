@@ -33,8 +33,8 @@
   * `cd overload/`
   * `pip3 install -r requirements.txt`
 
-# :phone: Example SMS & Call flood:
-```python3 impulse.py --method SMS --time 20 --threads 15 --target +380123456789```
+# Como usar:
+```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
 
 <p align="center">
   <img src="https://i.ibb.co/KmPnV9f/Impulse-SMS.png">
