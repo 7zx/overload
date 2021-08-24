@@ -1,11 +1,15 @@
+# :bomb: Impulse
+## Modern Denial-of-service ToolKit
+
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png">
+</p>
+
+# :computer: Main window
 <p align="center">
   <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
 </p>
-<h1 align="center">Overload</h1>  
-
-
-## DDOS TOOL
-Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
 
 # 🌙 Instalação:
 * Windows:
@@ -29,8 +33,9 @@ Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
   * `cd overload/`
   * `pip3 install -r requirements.txt`
 
-Uso:
+# :phone: Example SMS & Call flood:
+```python3 impulse.py --method SMS --time 20 --threads 15 --target +380123456789```
 
-```sh
-python3 overload.py --time XXX --threads XXX --target <url> --method HTTP
-```
+<p align="center">
+  <img src="https://i.ibb.co/KmPnV9f/Impulse-SMS.png">
+</p>
