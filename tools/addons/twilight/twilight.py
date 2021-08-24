@@ -1,9 +1,9 @@
-# Import modules
+# Importa os modulos
 import tools.addons.twilight.xor as Xor
 import tools.addons.twilight.salt as Salt
 import tools.addons.twilight.hash as Hash
 
-# Encrypt function
+# Função de criptografia
 def Encrypt(text, key):
     
     salt = Hash.getSaltByKey(key, text)
@@ -11,7 +11,7 @@ def Encrypt(text, key):
     xoredText  = Xor.encode(saltedText, key)
     return xoredText
 
-# Decrypt function
+# Função de descriptografia
 def Decrypt(text, key):
     unxoredText = Xor.decode(text, key)
     salt = Hash.getSaltByKey(key, unxoredText)
