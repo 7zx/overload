@@ -1,10 +1,10 @@
-# Import modules
+# Importa os modulos
 import requests
 import random
 import tools.randomData as randomData
 from colorama import Fore
 
-# Load user agents
+# Carrega os user agents
 user_agents = []
 for _ in range(30):
     user_agents.append(randomData.random_useragent())
@@ -28,9 +28,9 @@ def flood(target):
         print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out{Fore.RESET}")
     except Exception as e:
         print(
-            f"{Fore.MAGENTA}Error while sending GET request\n{Fore.MAGENTA}{e}{Fore.RESET}"
+            f"{Fore.MAGENTA}Erro ao enviar requests GET\n{Fore.MAGENTA}{e}{Fore.RESET}"
         )
     else:
         print(
-            f"{Fore.GREEN}[{r.status_code}] {Fore.YELLOW}Request sent! Payload size: {len(payload)}.{Fore.RESET}"
+            f"{Fore.GREEN}[{r.status_code}] {Fore.YELLOW}Request enviado! Tamanho do Payload: {len(payload)}.{Fore.RESET}"
         )
