@@ -29,7 +29,7 @@ def CriticalError(message, error):
     {Fore.MAGENTA}NODE: {platform.node()}
     {Fore.MAGENTA}TIME: {ctime()}
     {Fore.RED}:=== Report:
-    {Fore.MAGENTA}Reporta o teu erro aqui: https://github.com/LimerBoy/Impulse/issues/new
+    {Fore.MAGENTA}Reporta o teu erro aqui: https://github.com/7zx/overload/issues/new
     {Fore.RESET}
     """)
     sys.exit(5)
