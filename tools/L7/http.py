@@ -32,5 +32,5 @@ def flood(target):
         )
     else:
         print(
-            f"{Fore.GREEN}[{r.status_code}] {Fore.YELLOW}Request enviando! Tamanho do Payload: {len(payload)}.{Fore.RESET}"
+            f"{Fore.GREEN}[{r.status_code}] {Fore.CYAN}Request enviando! Tamanho do Payload: {len(payload)}.{Fore.RESET}"
         )
