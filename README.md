@@ -33,7 +33,7 @@
   * `cd overload/`
   * `pip3 install -r requirements.txt`
 
-# Como usar
+# ❓ Como Usar
 ```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
 
 <p align="center">
