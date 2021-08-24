@@ -9,7 +9,7 @@ if os.name == "nt":
     winpcap_dir = os.environ["ProgramFiles(x86)"] + "\\WinPcap"
     if not os.path.exists(winpcap_dir):
         print(
-            f'{Fore.MAGENTA}[!] {Fore.YELLOW}Attention! Component "WinPcap" not installed!\n    is needed to make an attack of syn, udp and others,\n    you can skip this if you want to use only SMS flood\n    Do you want to install it automatically? (y/n){Fore.RESET}'
+            f'{Fore.MAGENTA}[!] {Fore.RED}Attention! Component "WinPcap" not installed!\n    is needed to make an attack of syn, udp and others,\n    you can skip this if you want to use only SMS flood\n    Do you want to install it automatically? (y/n){Fore.RESET}'
         )
         if input(f"{Fore.MAGENTA} >>> {Fore.BLUE}").lower() in ("y", "yes", "1"):
             print(f"{Fore.RED}[~] {Fore.CYAN}Downloading installer...{Fore.BLUE}\n")
