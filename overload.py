@@ -1,10 +1,10 @@
-# Created by LimerBoy
-# Import modules
+# Feito por Nuvem & TsK
+# Importa os modulos
 import os
 import sys
 import argparse
 
-# Go to current dir
+# Vai ao diretorio atual
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 try:
@@ -14,10 +14,10 @@ try:
     import tools.addons.winpcap
     from tools.method import AttackMethod
 except ImportError as err:
-    CriticalError("Failed import some modules", err)
+    CriticalError("Falha ao importar alguns modulos", err)
     sys.exit(1)
 
-# Parse args
+# Analisa args
 parser = argparse.ArgumentParser(description="Overload HTTP Attack")
 parser.add_argument(
     "--target",
@@ -32,13 +32,13 @@ parser.add_argument(
     help="Attack method",
 )
 parser.add_argument(
-    "--time", type=int, default=1200, metavar="<time>", help="time in secounds"
+    "--time", type=int, default=1200, metavar="<time>", help="tempo em segundos"
 )
 parser.add_argument(
-    "--threads", type=int, default=100, metavar="<threads>", help="threads count (1-200)"
+    "--threads", type=int, default=100, metavar="<threads>", help="contagem de threads (1-200)"
 )
 
-# Get args
+# Obtem args
 args = parser.parse_args()
 threads = args.threads
 time = args.time
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
-    # Run ddos attack
+    # Executa ataque DDOS
     with AttackMethod(
         duration=time, name=method, threads=threads, target=target
     ) as Flood:
