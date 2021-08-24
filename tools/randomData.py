@@ -2,7 +2,7 @@ import json
 import random
 
 
-# Get random IP
+# Procura um IP aleatório
 def random_IP():
     ip = []
     for _ in range(0, 4):
@@ -10,14 +10,14 @@ def random_IP():
     return ".".join(ip)
 
 
-# Get random referer
+# Procura uma referência aleatória
 def random_referer():
     with open("tools/L7/referers.txt", "r") as referers:
         referers = referers.readlines()
     return random.choice(referers)
 
 
-# Get random user agent
+# Procura um user agent aleatório
 def random_useragent():
     with open("tools/L7/user_agents.json", "r") as agents:
         user_agents = json.load(agents)["agents"]
