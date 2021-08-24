@@ -14,7 +14,7 @@ try:
     import tools.addons.winpcap
     from tools.method import AttackMethod
 except ImportError as err:
-    CriticalError("Falha ao importar alguns módulos", err)
+    CriticalError("falha ao importar alguns módulos", err)
     sys.exit(1)
 
 # Parse args
@@ -29,7 +29,7 @@ parser.add_argument(
     "--method",
     type=str,
     metavar="<HTTP>",
-    help="método de ataque",
+    help="metodo de ataque",
 )
 parser.add_argument(
     "--time", type=int, default=1200, metavar="<time>", help="tempo em segundos"
