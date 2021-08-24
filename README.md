@@ -37,5 +37,5 @@
 ```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
 
 <p align="center">
-  <img src="https://sismo.app/wp-content/uploads/2019/02/under-construction-gif-11.gif">
+  <img src="http://www.animatedgif.net/underconstruction/anim0205-1_e0.gif">
 </p>
