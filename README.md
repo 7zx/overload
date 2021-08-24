@@ -37,5 +37,5 @@
 ```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
 
 <p align="center">
-  <img src="https://i.ibb.co/KmPnV9f/Impulse-SMS.png">
+  <img src="">
 </p>
