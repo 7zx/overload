@@ -1,4 +1,4 @@
-# Import modules
+# Importa os modulos
 from colorama import Fore
 
 # Logo
