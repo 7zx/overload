@@ -1,4 +1,4 @@
-# Import modules
+# Importa os modulos
 import tools.addons.twilight.xor as Xor
 import tools.addons.twilight.salt as Salt
 import tools.addons.twilight.hash as Hash
