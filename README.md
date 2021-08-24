@@ -1,5 +1,5 @@
 # :bomb: Impulse
-## Modern Denial-of-service ToolKit
+## DDOS Tool (Layer 7)
 
 
 <p align="center">
