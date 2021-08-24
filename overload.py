@@ -1,4 +1,4 @@
-# Created by LimerBoy
+# Created by Cloud
 # Import modules
 import os
 import sys
@@ -14,28 +14,28 @@ try:
     import tools.addons.winpcap
     from tools.method import AttackMethod
 except ImportError as err:
-    CriticalError("Failed import some modules", err)
+    CriticalError("falha ao importar alguns módulos", err)
     sys.exit(1)
 
 # Parse args
-parser = argparse.ArgumentParser(description="Denial-of-service ToolKit")
+parser = argparse.ArgumentParser(description="Overload HTTP Attack")
 parser.add_argument(
     "--target",
     type=str,
-    metavar="<IP:PORT, URL, PHONE>",
-    help="Target ip:port, url or phone",
+    metavar="<URL>",
+    help="alvo URL",
 )
 parser.add_argument(
     "--method",
     type=str,
-    metavar="<SMS/EMAIL/NTP/UDP/SYN/ICMP/POD/SLOWLORIS/MEMCACHED/HTTP>",
-    help="Attack method",
+    metavar="<HTTP>",
+    help="metodo de ataque",
 )
 parser.add_argument(
-    "--time", type=int, default=10, metavar="<time>", help="time in secounds"
+    "--time", type=int, default=1200, metavar="<time>", help="tempo em segundos"
 )
 parser.add_argument(
-    "--threads", type=int, default=3, metavar="<threads>", help="threads count (1-200)"
+    "--threads", type=int, default=100, metavar="<threads>", help="numero de threads (1-200)"
 )
 
 # Get args
