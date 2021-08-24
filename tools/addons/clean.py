@@ -1,8 +1,8 @@
-# Import modules
+# Importa os modulos
 import os
 
-# Clear command line
+# Limpa o CMD
 if os.name == "nt":
-    os.system("@cls & @title Impulse ToolKit & @color e")
+    os.system("@cls & @title overload DDOSTool & @color e")
 else:
     os.system("clear")
