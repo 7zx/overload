@@ -9,7 +9,7 @@ Sobrecarga em um website para que recursos do sistema fiquem indisponíveis.
 
 # 🌙 Instalação:
 * Windows:
-  * Instala Python 3.8 aqui [here](https://www.python.org/downloads/release/python-38)
+  * Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
   * Abre o installer e clicla em: `add python to PATH`
   * Faz download do overload
   * Abre o cmd ou o PowerShell no diretório overload
