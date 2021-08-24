@@ -6,7 +6,7 @@
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png">
 </p>
 
-# :computer: Main window
+# :computer: Janela Principal
 <p align="center">
   <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
 </p>
