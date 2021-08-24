@@ -11,7 +11,7 @@
   <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
 </p>
 
-# 🌙 Instalação:
+# 🌙 Instalação
 * Windows:
   * Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
   * Abre o installer e clica em: `add python to PATH`
