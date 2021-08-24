@@ -16,6 +16,6 @@ if os.name == "nt":
             winpcap_installer = wget.download(winpcap_url)
             os.startfile(winpcap_installer)
             print(
-                f"\n\n{Fore.GREEN}[?] {Fore.YELLOW}Now please restart program{Fore.RESET}"
+                f"\n\n{Fore.GREEN}[?] {Fore.RED}Now please restart program{Fore.RESET}"
             )
             sys.exit(1)
