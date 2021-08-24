@@ -1,20 +1,20 @@
-# Import modules
+# Importar modulos
 from random import choice
 
 
-# Add salt to data
+# Adiciona salt aos dados
 def protect(message, salt):
-    # Variables
+    # Variaveis
     eData = ''
     salt = list(salt)
     saltChars = []
 
-    # Add salt characters to list
+    # Adiciona salt a lista de caracteres
     for char in message:
         if not char in saltChars:
             saltChars.append(char)
 
-    # Add salt to message
+    # Adiciona salt a menssagem
     for index, secretChar in enumerate(message):
         for _ in range(int(salt[index])):
             eData += choice(saltChars)
@@ -23,13 +23,13 @@ def protect(message, salt):
     return eData
 
 
-# Remove salt from data
+# Remove salt dos dados
 def unprotect(message, salt):
     # Variables
     p = 0
     dData = ''
 
-    # Remove salt characters from string
+    # Remove os caracteres salt a string
     for secretSalt in salt:
         message = message[int(secretSalt) + p:]
         # If not data - stop
