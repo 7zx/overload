@@ -11,7 +11,7 @@
 # 🌙 Instalação
 
 
-<img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50"><h2>Windows</h2> 
+<h2>Windows</h2> <img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50">
   - Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
   - Abre o installer e clica em: `add python to PATH`
   - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui</a>
@@ -21,7 +21,7 @@
 
  
 
-<img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50"> <h2>Linux</h2>
+ <h2>Linux</h2><img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50">
 
 ```
 sudo apt update
