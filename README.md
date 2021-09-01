@@ -34,5 +34,5 @@
 ```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
 
 <p align="center">
-  <img src="https://exo.pet/fm/construction_xtra_large.gif">
+  <img src="https://exo.pet/fm/construction_xtra_large.gif" width="600" height="600">
 </p>
