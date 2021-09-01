@@ -36,7 +36,9 @@ pip3 install -r requirements.txt
 ```
 
 # ❓ Como Usar
-```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
+```
+python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP
+```
 
 <p align="center">
   <img src="https://exo.pet/fm/construction_xtra_large.gif" width="400" height="400">
