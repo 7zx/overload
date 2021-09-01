@@ -16,9 +16,10 @@
   - Abre o installer e clica em: `add python to PATH`
   - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui</a>
   - Abre o cmd ou o PowerShell no diretório overload
-  - Execute este comando: `pip install -r requirements.txt`
-<img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50">  
+  - Execute este comando: `pip install -r requirements.txt`  
 
+
+<img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50">  
 ### Linux:
 
 ```
