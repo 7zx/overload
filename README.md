@@ -12,7 +12,7 @@
 * Windows:
   - Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
   - Abre o installer e clica em: `add python to PATH`
-  - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui/a>
+  - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui</a>
   - Abre o cmd ou o PowerShell no diretório overload
   - Execute este comando: `pip install -r requirements.txt`
 
