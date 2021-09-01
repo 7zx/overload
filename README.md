@@ -9,14 +9,16 @@
 </p>
 
 # 🌙 Instalação
-<img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50"> * Windows 
+<img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50">
+
+### Windows 
   - Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
   - Abre o installer e clica em: `add python to PATH`
   - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui</a>
   - Abre o cmd ou o PowerShell no diretório overload
   - Execute este comando: `pip install -r requirements.txt`
 
-* Linux:
+### Linux:
 
 ```
 sudo apt update
@@ -26,7 +28,7 @@ cd overload/
 pip3 install -r requirements.txt
 ```
 
-Termux:
+### Termux:
 ```
 pkg update
 pkg install python3 python3-pip git -y
@@ -35,7 +37,7 @@ cd overload/
 pip3 install -r requirements.txt
 ```
 
-# ❓ Como Usar
+## ❓ Como Usar
 ```
 python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP
 ```
