@@ -1,11 +1,7 @@
-<h1 align="center">📡 Overload</h1> 
+<h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="300" height="300">
 </p>
-
-
-## DDOS Tool (Layer 7)
-
 
 # :computer: Janela Principal
 <p align="center">
