@@ -32,7 +32,8 @@ cd overload/
 pip3 install -r requirements.txt
 ```
 
-<h2>Termux</h2><img src="https://brandslogos.com/wp-content/uploads/images/large/terminal-logo.png" width="50" height="50">
+<h2>Termux</h2><img src="https://brandslogos.com/wp-content/uploads/images/large/terminal-logo.png" width="50" height="50">  
+
 ```
 pkg update
 pkg install python3 python3-pip git -y
