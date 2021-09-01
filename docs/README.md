@@ -39,10 +39,14 @@ pip3 install -r requirements.txt
 ```
 
 ## ❓ Como Usar
+O comando básico para poder executar o overload é o seguinte.  
+
 ```
 python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP
 ```
 
-<p align="center">
-  <img src="https://exo.pet/fm/construction_xtra_large.gif" width="400" height="400">
-</p>
+Exemplo:  
+
+```
+python3 overload.py --time 5000 --threads 550 --target https://www.publico.pt/ --method HTTP
+```
