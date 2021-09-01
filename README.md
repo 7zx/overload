@@ -17,18 +17,23 @@
   * Execute este comando: `pip install -r requirements.txt`
 
 * Linux:
-  * `sudo apt update`
-  * `sudo apt install python3 python3-pip git -y`
-  * `git clone https://github.com/7zx/overload`
-  * `cd overload/`
-  * `pip3 install -r requirements.txt`
 
-* Termux:
-  * `pkg update`
-  * `pkg install python3 python3-pip git -y`
-  * `git clone https://github.com/7zx/overload`
-  * `cd overload/`
-  * `pip3 install -r requirements.txt`
+```
+sudo apt update
+sudo apt install python3 python3-pip git -y
+git clone https://github.com/7zx/overload
+cd overload/
+pip3 install -r requirements.txt
+```
+
+Termux:
+```
+pkg update
+pkg install python3 python3-pip git -y
+git clone https://github.com/7zx/overload
+cd overload/
+pip3 install -r requirements.txt
+```
 
 # ❓ Como Usar
 ```python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP```
