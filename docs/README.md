@@ -1,6 +1,6 @@
 <h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
 
-<p>                    </p> ![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)  ![Windows](https://svgshare.com/i/ZhY.svg)  ![Linux](https://svgshare.com/i/Zhy.svg)  ![GitHub forks](https://img.shields.io/github/forks/7zx/overload?style=social&label=Fork&maxAge=2592000)  ![GitHub stars](https://img.shields.io/github/stars/7zx/overload?style=social&label=Star&maxAge=2592000)  ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+<p>                    </p>  ![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)  ![Windows](https://svgshare.com/i/ZhY.svg)  ![Linux](https://svgshare.com/i/Zhy.svg)  ![GitHub forks](https://img.shields.io/github/forks/7zx/overload?style=social&label=Fork&maxAge=2592000)  ![GitHub stars](https://img.shields.io/github/stars/7zx/overload?style=social&label=Star&maxAge=2592000)  ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
