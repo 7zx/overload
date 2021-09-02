@@ -1,6 +1,6 @@
 <h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
 
-![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)  ![Windows](https://svgshare.com/i/ZhY.svg)  ![Linux](https://svgshare.com/i/Zhy.svg)  ![GitHub forks](https://img.shields.io/https://img.shields.io/github/forks/7zx/overload.svg)
+![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)  ![Windows](https://svgshare.com/i/ZhY.svg)  ![Linux](https://svgshare.com/i/Zhy.svg)  ![GitHub forks](https://img.shields.io/github/forks/7zx/overload)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
