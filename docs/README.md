@@ -1,4 +1,5 @@
 <h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
+[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
 </p>
