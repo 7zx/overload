@@ -33,7 +33,7 @@ sudo apt update
 sudo apt install python3 python3-pip git -y
 git clone https://github.com/7zx/overload
 cd overload/
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt or python -m pip install -r requirements.txt
 ```
 
 <h2>Termux</h2><img src="https://brandslogos.com/wp-content/uploads/images/large/terminal-logo.png" width="50" height="50">  
