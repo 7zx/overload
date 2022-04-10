@@ -7,21 +7,21 @@
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
 </p>
 
-# :computer: Janela Principal
+# :computer: Main Window
 <p align="center">
   <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
 </p>
 
-# 🌙 Instalação
+# 🌙 Installation
 
 
 <h2>Windows</h2> <img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50">  
 
-  - Instala Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
-  - Abre o installer e clica em: `add python to PATH`
-  - Faz download do overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">aqui</a>
-  - Abre o cmd ou o PowerShell no diretório overload
-  - Execute este comando: `pip install -r requirements.txt`  
+  - Download Python 3.8 [aqui](https://www.python.org/downloads/release/python-38)
+  - Open the installer and click on: `add python to PATH`
+  - Download overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>
+  - Open CMD or PowerShell in the overload directory
+  - Execute this command: `pip3 install -r requirements.txt or python -m pip install -r requirements.txt`  
 
 
  
@@ -46,14 +46,14 @@ cd overload/
 pip3 install -r requirements.txt
 ```
 
-## ❓ Como Usar
-O comando básico para poder executar o overload é o seguinte.  
+## ❓ How To Use
+The basic command to be able to execute Overload:
 
 ```
 python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP
 ```
 
-Exemplo:  
+Example:  
 
 ```
 python3 overload.py --time 5000 --threads 550 --target https://www.publico.pt/ --method HTTP
