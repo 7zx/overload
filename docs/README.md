@@ -7,12 +7,12 @@
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
 </p>
 
-# :computer: Main Window
+# :computer: Main Window:
 <p align="center">
   <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
 </p>
 
-# 🌙 Installation
+# 🌙 Installation:
 
 
 <h2>Windows</h2> <img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50">  
@@ -46,7 +46,7 @@ cd overload/
 pip3 install -r requirements.txt
 ```
 
-## ❓ How To Use
+## ❓ How To Use:
 The basic command to be able to execute Overload:
 
 ```
@@ -58,3 +58,10 @@ Example:
 ```
 python3 overload.py --time 5000 --threads 550 --target https://www.publico.pt/ --method HTTP
 ```
+
+## 💰 Donate:
+
+
+  BTC `bc1qhsdvfaee48qpauxzyccyjjxd7laggmlvyzketh` 
+  ETH `0xA438762F645A4DcE1a4c7be66D0E787B8cDb30bd` 
+  PayPal `https://paypal.me/goncalopolido` 
