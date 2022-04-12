@@ -1,6 +1,3 @@
-# Importa os modulos
-from colorama import Fore
-
 # Logo
 logo = """
  ▒█████   ██▒   █▓▓█████  ██▀███   ██▓     ▒█████   ▄▄▄      ▓█████▄ 

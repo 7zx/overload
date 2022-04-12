@@ -11,7 +11,7 @@ try:
     from tools.crash import CriticalError
     import tools.addons.clean
     import tools.addons.logo
-    import tools.addons.winpcap
+    import tools.addons.wireshark
     from tools.method import AttackMethod
 except ImportError as err:
     CriticalError("Falha ao importar alguns modulos", err)
