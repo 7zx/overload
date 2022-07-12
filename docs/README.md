@@ -21,7 +21,7 @@
   - Open the installer and click on: `add python to PATH`
   - Download overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>
   - Open CMD or PowerShell in the overload directory
-  - Execute this command: `pip3 install -r requirements.txt or python -m pip install -r requirements.txt`  
+  - Execute this command: `python -m pip install -r requirements.txt`  
 
 
  
