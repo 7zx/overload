@@ -21,7 +21,8 @@
   - Open the installer and click on: `add python to PATH`
   - Download overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>
   - Open CMD or PowerShell in the overload directory
-  - Execute this command: `python -m pip install -r requirements.txt`  
+  - Open virtual environment: `cd venv/Scripts`
+  - Activate virtual environment: `activate`
 
 
  
