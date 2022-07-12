@@ -1,0 +1,4 @@
+[console_scripts]
+UTscapy = scapy.tools.UTscapy:main
+scapy = scapy.main:interact
+
