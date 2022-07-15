@@ -56,7 +56,7 @@ python3 overload.py --time XXX --threads XXX --target [URL] --method HTTP
 Example:  
 
 ```
-python3 overload.py --time 5000 --threads 550 --target http://127.0.0.1/ --method HTTP
+python overload.py --time 5000 --threads 550 --target http://127.0.0.1/ --method HTTP
 ```
 
 ## 💰 Donate:
