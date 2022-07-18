@@ -5,6 +5,8 @@ import os
 import sys
 import argparse
 from colorama import Fore
+import ctypes
+ctypes.windll.kernel32.SetConsoleTitleW("Overload DDOS Tool by: 7zx and 8fn")
 
 # Get the actual directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
