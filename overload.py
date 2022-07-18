@@ -1,11 +1,12 @@
-# Feito por Nuvem & TsK
-# Importa os modulos
+# Created by nuvem and tsk
+
+# Import modules
 import os
 import sys
 import argparse
 from colorama import Fore
 
-# Vai ao diretorio atual
+# Get the actual directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 try:
@@ -15,10 +16,10 @@ try:
     import tools.addons.winpcap
     from tools.method import AttackMethod
 except ImportError as err:
-    CriticalError("Falha ao importar alguns modulos", err)
+    CriticalError("Failed to import some packages", err)
     sys.exit(1)
 
-# Analisa args
+# Analyze args
 parser = argparse.ArgumentParser(description="Overload HTTP Attack")
 parser.add_argument(
     "--target",
@@ -40,7 +41,7 @@ parser.add_argument(
     "--threads", type=int, default=100, metavar="<threads>", help="threads count (1-200)"
 )
 
-# Obtem args
+# Get args
 args = parser.parse_args()
 threads = args.threads
 time = args.time
@@ -81,7 +82,7 @@ if __name__ == "__main__":
                 Flood.Start()
 
 
-    # Executa ataque DDOS
+    # Execution of DDOS
     with AttackMethod(
         duration=time, name=method, threads=threads, target=target
     ) as Flood:

