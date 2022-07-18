@@ -21,7 +21,7 @@ def __isCloudFlare(link):
         for i in range(len(ipv4)):
             if ipaddress.ip_address(origin) in ipaddress.ip_network(ipv4[i]):
                 print(
-                    f"{Fore.RED}[!] {Fore.CYAN}Este site é protegido pela CloudFlare, este ataque pode não produzir os resultados desejados.{Fore.RESET}"
+                    f"{Fore.RED}[!] {Fore.CYAN}This website is protected by CloudFlare, this attack may not produce the desired results.{Fore.RESET}"
                 )
                 sleep(1)
     except socket.gaierror:
@@ -36,7 +36,7 @@ def __GetAddressInfo(target):
         ip = target.split(":")[0]
         port = int(target.split(":")[1])
     except IndexError:
-        print(f"{Fore.RED}[!] {Fore.MAGENTA}Deves inserir um ip e port{Fore.RESET}")
+        print(f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an ip and port{Fore.RESET}")
         sys.exit(1)
     else:
         return ip, port

@@ -28,9 +28,9 @@ def flood(target):
         print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out{Fore.RESET}")
     except Exception as e:
         print(
-            f"{Fore.MAGENTA}Erro ao enviar requests GET\n{Fore.MAGENTA}{e}{Fore.RESET}"
+            f"{Fore.MAGENTA}Error sending requests GET\n{Fore.MAGENTA}{e}{Fore.RESET}"
         )
     else:
         print(
-            f"{Fore.GREEN}[{r.status_code}] {Fore.CYAN}Request enviando! Tamanho do Payload: {len(payload)}.{Fore.RESET}"
+            f"{Fore.GREEN}[{r.status_code}] {Fore.CYAN}Request sending! Payload Size: {len(payload)}.{Fore.RESET}"
         )
