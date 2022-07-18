@@ -20,7 +20,7 @@ def GetMethodByName(method):
         dir = f"tools.L7.{method.lower()}"
     else:
         raise SystemExit(
-            f"{Fore.RED}[!] {Fore.MAGENTA}Metodo DDOS desconhecido.. {repr(method)} selecionado..{Fore.RESET}"
+            f"{Fore.RED}[!] {Fore.MAGENTA}Unknown DDOS method... {repr(method)} selecionado..{Fore.RESET}"
         )
     module = __import__(dir, fromlist=["object"])
     if hasattr(module, "flood"):
@@ -28,7 +28,7 @@ def GetMethodByName(method):
         return method
     else:
         CriticalError(
-            f"Metodo 'flood' nao encontrado em {repr(dir)}. Usa Python 3.8", "-"
+            f"'Flood' method not found in {repr(dir)}. Use Python 3.8", "-"
         )
 
 
@@ -56,7 +56,7 @@ class AttackMethod:
 
     # Saida
     def __exit__(self, exc_type, exc_val, exc_tb):
-        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Ataque completo!{Fore.RESET}")
+        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
 
     # Verifica de tempo de execução
     def __RunTimer(self):
@@ -107,8 +107,8 @@ class AttackMethod:
             target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}Começando o ataque {target} utiilzando o método {self.name}.{Fore.RESET}\n"
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}O ataque será interrompido após {Fore.MAGENTA}{duration}{Fore.BLUE}.{Fore.RESET}"
+            f"{Fore.MAGENTA}[?] {Fore.BLUE}Starting the attack {target} using the method {self.name}.{Fore.RESET}\n"
+            f"{Fore.MAGENTA}[?] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.{Fore.RESET}"
         )
         self.is_running = True
         try:
@@ -116,7 +116,7 @@ class AttackMethod:
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detetado. Parando {self.threads_count} threads..{Fore.RESET}"
+                f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads..{Fore.RESET}"
             )
             # Espera que as threads terminem
             for thread in self.threads:
