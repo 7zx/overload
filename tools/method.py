@@ -20,7 +20,7 @@ def GetMethodByName(method):
         dir = f"tools.L7.{method.lower()}"
     else:
         raise SystemExit(
-            f"{Fore.RED}[!] {Fore.MAGENTA}Unknown DDOS method... {repr(method)} selecionado..{Fore.RESET}"
+            f"{Fore.RED}[!] {Fore.MAGENTA}Unknown DDOS method... {repr(method)} selected..{Fore.RESET}"
         )
     module = __import__(dir, fromlist=["object"])
     if hasattr(module, "flood"):
@@ -96,7 +96,7 @@ class AttackMethod:
         for index, thread in enumerate(self.threads):
             thread.join()
             print(
-                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread parada {index + 1}.{Fore.RESET}"
+                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread stopped {index + 1}.{Fore.RESET}"
             )
 
     # Inicia o ataque DDOS
