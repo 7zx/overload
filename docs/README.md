@@ -4,12 +4,12 @@
 </div>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="250" height="250">
 </p>
 
 # :computer: Main Window:
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/imgshow.png">
 </p>
 
 # 🌙 Installation:
@@ -26,7 +26,7 @@
 
  
 
- <h2>Linux</h2><img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50">
+ <h2>Linux</h2><img src="https://raw.githubusercontent.com/7zx/overload/main/img/linux-icon-28166.png" width="50" height="50">
 
 ```
 sudo apt update
