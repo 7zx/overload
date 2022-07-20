@@ -6,6 +6,8 @@ import sys
 import argparse
 from colorama import Fore
 
+os.system("@cls & @title Overload DDOS Tool by: 7zx and 8fn & @color e")
+
 # Get the actual directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
