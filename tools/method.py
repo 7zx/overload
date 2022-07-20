@@ -10,13 +10,8 @@ from tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 
 def GetMethodByName(method):
-    if method == "SMS":
-        dir = "tools.SMS.main"
-    elif method == "EMAIL":
-        dir = "tools.EMAIL.main"
-    elif method in ("SYN", "UDP", "NTP", "POD", "ICMP", "MEMCACHED"):
-        dir = f"tools.L4.{method.lower()}"
-    elif method in ("HTTP", "SLOWLORIS"):
+    
+    if method in ("HTTP", "SLOWLORIS"):
         dir = f"tools.L7.{method.lower()}"
     else:
         raise SystemExit(
@@ -77,9 +72,6 @@ class AttackMethod:
         # Inicia o tempo das threads
         thread = Thread(target=self.__RunTimer)
         thread.start()
-        # Verifica se é 1 thread
-        if self.name == "EMAIL":
-            self.threads_count = 1
         # Cria o flood das threads
         for _ in range(self.threads_count):
             thread = Thread(target=self.__RunFlood)
@@ -101,10 +93,8 @@ class AttackMethod:
 
     # Inicia o ataque DDOS
     def Start(self):
-        if self.name == "EMAIL":
-            target = self.target_name
-        else:
-            target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
+       
+        target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
             f"{Fore.MAGENTA}[?] {Fore.BLUE}Starting the attack {target} using the method {self.name}.{Fore.RESET}\n"
