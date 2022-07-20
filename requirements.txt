@@ -4,4 +4,3 @@ wget
 argparse
 colorama
 humanfriendly
-ctypes
