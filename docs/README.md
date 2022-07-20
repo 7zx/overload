@@ -9,7 +9,7 @@
 
 # :computer: Main Window:
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tanjilk/overload/main/img/imgshow.png">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/imgshow.png">
 </p>
 
 # 🌙 Installation:
