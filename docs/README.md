@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="200" height="200">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="500" height="500">
 </p>
 
 # :computer: Main Window:
