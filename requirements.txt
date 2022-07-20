@@ -5,4 +5,3 @@ argparse
 colorama
 humanfriendly
 ctypes
-windll
