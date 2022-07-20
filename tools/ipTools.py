@@ -52,12 +52,9 @@ def __GetURLInfo(target):
 
 
 def GetTargetAddress(target, method):
-    if method == "HTTP":
-        url = __GetURLInfo(target)
-        __isCloudFlare(url)
-        return url
-    else:
-        return target
+    url = __GetURLInfo(target)
+    __isCloudFlare(url)
+    return url
 
 
 """ Is connected to internet """

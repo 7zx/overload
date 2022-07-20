@@ -21,36 +21,6 @@ except ImportError as err:
     CriticalError("Failed to import some packages", err)
     sys.exit(1)
 
-# Analyze args
-"""
-parser = argparse.ArgumentParser(description="Overload HTTP Attack")
-parser.add_argument(
-    "--target",
-    type=str,
-    metavar="<URL>",
-    help="Target URL",
-)
-parser.add_argument(
-    "--method",
-    type=str,
-    default="HTTP",
-    metavar="<HTTP>",
-    help="Attack method",
-)
-parser.add_argument(
-    "--time", type=int, default=1200, metavar="<time>", help="time in seconds"
-)
-parser.add_argument(
-    "--threads", type=int, default=100, metavar="<threads>", help="threads count (1-200)"
-)
-
-# Get args
-args = parser.parse_args()
-threads = args.threads
-time = args.time
-method = str(args.method).upper()
-target = args.target
-"""
 method = "HTTP"
 logo = """
  ▒█████   ██▒   █▓▓█████  ██▀███   ██▓     ▒█████   ▄▄▄      ▓█████▄ 
@@ -80,11 +50,3 @@ if __name__ == "__main__":
         Flood.Start()
 else:
     sys.exit(1)
-
-    """
-    # Execution of DDOS
-    with AttackMethod(
-        duration=time, name=method, threads=threads, target=target
-    ) as Flood:
-        Flood.Start()
-    """
