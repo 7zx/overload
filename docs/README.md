@@ -26,7 +26,7 @@
 
  
 
- <h2>Linux</h2><img src="https://raw.githubusercontent.com/8fn/overload/main/img/linux-icon-28166.png" width="50" height="50">
+ <h2>Linux</h2><img src="https://raw.githubusercontent.com/7zx/overload/main/img/linux-icon-28166.png" width="50" height="50">
 
 ```
 sudo apt update
