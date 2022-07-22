@@ -59,7 +59,7 @@ Example:
 ├───DDOS TOOL LAYER 7
 │   ├───TIME:1000
 │   └───THREADS:500
-│   └───URL:http://127.0.0.1
+│   └───URL:https://github.com/7zx/overload
 ```
 
 ## 💰 Donate:
