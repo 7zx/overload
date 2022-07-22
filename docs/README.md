@@ -7,7 +7,7 @@
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="250" height="250">
 </p>
 
-# :computer: Main Window:
+# :computer: Preview:
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/preview.gif">
 </p>
