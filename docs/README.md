@@ -47,10 +47,10 @@ pip3 install -r requirements.txt
 ```
 
 ## ❓ How To Use:
-The basic command to be able to execute Overload:
+The basic command to be able to open Overload:
 
 ```
-python overload.py --time XXX --threads XXX --target [URL] --method HTTP
+python overload.py
 ```
 
 Example:  
