@@ -50,7 +50,7 @@ pip3 install -r requirements.txt
 The basic command to be able to open Overload:
 
 ```
-python overload.py
+python overload.py or overload.py
 ```
 
 Example:  
