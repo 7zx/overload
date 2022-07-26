@@ -1,6 +1,6 @@
 <h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
 <div align="center">
-<img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social&label=Fork&maxAge=2592000"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social&label=Star&maxAge=2592000"> <img src="(https://img.shields.io/badge/Donate-%3C3-ff69b4)](https://github.com/Airkek/Youtube-Viewers/blob/master/Donate.md)">
+<img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social&label=Fork&maxAge=2592000"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social&label=Star&maxAge=2592000"> <img src="(https://img.shields.io/badge/Donate-%3C3-ff69b4)](https://github.com/7zx/overload/blob/master/donate.md)">
 </div>
 
 <p align="center">
