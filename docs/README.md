@@ -61,10 +61,3 @@ Example:
 │   └───THREADS:500
 │   └───URL:https://github.com/7zx/overload
 ```
-
-## 💰 Donate:
-
-
-  **BTC:** `bc1qhsdvfaee48qpauxzyccyjjxd7laggmlvyzketh` </br>
-  **ETH:** `0xA438762F645A4DcE1a4c7be66D0E787B8cDb30bd` </br>
-  **PayPal:** **https://paypal.me/goncalopolido**
