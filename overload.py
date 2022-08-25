@@ -6,7 +6,7 @@ import sys
 import argparse
 from colorama import Fore
 
-os.system("@cls & @title Overload DDOS Tool by: 7zx and 8fn & @color e")
+os.system("@cls & @title SW DDOS Tool by: 7zx and 8fn & @color e")
 
 # Get the actual directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -24,16 +24,7 @@ except ImportError as err:
 
 method = "HTTP"
 logo = """
- ▒█████   ██▒   █▓▓█████  ██▀███   ██▓     ▒█████   ▄▄▄      ▓█████▄ 
-▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒▓██▒    ▒██▒  ██▒▒████▄    ▒██▀ ██▌
-▒██░  ██▒ ▓██  █▒░▒███   ▓██ ░▄█ ▒▒██░    ▒██░  ██▒▒██  ▀█▄  ░██   █▌
-▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄  ▒██░    ▒██   ██░░██▄▄▄▄██ ░▓█▄   ▌
-░ ████▓▒░   ▒▀█░  ░▒████▒░██▓ ▒██▒░██████▒░ ████▓▒░ ▓█   ▓██▒░▒████▓ 
-░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░░ ▒░▓  ░░ ▒░▒░▒░  ▒▒   ▓▒█░ ▒▒▓  ▒ 
-  ░ ▒ ▒░    ░ ░░   ░ ░  ░  ░▒ ░ ▒░░ ░ ▒  ░  ░ ▒ ▒░   ▒   ▒▒ ░ ░ ▒  ▒ 
-░ ░ ░ ▒       ░░     ░     ░░   ░   ░ ░   ░ ░ ░ ▒    ░   ▒    ░ ░  ░ 
-    ░ ░        ░     ░  ░   ░         ░  ░    ░ ░        ░  ░   ░    
-              ░                                               ░     
+S̶̨̡͍̠̦̞͇̫̰̯͐̃͜W̵̱̞̮̝̭͑̉̃͋̿̈́̊͗͆̒̚͝ ̶̬̦̮̳͍̪̰̬̭̥͙̥̰̭͙̃̀̈̈̋́D̷̛̰̄̀̔̚̚Ḏ̷̲̪̣͚̺̖͔͓̬̹̪̜̽̆͋̊̑͌̈́̎͌͘͘͜͝͝Ô̷̧̥̝̠S̷̩͍̳̜̻̬̥͑̂͌̀̽̑̓́̑̈̅̓̃
 """
 CRED2 = '\33[91m'
 
@@ -41,7 +32,7 @@ if __name__ == "__main__":
     # Print help
     os.system('cls' if os.name == 'nt' else 'clear')
     print(CRED2 + logo + CRED2)
-    print("├───DDOS TOOL LAYER 7")
+    print("├───SW DDOS TOOL ")
     time = int(input(f"{Fore.RED}│   ├───TIME:{Fore.RESET}"))
     threads = int(input(f"{Fore.RED}│   └───THREADS:{Fore.RESET}"))
     target = str(input(f"{Fore.RED}│   └───URL:{Fore.RESET}"))
