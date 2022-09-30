@@ -1,8 +1,10 @@
 # Importar modulos
-from time import time, sleep
 from threading import Thread
+from time import sleep, time
+
 from colorama import Fore
-from humanfriendly import format_timespan, Spinner
+from humanfriendly import Spinner, format_timespan
+
 from tools.crash import CriticalError
 from tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
@@ -10,7 +12,7 @@ from tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 
 def GetMethodByName(method):
-    
+
     if method in ("HTTP", "SLOWLORIS"):
         dir = f"tools.L7.{method.lower()}"
     else:
@@ -22,10 +24,7 @@ def GetMethodByName(method):
         method = getattr(module, "flood")
         return method
     else:
-        CriticalError(
-            f"'Flood' method not found in {repr(dir)}. Use Python 3.8", "-"
-        )
-
+        CriticalError(f"'Flood' method not found in {repr(dir)}. Use Python 3.8", "-")
 
     """ Class para controlar os metodos de ataque """
 
@@ -93,7 +92,7 @@ class AttackMethod:
 
     # Inicia o ataque DDOS
     def Start(self):
-       
+
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(

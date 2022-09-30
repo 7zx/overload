@@ -1,8 +1,11 @@
 # Importa os modulos
 import random
 import socket
-import tools.randomData as randomData
+
 from colorama import Fore
+
+import tools.randomData as randomData
+
 
 # Socket inicial
 def create_socket(target):
@@ -21,7 +24,9 @@ def create_socket(target):
     except socket.timeout:
         print(f"{Fore.RED}[-] {Fore.MAGENTA}Time's up...{Fore.RESET}")
     except socket.error:
-        print(f"{Fore.RED}[-] {Fore.MAGENTA}There was an error creating socket{Fore.RESET}")
+        print(
+            f"{Fore.RED}[-] {Fore.MAGENTA}There was an error creating socket{Fore.RESET}"
+        )
     else:
         print(f"{Fore.GREEN}[+] {Fore.YELLOW}Socket created..{Fore.RESET}")
         return sock

@@ -1,11 +1,11 @@
 # Importa os modulos
-import sys
-import socket
 import ipaddress
-import requests
+import socket
+import sys
+from time import sleep
 from urllib.parse import urlparse
 
-from time import sleep
+import requests
 from colorama import Fore
 
 """ Verifica se o site está sob proteção CloudFlare """
@@ -36,7 +36,9 @@ def __GetAddressInfo(target):
         ip = target.split(":")[0]
         port = int(target.split(":")[1])
     except IndexError:
-        print(f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an ip and port{Fore.RESET}")
+        print(
+            f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an ip and port{Fore.RESET}"
+        )
         sys.exit(1)
     else:
         return ip, port

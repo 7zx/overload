@@ -1,6 +1,7 @@
 # Importar modulos
 import os
 import sys
+
 import wget
 from colorama import Fore
 
@@ -15,7 +16,5 @@ if os.name == "nt":
             print(f"{Fore.YELLOW}[~] {Fore.CYAN}Installing installer...{Fore.BLUE}\n")
             winpcap_installer = wget.download(winpcap_url)
             os.startfile(winpcap_installer)
-            print(
-                f"\n\n{Fore.GREEN}[?] {Fore.YELLOW}restart the program{Fore.RESET}"
-            )
+            print(f"\n\n{Fore.GREEN}[?] {Fore.YELLOW}restart the program{Fore.RESET}")
             sys.exit(1)
