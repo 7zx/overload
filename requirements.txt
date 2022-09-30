@@ -1,8 +1,0 @@
-requests
-scapy
-wget
-argparse
-colorama
-humanfriendly
-ctypes
-windll
