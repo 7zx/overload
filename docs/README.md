@@ -1,15 +1,15 @@
 <h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
 <div align="center">
-<img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social&label=Fork&maxAge=2592000"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social&label=Star&maxAge=2592000"> 
+<img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social">
 </div>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="250" height="250">
 </p>
 
-# :computer: Main Window:
+# :computer: Preview:
 <p align="center">
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/imgshow.png">
+  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/preview.gif">
 </p>
 
 # 🌙 Installation:
@@ -47,21 +47,17 @@ pip3 install -r requirements.txt
 ```
 
 ## ❓ How To Use:
-The basic command to be able to execute Overload:
+The basic command to be able to open Overload:
 
 ```
-python overload.py --time XXX --threads XXX --target [URL] --method HTTP
+python overload.py or overload.py
 ```
 
 Example:  
 
 ```
-python overload.py --time 5000 --threads 550 --target http://127.0.0.1/ --method HTTP
+├───DDOS TOOL LAYER 7
+│   ├───TIME:1000
+│   └───THREADS:500
+│   └───URL:https://github.com/7zx/overload
 ```
-
-## 💰 Donate:
-
-
-  **BTC:** `bc1qhsdvfaee48qpauxzyccyjjxd7laggmlvyzketh` </br>
-  **ETH:** `0xA438762F645A4DcE1a4c7be66D0E787B8cDb30bd` </br>
-  **PayPal:** **https://paypal.me/goncalopolido**
