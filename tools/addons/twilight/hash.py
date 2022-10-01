@@ -5,7 +5,7 @@ from string import ascii_letters
 
 # Obtem salt numbers
 def getSaltByKey(key, message):
-    salt = ''
+    salt = ""
     kHash = md5(key.encode()).hexdigest()
 
     while True:

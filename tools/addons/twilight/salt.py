@@ -5,7 +5,7 @@ from random import choice
 # Adiciona salt aos dados
 def protect(message, salt):
     # Variaveis
-    eData = ''
+    eData = ""
     salt = list(salt)
     saltChars = []
 
@@ -27,11 +27,11 @@ def protect(message, salt):
 def unprotect(message, salt):
     # Variables
     p = 0
-    dData = ''
+    dData = ""
 
     # Remove os caracteres salt a string
     for secretSalt in salt:
-        message = message[int(secretSalt) + p:]
+        message = message[int(secretSalt) + p :]
         # If not data - stop
         if not message:
             break

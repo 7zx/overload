@@ -1,8 +1,10 @@
 # Importa os modulos
-import requests
 import random
-import tools.randomData as randomData
+
+import requests
 from colorama import Fore
+
+import tools.randomData as randomData
 
 # Carrega os user agents
 user_agents = []
