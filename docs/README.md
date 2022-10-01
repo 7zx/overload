@@ -17,7 +17,7 @@
 
 <h2>Windows</h2> <img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="50" height="50">  
 
-  - Download Python 3.8 [here](https://www.python.org/downloads/release/python-38)
+  - Download Python 3.8 [here](https://www.python.org/downloads/release/python-380/)
   - Open the installer and click on: `add python to PATH`
   - Download overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>
   - Open CMD or PowerShell in the overload directory
