@@ -7,7 +7,7 @@ import requests
 if os.name == "nt":
 
     # Executable URL
-    ws_url = "https://2.na.dl.wireshark.org/win64/Wireshark-win64-3.4.15.exe"
+    ws_url = "https://2.na.dl.wireshark.org/win64/Wireshark-win64-3.4.16.exe"
 
     # Searching for Wireshark paths
     ws_dir_1, ws_dir_2 = os.environ["ProgramFiles"] + "\\Wireshark", os.environ["ProgramFiles(x86)"] + "\\Wireshark"
