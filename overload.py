@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Created by nuvem and tsk
 
 # Import modules
