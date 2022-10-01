@@ -1,15 +1,17 @@
 # Importa os modulos
 import os
-import sys
 import platform
+import sys
 from time import ctime
+
 from colorama import Fore
 
 """ Esta funçao ira parar o programa quando ocorrer um erro critico """
 
 
 def CriticalError(message, error):
-    print(f"""
+    print(
+        f"""
     {Fore.RED}:=== Critical error:
     {Fore.MAGENTA}MESSAGE: {message}.
     {Fore.MAGENTA}ERROR: {error}
@@ -31,5 +33,6 @@ def CriticalError(message, error):
     {Fore.RED}:=== Report:
     {Fore.MAGENTA}Report error here: https://github.com/7zx/overload/issues/new
     {Fore.RESET}
-    """)
+    """
+    )
     sys.exit(5)

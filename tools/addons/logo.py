@@ -14,5 +14,5 @@ logo = """
     ░ ░        ░     ░  ░   ░         ░  ░    ░ ░        ░  ░   ░    
               ░                                               ░     
 """
-CRED2 = '\33[91m'
-print(CRED2 + logo + CRED2) 
+CRED2 = "\33[91m"
+print(CRED2 + logo + CRED2)
