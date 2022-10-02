@@ -1,4 +1,3 @@
-# Importa os modulos
 import ipaddress
 import socket
 import sys
@@ -8,12 +7,10 @@ from urllib.parse import urlparse
 import requests
 from colorama import Fore
 
-""" Verifica se o site está sob proteção CloudFlare """
-
-
+# Checks if the target is protected by CloudFlare
 def __isCloudFlare(link):
     parsed_uri = urlparse(link)
-    domain = "{uri.netloc}".format(uri=parsed_uri)
+    domain = f"{parsed_uri.netloc}"
     try:
         origin = socket.gethostbyname(domain)
         iprange = requests.get("https://www.cloudflare.com/ips-v4").text
@@ -25,26 +22,31 @@ def __isCloudFlare(link):
                 )
                 sleep(1)
     except socket.gaierror:
-        return False
+        print(
+            f"{Fore.RED}[!] {Fore.CYAN}It was not possible to check for CloudFlare protection!.{Fore.RESET}"
+        )
+        sleep(1)
 
 
-""" Retorna ip, porta """
-
-
+# Gets target's IP and port
 def __GetAddressInfo(target):
     try:
         ip = target.split(":")[0]
         port = int(target.split(":")[1])
     except IndexError:
         print(
-            f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an ip and port{Fore.RESET}"
+            f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an IP and port!{Fore.RESET}"
         )
         sys.exit(1)
     else:
         return ip, port
 
 
-""" Retorna URL """
+# Gets target's Uniform Resource Locator (URL)
+def GetTargetAddress(target):
+    url = __GetURLInfo(target)
+    __isCloudFlare(url)
+    return url
 
 
 def __GetURLInfo(target):
@@ -53,20 +55,12 @@ def __GetURLInfo(target):
     return target
 
 
-def GetTargetAddress(target, method):
-    url = __GetURLInfo(target)
-    __isCloudFlare(url)
-    return url
-
-
-""" Is connected to internet """
-
-
+# Checking internet connection
 def InternetConnectionCheck():
     try:
         requests.get("https://google.com", timeout=4)
     except:
         print(
-            f"{Fore.RED}[!] {Fore.MAGENTA}Your device is not connected to the Internet{Fore.RESET}"
+            f"{Fore.RED}[!] {Fore.MAGENTA}Your device is not connected to the Internet!{Fore.RESET}"
         )
         sys.exit(1)
