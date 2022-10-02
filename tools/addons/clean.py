@@ -1,8 +1,7 @@
-# Importa os modulos
 import os
 
-# Limpa o CMD
+# Clears CMD
 if os.name == "nt":
-    os.system("@cls & @title Overload DDOS Tool by: 7zx and 8fn & @color e")
+    os.system("cls")
 else:
     os.system("clear")
