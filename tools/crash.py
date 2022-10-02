@@ -1,4 +1,3 @@
-# Importa os modulos
 import os
 import platform
 import sys
@@ -6,7 +5,7 @@ from time import ctime
 
 from colorama import Fore
 
-""" Esta funçao ira parar o programa quando ocorrer um erro critico """
+# This function will stop the program when a critical error occurs
 
 
 def CriticalError(message, error):
@@ -35,4 +34,4 @@ def CriticalError(message, error):
     {Fore.RESET}
     """
     )
-    sys.exit(5)
+    sys.exit(1)
