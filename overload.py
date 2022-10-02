@@ -11,8 +11,8 @@ from colorama import Fore
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 try:
+    os.system("cls" if os.name == "nt" else "clear")
 
-    import tools.addons.clean
     # Tries to download Wireshark if Windows OS is detected.
     import tools.addons.wireshark
     from tools.method import AttackMethod
