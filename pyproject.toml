@@ -17,6 +17,7 @@ humanfriendly = "^10.0"
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
 isort = "^5.10.1"
+pre-commit = "^2.20.0"
 
 [build-system]
 requires = ["poetry-core"]
