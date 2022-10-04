@@ -5,7 +5,6 @@ from time import sleep, time
 from colorama import Fore
 from humanfriendly import Spinner, format_timespan
 
-from tools.crash import CriticalError
 from tools.ipTools import GetTargetAddress, InternetConnectionCheck
 
 
@@ -82,7 +81,6 @@ class AttackMethod:
             )
 
         print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
-        sys.exit(0)
 
     # Starts DDOS attack
     def Start(self):
@@ -108,9 +106,9 @@ class AttackMethod:
             for thread in self.threads:
                 if thread.is_alive():
                     thread.join()
-
+            
             print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Interrupted!{Fore.RESET}")
-            sys.exit(1)
 
         except Exception as err:
-            CriticalError("An error ocurred during the attack", err)
+            print(err)
+            sys.exit(1)
