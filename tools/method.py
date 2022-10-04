@@ -82,7 +82,6 @@ class AttackMethod:
             )
 
         print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
-        sys.exit(0)
 
     # Starts DDOS attack
     def Start(self):
@@ -114,3 +113,6 @@ class AttackMethod:
 
         except Exception as err:
             CriticalError("An error ocurred during the attack", err)
+
+        else:
+            return True
