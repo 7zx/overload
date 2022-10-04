@@ -15,6 +15,7 @@ try:
 
     # Tries to download Wireshark if Windows OS is detected.
     import tools.addons.wireshark
+    from tools.addons.checks import checkNumbersInput, checkTargetInput
     from tools.method import AttackMethod
 
 except ImportError as err:
@@ -43,9 +44,9 @@ if __name__ == "__main__":
     print("├───DDOS TOOL LAYER 7")
 
     try:
-        time = int(input(f"{Fore.RED}│   ├───TIME: {Fore.RESET}"))
-        threads = int(input(f"{Fore.RED}│   └───THREADS: {Fore.RESET}"))
-        target = str(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
+        time = checkNumbersInput("time")
+        threads = checkNumbersInput("threads")
+        target = checkTargetInput()
 
         with AttackMethod(
             duration=time, method_name="HTTP", threads=threads, target=target
