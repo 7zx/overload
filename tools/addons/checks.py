@@ -1,10 +1,10 @@
 import requests
 from colorama import Fore
 
-from tools.ipTools import __GetURLInfo
+from tools.ip_tools import __get_url_info
 
 
-def checkNumbersInput(x):
+def check_number_input(x: str) -> int:
     y, i = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}"), True
     while i:
         try:
@@ -13,26 +13,33 @@ def checkNumbersInput(x):
                 raise ValueError
         except ValueError:
             print(
-                f"{Fore.GREEN}│   ├─── This value must be a number greater than zero!{Fore.RESET}"
+                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}This value must be a number greater than zero!{Fore.RESET}"
             )
-            y = y = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}")
+            y = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}")
         else:
             i = False
             return y
 
 
-def checkTargetInput():
-    y, i = __GetURLInfo(input(f"{Fore.RED}│   └───URL: {Fore.RESET}")), True
-    print(y)
+def check_target_input() -> str:
+    y, i = __get_url_info(input(f"{Fore.RED}│   └───URL: {Fore.RESET}")), True
     while i:
         try:
-            r = requests.get(y, timeout=4)
-            if r.status_code != 200:
-                raise Exception
-        except:
-            print(f"{Fore.GREEN}It's not possible to reach this target!{Fore.RESET}")
-            y = __GetURLInfo(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
-            print(y)
+            requests.get("https://google.com", timeout=4)
+            try:
+                requests.get(y, timeout=4)
+            except:
+                raise requests.exceptions.InvalidURL
+        except requests.exceptions.ConnectionError:
+            print(
+                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}The device is not connected to the internet!{Fore.RESET}"
+            )
+            y = __get_url_info(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
+        except requests.exceptions.InvalidURL:
+            print(
+                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Invalid URL!{Fore.RESET}"
+            )
+            y = __get_url_info(input(f"{Fore.RED}│   └───URL: {Fore.RESET}"))
         else:
             i = False
             return y
