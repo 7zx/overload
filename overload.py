@@ -15,7 +15,7 @@ try:
 
     # Tries to download Wireshark if Windows OS is detected.
     import tools.addons.wireshark
-    from tools.addons.checks import checkNumbersInput, checkTargetInput
+    from tools.addons.checks import check_number_input, check_target_input
     from tools.method import AttackMethod
 
 except ImportError as err:
@@ -44,14 +44,14 @@ if __name__ == "__main__":
     print("├───DDOS TOOL LAYER 7")
 
     try:
-        time = checkNumbersInput("time")
-        threads = checkNumbersInput("threads")
-        target = checkTargetInput()
+        time = check_number_input("time")
+        threads = check_number_input("threads")
+        target = check_target_input()
 
         with AttackMethod(
             duration=time, method_name="HTTP", threads=threads, target=target
-        ) as Flood:
-            Flood.Start()
+        ) as attack:
+            attack.start()
     except KeyboardInterrupt:
         print(
             f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Program closed.{Fore.RESET}"

