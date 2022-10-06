@@ -10,8 +10,7 @@ from colorama import Fore
 
 # Checks if the target is protected by CloudFlare
 def __is_cloud_flare(link: str) -> None:
-    parsed_uri = urlparse(link)
-    domain = f"{parsed_uri.netloc}"
+    domain = get_target_domain(link)
     try:
         origin = socket.gethostbyname(domain)
         iprange = requests.get("https://www.cloudflare.com/ips-v4").text
@@ -43,14 +42,20 @@ def __get_address_info(target):
         return ip, port
 
 
-# Gets target's Uniform Resource Locator (URL)
+# Gets target's Uniform Resource Locator (URL) formatted with http://
 def get_target_address(target: str) -> str:
-    url = __get_url_info(target)
+    url = set_target_http(target)
     __is_cloud_flare(url)
     return url
 
 
-def __get_url_info(target: str) -> str:
+def set_target_http(target: str) -> str:
     if not target.startswith("http"):
         target = f"http://{target}"
     return target
+
+
+# Gets target's domain
+def get_target_domain(target: str) -> str:
+    parsed_uri = urlparse(target)
+    return parsed_uri.netloc
