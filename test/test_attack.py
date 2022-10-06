@@ -13,5 +13,5 @@ methods = ["HTTP"]
 @pytest.mark.parametrize("method", methods)
 def test_Start(method: str) -> None:
 
-    with AttackMethod("HTTP", 5, 10, "google.com") as attack:
+    with AttackMethod(method, 5, 10, "google.com") as attack:
         assert attack.start() == True
