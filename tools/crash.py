@@ -5,12 +5,11 @@ from time import ctime
 
 from colorama import Fore
 
+
 # This function will stop the program when a critical error occurs
-
-
-def CriticalError(message, error):
+def CriticalError(message: str, error: Exception) -> None:
     print(
-        f"""
+        f"""\n
     {Fore.RED}:=== Critical error:
     {Fore.MAGENTA}MESSAGE: {message}.
     {Fore.MAGENTA}ERROR: {error}

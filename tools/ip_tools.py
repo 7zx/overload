@@ -7,10 +7,10 @@ from urllib.parse import urlparse
 import requests
 from colorama import Fore
 
+
 # Checks if the target is protected by CloudFlare
-def __isCloudFlare(link):
-    parsed_uri = urlparse(link)
-    domain = f"{parsed_uri.netloc}"
+def __is_cloud_flare(link: str) -> None:
+    domain = get_target_domain(link)
     try:
         origin = socket.gethostbyname(domain)
         iprange = requests.get("https://www.cloudflare.com/ips-v4").text
@@ -29,7 +29,7 @@ def __isCloudFlare(link):
 
 
 # Gets target's IP and port
-def __GetAddressInfo(target):
+def __get_address_info(target):
     try:
         ip = target.split(":")[0]
         port = int(target.split(":")[1])
@@ -42,25 +42,20 @@ def __GetAddressInfo(target):
         return ip, port
 
 
-# Gets target's Uniform Resource Locator (URL)
-def GetTargetAddress(target):
-    url = __GetURLInfo(target)
-    __isCloudFlare(url)
+# Gets target's Uniform Resource Locator (URL) formatted with http://
+def get_target_address(target: str) -> str:
+    url = set_target_http(target)
+    __is_cloud_flare(url)
     return url
 
 
-def __GetURLInfo(target):
+def set_target_http(target: str) -> str:
     if not target.startswith("http"):
         target = f"http://{target}"
     return target
 
 
-# Checking internet connection
-def InternetConnectionCheck():
-    try:
-        requests.get("https://google.com", timeout=4)
-    except:
-        print(
-            f"{Fore.RED}[!] {Fore.MAGENTA}Your device is not connected to the Internet!{Fore.RESET}"
-        )
-        sys.exit(1)
+# Gets target's domain
+def get_target_domain(target: str) -> str:
+    parsed_uri = urlparse(target)
+    return parsed_uri.netloc

