@@ -1,3 +1,5 @@
+"""Main script to start GUI DoS attack application."""
+
 # -*- coding: utf-8 -*-
 import os
 import sys
@@ -8,7 +10,7 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 os.system("cls" if os.name == "nt" else "clear")
 
 try:
-    from tools.addons.checks import check_number_input, check_proxy_input, check_target_input  # type: ignore[import] 
+    from tools.addons.checks import check_number_input, check_proxy_input, check_target_input  # type: ignore[import]
     from tools.addons.logo import show_logo  # type: ignore[import]
     from tools.method import AttackMethod  # type: ignore[import]
 except ImportError as err:
@@ -18,6 +20,7 @@ except ImportError as err:
 
 
 def main() -> None:
+    """Run main application."""
     show_logo()
     try:
         time = check_number_input("time")
