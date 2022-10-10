@@ -1,4 +1,4 @@
-<h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
+<h1 align="center">📡 DoS Tool (Layer 7) </h1> 
 <div align="center">
 <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/license/7zx/overload"> <img src="https://img.shields.io/badge/code%20style-black-000000.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social">
 </div>
@@ -99,17 +99,29 @@ python3 overload.py
 <br>
 
 <div align="center">
-  <h2>❓ How To Use</h2><br>
+  <h2> ❔ How To Use</h2><br>
 </div>
 
-Once the application has opened, enter for how long the attack will take over (in seconds), how many threads will attack the target, and the target URL itself. 
+Once the application has been opened, enter for how long the attack will take over (in seconds), how many threads will attack the target, if the attack will use public global proxies for IP spoofing, and the target URL itself.
 <br>
 
 Example:  
 
 ```
 ├───DDOS TOOL LAYER 7
-│   ├───TIME:1000
-│   └───THREADS:500
+│   ├───TIME:600
+│   ├───THREADS:800
+│   ├───USE PROXY:0 (False)
 │   └───URL:https://github.com/7zx/overload
 ```
+
+After that, the threads will initialize and connect to elite-anonymity public proxies if the case, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted for volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/). In both cases, a bunch of HTTP GET requests will start to be sent to the target right after the initialization.
+
+---
+<br>
+
+<div align="center">
+  <h2>⚠ Disclaimer</h2><br>
+</div>
+
+This application is intended to be used as a testing tool against your own servers. **DO NOT USE IT TO ATTACK OTHER PEOPLE**, we don't take responsability for anything that may come up if you attack someone else.
