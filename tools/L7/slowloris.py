@@ -1,9 +1,9 @@
 import random
 import socket
 
-from colorama import Fore
+from colorama import Fore  # type: ignore[import]
 
-import tools.random_data as random_data
+import tools.random_data as random_data  # type: ignore[import]
 
 
 # Initial socket
