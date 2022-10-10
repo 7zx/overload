@@ -1,11 +1,10 @@
 import ipaddress
 import socket
-import sys
 from time import sleep
 from urllib.parse import urlparse
 
 import requests
-from colorama import Fore
+from colorama import Fore  # type: ignore[import]
 
 
 # Checks if the target is protected by CloudFlare
@@ -26,20 +25,6 @@ def __is_cloud_flare(link: str) -> None:
             f"{Fore.RED}[!] {Fore.CYAN}It was not possible to check for CloudFlare protection!.{Fore.RESET}"
         )
         sleep(1)
-
-
-# Gets target's IP and port
-def __get_address_info(target):
-    try:
-        ip = target.split(":")[0]
-        port = int(target.split(":")[1])
-    except IndexError:
-        print(
-            f"{Fore.RED}[!] {Fore.MAGENTA}You should insert an IP and port!{Fore.RESET}"
-        )
-        sys.exit(1)
-    else:
-        return ip, port
 
 
 # Gets target's Uniform Resource Locator (URL) formatted with http://
