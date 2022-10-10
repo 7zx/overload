@@ -1,9 +1,14 @@
+import os
 import socket
 import sys
 
+os.chdir(os.getcwd() + "/..")
+
+from tools.crash import CriticalError  # type: ignore[import]
+
 
 class Server:
-    def __init__(self, host, port):
+    def __init__(self, host: str, port: int):
         self.host = host
         self.port = port
 
@@ -29,11 +34,10 @@ class Server:
 
     def start(self):
 
-        # Starts listening
-        self.sock.listen()
-        while True:
-            try:
-
+        try:
+            # Starts listening
+            self.sock.listen()
+            while True:
                 # Accepts client connection creating another socket entity for the communication
                 conn, _ = self.sock.accept()
 
@@ -43,9 +47,11 @@ class Server:
                 # Sends response and closes socket connection
                 conn.sendall(self.response)
                 conn.close()
-            except Exception as err:
-                print(err)
-                sys.exit(1)
+        except KeyboardInterrupt:
+            print("\nCrtl+C detected. Server closed.")
+            sys.exit(1)
+        except Exception as err:
+            CriticalError("An error occured while the server was listening", err)
 
 
 def main():
