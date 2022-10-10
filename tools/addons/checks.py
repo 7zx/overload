@@ -45,10 +45,10 @@ def check_target_input() -> str:
 
 
 def check_proxy_input():
-    y = input(f"{Fore.RED}│   └───USE PROXY (0|1): {Fore.RESET}")
+    y = input(f"{Fore.RED}│   ├───USE PROXY (0|1): {Fore.RESET}")
     while y not in ["0", "1"]:
         print(
             f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a binary entry (0 = no | 1 = yes){Fore.RESET}"
         )
-        y = input(f"{Fore.RED}│   └───USE PROXY (0|1): {Fore.RESET}")
+        y = input(f"{Fore.RED}│   ├───USE PROXY (0|1): {Fore.RESET}")
     return bool(int(y))
