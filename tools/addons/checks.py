@@ -1,3 +1,5 @@
+"""This module provides functions to check inputs."""
+
 from typing import Union
 
 import requests
@@ -7,6 +9,11 @@ from tools.ip_tools import set_target_http  # type: ignore[import]
 
 
 def check_number_input(x: str) -> int:
+    """Check if an input is a number greater than zero.
+
+    Keyword arguments:
+    x -- name of the input field
+    """
     while True:
         y = input(
             f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}"
@@ -24,6 +31,7 @@ def check_number_input(x: str) -> int:
 
 
 def check_target_input() -> str:
+    """Check if an URL is valid."""
     while True:
         y = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
         try:
@@ -45,6 +53,7 @@ def check_target_input() -> str:
 
 
 def check_proxy_input():
+    """Check if an input is 0 or 1."""
     y = input(f"{Fore.RED}│   ├───USE PROXY (0|1): {Fore.RESET}")
     while y not in ["0", "1"]:
         print(

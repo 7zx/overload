@@ -1,3 +1,5 @@
+"""This module provides functions to analyze network matters."""
+
 import ipaddress
 import socket
 from time import sleep
@@ -7,8 +9,12 @@ import requests
 from colorama import Fore  # type: ignore[import]
 
 
-# Checks if the target is protected by CloudFlare
 def __is_cloud_flare(link: str) -> None:
+    """Check if the target is protected by CloudFlare.
+
+    Keyword arguments:
+    link -- the URL to be checked in the CloudFlare protection networks
+    """
     domain = get_target_domain(link)
     try:
         origin = socket.gethostbyname(domain)
@@ -27,14 +33,23 @@ def __is_cloud_flare(link: str) -> None:
         sleep(1)
 
 
-# Gets target's Uniform Resource Locator (URL) formatted with http://
 def get_target_address(target: str) -> str:
+    """Get target's URL formatted with HTTP protocol and CloudFlare checked.
+
+    Keyword arguments:
+    target -- the target's URL
+    """
     url = set_target_http(target)
     __is_cloud_flare(url)
     return url
 
 
 def set_target_http(target: str) -> str:
+    """Get target's URL formatted with HTTP protocol.
+
+    Keyword arguments:
+    target -- the target's URL
+    """
     if not target.startswith("http"):
         target = f"http://{target}"
     return target
@@ -42,5 +57,10 @@ def set_target_http(target: str) -> str:
 
 # Gets target's domain
 def get_target_domain(target: str) -> str:
+    """Get target's domain.
+
+    Keyword arguments:
+    target -- the target's URL
+    """
     parsed_uri = urlparse(target)
     return parsed_uri.netloc

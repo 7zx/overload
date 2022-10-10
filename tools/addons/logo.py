@@ -1,4 +1,8 @@
+"""This module provides a function that prints the logo's application."""
+
+
 def show_logo() -> None:
+    """Print the application logo."""
     logo = """
   ▒█████   ██▒   █▓▓█████  ██▀███   ██▓     ▒█████   ▄▄▄      ▓█████▄ 
   ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒▓██▒    ▒██▒  ██▒▒████▄    ▒██▀ ██▌

