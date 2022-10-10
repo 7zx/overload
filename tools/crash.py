@@ -8,7 +8,6 @@ from time import ctime
 from colorama import Fore  # type: ignore[import]
 
 
-# This function will show a custom message error when it occurs
 def CriticalError(message: str, error: Exception) -> None:
     """Print a custom message error.
 

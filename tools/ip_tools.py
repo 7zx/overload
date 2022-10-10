@@ -55,7 +55,6 @@ def set_target_http(target: str) -> str:
     return target
 
 
-# Gets target's domain
 def get_target_domain(target: str) -> str:
     """Get target's domain.
 
