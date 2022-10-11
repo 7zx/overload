@@ -20,42 +20,21 @@
   <h2>Windows</h2><br>
 </div>
 
-  > Download Python 3.10 [here](https://www.python.org/downloads/);
-  
-  > Open the installer and click on `add python to PATH`;
-  
-  > Download Overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>;
-  
-  > Open CMD or PowerShell in the overload directory;
-
-  > If you'd rather run the application without a Virtual Enviroment, execute:
+Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. If you'd rather run the application without a Virtual Enviroment, execute:
   ```
   python3 -m pip install -r requirements.txt
-  ``` 
-  > To install dependencies, and:
-  ```
   python3 overload.py
   ```
-  > To run the application.
 
-  > Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
+Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
   ```
   make setup
-  ```
-  > And once the VEnv is created, you can run the application whenever you want executing:
-  ```
   make run
   ```
-  > If you don't have `make`, then install Poetry with:
+If you don't have `make`, then execute:
   ```
   curl -sSL https://install.python-poetry.org | python3 -
-  ```
-  > Create a Venv and install its dependencies executing:
-  ```
   poetry install --without dev
-  ``` 
-  > And finally, run the program:
-  ```
   poetry run python3 overload.py
   ```
 
@@ -115,7 +94,7 @@ Example:
 │   └───URL:https://github.com/7zx/overload
 ```
 
-After that, the threads will initialize and connect to elite-anonymity public proxies if the case, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted for volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/). In both cases, a bunch of HTTP GET requests will start to be sent to the target right after the initialization.
+If the case, the threads will initialize and connect to elite-anonymity public proxies, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted by volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/). In both cases, a bunch of HTTP GET requests will start to be sent to the target right after the initialization.
 
 ---
 <br>
