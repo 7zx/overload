@@ -10,7 +10,8 @@ with open("tools/L7/user_agents.json", "r") as agents:
     user_agents = json.load(agents)["agents"]
 
 with requests.get(
-    "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
+    "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all",
+    verify=False,
 ) as proxies:
     proxies_ = list()
     for proxy in proxies.text.split("\r\n"):
