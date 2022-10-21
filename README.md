@@ -1,4 +1,4 @@
-<h1 align="center">📡 DDOS Tool (Layer 7) </h1> 
+<h1 align="center">📡 DoS Tool (Layer 7) </h1> 
 <div align="center">
 <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/license/7zx/overload"> <img src="https://img.shields.io/badge/code%20style-black-000000.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social">
 </div>
@@ -20,42 +20,21 @@
   <h2>Windows</h2><br>
 </div>
 
-  > Download Python 3.10 [here](https://www.python.org/downloads/);
-  
-  > Open the installer and click on `add python to PATH`;
-  
-  > Download Overload <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a>;
-  
-  > Open CMD or PowerShell in the overload directory;
-
-  > If you'd rather run the application without a Virtual Enviroment, execute:
+Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. If you'd rather run the application without a Virtual Enviroment, execute:
   ```
   python3 -m pip install -r requirements.txt
-  ``` 
-  > To install dependencies, and:
-  ```
   python3 overload.py
   ```
-  > To run the application.
 
-  > Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
+Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
   ```
   make setup
-  ```
-  > And once the VEnv is created, you can run the application whenever you want executing:
-  ```
   make run
   ```
-  > If you don't have `make`, then install Poetry with:
+If you don't have `make`, then execute:
   ```
   curl -sSL https://install.python-poetry.org | python3 -
-  ```
-  > Create a Venv and install its dependencies executing:
-  ```
   poetry install --without dev
-  ``` 
-  > And finally, run the program:
-  ```
   poetry run python3 overload.py
   ```
 
@@ -99,17 +78,29 @@ python3 overload.py
 <br>
 
 <div align="center">
-  <h2>❓ How To Use</h2><br>
+  <h2> ❔ How To Use</h2><br>
 </div>
 
-Once the application has opened, enter for how long the attack will take over (in seconds), how many threads will attack the target, and the target URL itself. 
+Once the application has been opened, enter for how long the attack will take over (in seconds), how many threads will attack the target, if the attack will use public global proxies for IP spoofing, and the target URL itself.
 <br>
 
 Example:  
 
 ```
 ├───DDOS TOOL LAYER 7
-│   ├───TIME:1000
-│   └───THREADS:500
+│   ├───TIME:600
+│   ├───THREADS:800
+│   ├───USE PROXY:0 (False)
 │   └───URL:https://github.com/7zx/overload
 ```
+
+If the case, the threads will initialize and connect to elite-anonymity public proxies, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted by volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/). In both cases, a bunch of HTTP GET requests will start to be sent to the target right after the initialization.
+
+---
+<br>
+
+<div align="center">
+  <h2>⚠ Disclaimer</h2><br>
+</div>
+
+This application is intended to be used as a testing tool against your own servers. **DO NOT USE IT TO ATTACK OTHER PEOPLE**, we don't take responsability for anything that may come up if you attack someone else.

@@ -1,6 +1,7 @@
+# Poetry pyproject.toml
+pyproject.toml
+
 # Byte-compiled / optimized / DLL files
-tools/L7/__pycache__/
-tools/addons/__pycache__/
 __pycache__/
 *.py[cod]
 *$py.class

@@ -1,13 +1,20 @@
+"""This module provides a function to print a custom message error."""
+
 import os
 import platform
 import sys
 from time import ctime
 
-from colorama import Fore
+from colorama import Fore  # type: ignore[import]
 
 
-# This function will stop the program when a critical error occurs
 def CriticalError(message: str, error: Exception) -> None:
+    """Print a custom message error.
+
+    Keyword arguments:
+    message -- the message to be printed
+    error -- the error object itself
+    """
     print(
         f"""\n
     {Fore.RED}:=== Critical error:

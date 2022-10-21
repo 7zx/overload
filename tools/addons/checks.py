@@ -1,12 +1,23 @@
-import requests
-from colorama import Fore
+"""This module provides functions to check inputs."""
 
-from tools.ip_tools import set_target_http
+from typing import Union
+
+import requests
+from colorama import Fore  # type: ignore[import]
+
+from tools.ip_tools import set_target_http  # type: ignore[import]
 
 
 def check_number_input(x: str) -> int:
+    """Check if an input is a number greater than zero.
+
+    Keyword arguments:
+    x -- name of the input field
+    """
     while True:
-        y = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}")
+        y = input(
+            f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}"
+        )  # type: Union[str, int]
         try:
             y = int(y)
             if y <= 0:
@@ -20,6 +31,7 @@ def check_number_input(x: str) -> int:
 
 
 def check_target_input() -> str:
+    """Check if an URL is valid."""
     while True:
         y = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
         try:
@@ -38,3 +50,14 @@ def check_target_input() -> str:
             )
         else:
             return y
+
+
+def check_proxy_input():
+    """Check if an input is 0 or 1."""
+    y = input(f"{Fore.RED}│   ├───USE PROXY (0|1): {Fore.RESET}")
+    while y not in ["0", "1"]:
+        print(
+            f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a binary entry (0 = no | 1 = yes){Fore.RESET}"
+        )
+        y = input(f"{Fore.RED}│   ├───USE PROXY (0|1): {Fore.RESET}")
+    return bool(int(y))
