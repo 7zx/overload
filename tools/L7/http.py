@@ -2,9 +2,12 @@
 
 import json
 import random
+import warnings
 
 import requests
 from colorama import Fore  # type: ignore[import]
+
+warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 
 with open("tools/L7/user_agents.json", "r") as agents:
     user_agents = json.load(agents)["agents"]
