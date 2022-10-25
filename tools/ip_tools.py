@@ -49,7 +49,7 @@ def get_target_address(target: str) -> str:
         - target - The target's URL
 
     Returns:
-        None
+        - url - The formatted and checked URL
     """
     url = set_target_http(target)
     __is_cloud_flare(url)
@@ -63,7 +63,7 @@ def set_target_http(target: str) -> str:
         - target - The target's URL
 
     Returns:
-        None
+        - target - The target's URL with HTTP protocol
     """
     if not target.startswith("http"):
         target = f"http://{target}"
@@ -77,10 +77,11 @@ def get_target_domain(target: str) -> str:
         - target - The target's URL
 
     Returns:
-        None
+        - domain - The target's domain
     """
     parsed_uri = urlparse(target)
-    return parsed_uri.netloc
+    domain = parsed_uri.netloc
+    return domain
 
 
 def create_socket(target: str) -> socket.SocketType:
@@ -90,7 +91,7 @@ def create_socket(target: str) -> socket.SocketType:
         - target - The target's URL
 
     Returns:
-        - sock - The socket object itself
+        - sock - The socket associated with the communication
     """
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

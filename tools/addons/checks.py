@@ -33,7 +33,7 @@ def check_number_input(x: str) -> int:
         - x - The name of the input field
 
     Returns:
-        - y - A valid name
+        - y - A valid value
     """
     while True:
         y = input(
@@ -58,7 +58,7 @@ def check_target_input() -> str:
         None
 
     Returns:
-        - y - A valid target
+        - y - A valid URL target
     """
     while True:
         y = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
