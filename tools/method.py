@@ -11,7 +11,6 @@ from typing import Any, List, Union
 from colorama import Fore  # type: ignore[import]
 from humanfriendly import Spinner, format_timespan  # type: ignore[import]
 
-from tools.crash import CriticalError  # type: ignore[import]
 from tools.ip_tools import create_socket, get_target_address  # type: ignore[import]
 
 
@@ -93,17 +92,18 @@ class AttackMethod:
         timing = Thread(target=self.__run_timer)
         timing.start()
 
-        self.sockets = [
-            create_socket(self.target)
-            for _ in range(self.threads_count)
-            if self.method_name.lower() == "slowloris"
-        ]
-        self.threads = [
-            Thread(target=self.__run_flood, args=(self.sockets[i],))
-            if self.method_name.lower() == "slowloris"
-            else Thread(target=self.__run_flood)
-            for i in range(self.threads_count)
-        ]
+        if self.method_name.lower() == "slowloris":
+            self.sockets = [
+                create_socket(self.target) for _ in range(self.threads_count)
+            ]
+            self.threads = [
+                Thread(target=self.__run_flood, args=(self.sockets[i],))
+                for i in range(self.threads_count)
+            ]
+        else:
+            self.threads = [
+                Thread(target=self.__run_flood) for _ in range(self.threads_count)
+            ]
 
         with Spinner(
             label=f"{Fore.YELLOW}Starting {self.threads_count} threads{Fore.RESET}",
@@ -121,7 +121,7 @@ class AttackMethod:
 
         print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
-    def start(self) -> bool:
+    def start(self) -> None:
         """Start the DoS attack itself."""
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
@@ -149,8 +149,3 @@ class AttackMethod:
                 f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
             )
             sys.exit(1)
-
-        except Exception as err:
-            CriticalError("An error ocurred during the attack", err)
-        else:
-            return True
