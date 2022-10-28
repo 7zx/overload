@@ -2,7 +2,14 @@
 
 
 def show_logo() -> None:
-    """Print the application logo."""
+    """Print the application logo.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     logo = """
   ▒█████   ██▒   █▓▓█████  ██▀███   ██▓     ▒█████   ▄▄▄      ▓█████▄ 
   ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒▓██▒    ▒██▒  ██▒▒████▄    ▒██▀ ██▌

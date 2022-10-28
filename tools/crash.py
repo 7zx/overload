@@ -11,9 +11,12 @@ from colorama import Fore  # type: ignore[import]
 def CriticalError(message: str, error: Exception) -> None:
     """Print a custom message error.
 
-    Keyword arguments:
-    message -- the message to be printed
-    error -- the error object itself
+    Args:
+        - message - The message to be printed
+        - error - The error object itself
+
+    Returns:
+        None
     """
     print(
         f"""\n
