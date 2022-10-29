@@ -33,7 +33,7 @@ Although you can run it without a Virtual Enviroment, we highly recommend you to
   ```
 If you don't have `make`, then execute:
   ```
-  curl -sSL https://install.python-poetry.org | python3 -
+  curl -sSL https://install.python-poetry.org | python3
   poetry install --without dev
   poetry run python3 overload.py
   ```
