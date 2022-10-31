@@ -31,8 +31,8 @@ def main() -> None:
         method = check_method_input()
         time = check_number_input("time")
         threads = check_number_input("threads" if method == "http" else "sockets")
-        use_proxy = check_proxy_input() if method == "http" else False
         sleep_time = check_number_input("sleep time") if method == "slowloris" else 0
+        use_proxy = check_proxy_input()
         target = check_target_input()
 
         with AttackMethod(
@@ -40,8 +40,8 @@ def main() -> None:
             method_name=method,
             threads=threads,
             target=target,
-            use_proxy=use_proxy,
             sleep_time=sleep_time,
+            use_proxy=use_proxy,
         ) as attack:
             attack.start()
     except KeyboardInterrupt:
