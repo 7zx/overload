@@ -20,18 +20,12 @@
   <h2>Windows</h2><br>
 </div>
 
-Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. If you'd rather run the application without a Virtual Enviroment, execute:
-  ```
-  python3 -m pip install -r requirements.txt
-  python3 overload.py
-  ```
-
-Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
+Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. Now you need to create a Virtual Enviroment for the application; if you have `make` utility on your system just execute:
   ```
   make setup
   make run
   ```
-If you don't have `make`, then execute:
+If you don't have it, then execute:
   ```
   curl -sSL https://install.python-poetry.org | python3
   poetry install --without dev
@@ -48,16 +42,12 @@ If you don't have `make`, then execute:
 ```
 sudo apt update
 sudo apt install python3 python3-pip git -y
+
 git clone https://github.com/7zx/overload
 cd overload/
 
-# With a Virtual Enviroment
 make setup
 make run
-
-# Without a Virtual Enviroment
-python3 -m pip install -r requirements.txt
-python3 overload.py
 ```
 ---
 <div align="center"> 
@@ -69,10 +59,12 @@ python3 overload.py
 ```
 pkg update
 pkg install python3 python3-pip git -y
+
 git clone https://github.com/7zx/overload
 cd overload/
-pip3 install -r requirements.txt
-python3 overload.py
+
+make setup
+make run
 ```
 ---
 <br>
