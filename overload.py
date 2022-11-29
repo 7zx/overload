@@ -4,24 +4,22 @@
 import os
 import sys
 
-from colorama import Fore  # type: ignore[import]
+from colorama import Fore
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 os.system("cls" if os.name == "nt" else "clear")
 
 try:
-    from tools.addons.checks import (  # type: ignore[import]
+    from tools.addons.checks import (
         check_method_input,
         check_number_input,
         check_proxy_input,
         check_target_input,
     )
-    from tools.addons.logo import show_logo  # type: ignore[import]
-    from tools.method import AttackMethod  # type: ignore[import]
-except ImportError as err:
-    from tools.crash import CriticalError  # type: ignore[import]
-
-    CriticalError("Failed to import some packages", err)
+    from tools.addons.logo import show_logo
+    from tools.method import AttackMethod
+except (ImportError, NameError) as err:
+    print("\nFailed to import something", err)
 
 
 def main() -> None:
@@ -31,8 +29,8 @@ def main() -> None:
         method = check_method_input()
         time = check_number_input("time")
         threads = check_number_input("threads" if method == "http" else "sockets")
-        use_proxy = check_proxy_input() if method == "http" else False
         sleep_time = check_number_input("sleep time") if method == "slowloris" else 0
+        use_proxy = check_proxy_input()
         target = check_target_input()
 
         with AttackMethod(
@@ -40,8 +38,8 @@ def main() -> None:
             method_name=method,
             threads=threads,
             target=target,
-            use_proxy=use_proxy,
             sleep_time=sleep_time,
+            use_proxy=use_proxy,
         ) as attack:
             attack.start()
     except KeyboardInterrupt:

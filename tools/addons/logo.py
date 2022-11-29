@@ -23,6 +23,5 @@ def show_logo() -> None:
                 ░                                               ░     
   """
 
-    CRED2 = "\33[91m"
-    print(CRED2 + logo + CRED2)
+    print("\33[91m" + logo + "\33[91m")
     print("├───DOS TOOL LAYER 7")
