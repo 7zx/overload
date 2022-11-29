@@ -4,34 +4,31 @@
 </div>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/logo.png" width="250" height="250">
+  <img src="img/logo.png" width="250" height="250">
 </p>
 
 <div align="center">
   <h1>💻 Preview</h1>
 </div>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/preview.gif">
+  <img src="img/preview.gif">
 </p>
 
 <div align="center">
   <h1>🌙 Installation</h1>
-  <img src="https://cdn.iconscout.com/icon/free/png-256/windows-221-1175066.png" width="80" height="80">
+  <img src="img/windows.png" width="80" height="80">
   <h2>Windows</h2><br>
 </div>
 
-Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. If you'd rather run the application without a Virtual Enviroment, execute:
-  ```
-  python3 -m pip install -r requirements.txt
-  python3 overload.py
-  ```
+Download Python 3.10 [here](https://www.python.org/downloads/), open the installer and click on `add python to PATH`. Next, download `overload` <a href="https://github.com/7zx/overload/archive/refs/heads/main.zip" target="blank">here</a> and open CMD or PowerShell in its directory. Now you need to create a Virtual Enviroment for the application; if you have `make` utility on your system just execute:
 
-Although you can run it without a Virtual Enviroment, we highly recommend you to create one for your application. If you have `make` utility on your system just execute:
   ```
   make setup
   make run
   ```
-If you don't have `make`, then execute:
+
+If you don't have it, then execute:
+
   ```
   curl -sSL https://install.python-poetry.org | python3
   poetry install --without dev
@@ -41,9 +38,8 @@ If you don't have `make`, then execute:
   ---
 <div align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/7zx/overload/main/img/linux-icon-28166.png" width="100" height="80"><h2>Linux</h2><br>
+  <img src="img/linux.png" width="100" height="80"><h2>Linux</h2><br>
 </div>
-
 
 ```
 sudo apt update
@@ -51,29 +47,28 @@ sudo apt install python3 python3-pip git -y
 git clone https://github.com/7zx/overload
 cd overload/
 
-# With a Virtual Enviroment
 make setup
 make run
-
-# Without a Virtual Enviroment
-python3 -m pip install -r requirements.txt
-python3 overload.py
 ```
+
 ---
-<div align="center"> 
+<div align="center">
   <br>
-  <img src="https://brandslogos.com/wp-content/uploads/images/large/terminal-logo.png" width="50" height="50">
-  <h2>Termux</h2><br> 
+  <img src="img/termux.png" width="50" height="50">
+  <h2>Termux</h2><br>
 </div>
 
 ```
 pkg update
 pkg install python3 python3-pip git -y
+
 git clone https://github.com/7zx/overload
 cd overload/
-pip3 install -r requirements.txt
-python3 overload.py
+
+make setup
+make run
 ```
+
 ---
 <br>
 
@@ -81,7 +76,7 @@ python3 overload.py
   <h2> ❔ How To Use</h2><br>
 </div>
 
-Once the application has been opened, choose the attack method (HTTP or Slowloris), for how long the attack will take over (in seconds), how many threads (or sockets) will attack the target, if the attack will use public global proxies (HTTP only) for IP spoofing, the sleep time of the sockets (Slowloris only), and the target URL itself.
+Once the application has been opened, choose the attack method (HTTP or Slowloris), for how long the attack will take over (in seconds), how many threads (or sockets) will attack the target, if the attack will use public global proxies for IP spoofing, the sleep time of the sockets (Slowloris only), and the target URL itself.
 <br>
 
 HTTP GET Attack Example:  
@@ -91,7 +86,7 @@ HTTP GET Attack Example:
 │   ├───METHOD (HTTP or Slowloris): HTTP
 │   ├───TIME: 600
 │   ├───THREADS: 800
-│   ├───USE PROXY: 0 (False)
+│   ├───USE PROXY: 1 (True)
 │   └───URL:https://github.com/7zx/overload
 ```
 
@@ -103,6 +98,7 @@ Slowloris Attack Example:
 │   ├───TIME: 300
 │   ├───SOCKETS: 200
 │   ├───SLEEP TIME: 15
+│   ├───USE PROXY: 0 (False)
 │   └───URL:https://github.com/7zx/overload
 ```
 
