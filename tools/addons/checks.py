@@ -3,9 +3,9 @@
 from typing import Union
 
 import requests
-from colorama import Fore  # type: ignore[import]
+from colorama import Fore
 
-from tools.ip_tools import set_target_http  # type: ignore[import]
+from tools.addons.ip_tools import set_target_http
 
 
 def check_method_input() -> str:
@@ -27,7 +27,7 @@ def check_method_input() -> str:
 
 
 def check_number_input(x: str) -> int:
-    """Check if an input is a number greater than zero.
+    """Check if an input is an integer number greater than zero.
 
     Args:
         - x - The name of the input field
@@ -36,16 +36,15 @@ def check_number_input(x: str) -> int:
         - y - A valid value
     """
     while True:
-        y = input(
-            f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}"
-        )  # type: Union[str, int]
+        y: Union[str, int]
+        y = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}")
         try:
             y = int(y)
             if y <= 0:
                 raise ValueError
         except ValueError:
             print(
-                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}This value must be a number greater than zero!{Fore.RESET}"
+                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}This value must be an integer number greater than zero!{Fore.RESET}"
             )
         else:
             return y
@@ -66,8 +65,8 @@ def check_target_input() -> str:
             requests.get("https://google.com", timeout=4)
             try:
                 requests.get(set_target_http(y), timeout=4)
-            except:
-                raise requests.exceptions.InvalidURL
+            except Exception as exc:
+                raise requests.exceptions.InvalidURL from exc
         except requests.exceptions.ConnectionError:
             print(
                 f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}The device is not connected to the internet!{Fore.RESET}"
