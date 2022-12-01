@@ -1,6 +1,9 @@
 <h1 align="center">📡 DoS Tool (Layer 7) </h1> 
 <div align="center">
+
+[![Discord Server](https://img.shields.io/discord/1047524696859623434?style=social)](https://discord.com/invite/WKuk6aCqsj)
 <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"> <img src="https://img.shields.io/github/license/7zx/overload"> <img src="https://img.shields.io/badge/code%20style-black-000000.svg"> <img src="https://img.shields.io/github/forks/7zx/overload?style=social"> <img src="https://img.shields.io/github/stars/7zx/overload?style=social">
+
 </div>
 
 <p align="center">
@@ -43,7 +46,7 @@ If you don't have it, then execute:
 
 ```
 sudo apt update
-sudo apt install python3 python3-pip git -y
+sudo apt install python3 git -y
 git clone https://github.com/7zx/overload
 cd overload/
 
@@ -60,7 +63,7 @@ make run
 
 ```
 pkg update
-pkg install python3 python3-pip git -y
+pkg install python3 git -y
 
 git clone https://github.com/7zx/overload
 cd overload/
