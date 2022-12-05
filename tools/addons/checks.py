@@ -15,15 +15,18 @@ def check_method_input() -> str:
         None
 
     Returns:
-        - y - A valid method name
+        - method - A valid method name
     """
-    y = input(f"{Fore.RED}│   ├───METHOD (HTTP or Slowloris): {Fore.RESET}").lower()
-    while y not in ["http", "slowloris"]:
+    while (method := input(f"{Fore.RED}│   ├───METHOD: {Fore.RESET}").lower()) not in [
+        "http",
+        "http-proxy",
+        "slowloris",
+        "slowloris-proxy",
+    ]:
         print(
-            f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a valid method (HTTP or Slowloris){Fore.RESET}"
+            f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a valid method!{Fore.RESET}"
         )
-        y = input(f"{Fore.RED}│   ├───METHOD (HTTP or Slowloris): {Fore.RESET}")
-    return y
+    return method
 
 
 def check_number_input(x: str) -> int:
@@ -57,14 +60,14 @@ def check_target_input() -> str:
         None
 
     Returns:
-        - y - A valid URL target
+        - target - A valid URL target
     """
     while True:
-        y = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
+        target = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
         try:
             requests.get("https://google.com", timeout=4)
             try:
-                requests.get(set_target_http(y), timeout=4)
+                requests.get(set_target_http(target), timeout=4)
             except Exception as exc:
                 raise requests.exceptions.InvalidURL from exc
         except requests.exceptions.ConnectionError:
@@ -76,28 +79,4 @@ def check_target_input() -> str:
                 f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Invalid URL!{Fore.RESET}"
             )
         else:
-            return y
-
-
-def check_proxy_input() -> bool:
-    """Check if proxy input can be converted to binary.
-
-    Args:
-        None
-
-    Returns:
-        - y - A valid boolean for proxy usage
-    """
-    y = input(
-        f"{Fore.RED}│   ├───USE PROXY: {Fore.RESET}"
-    ).lower()  # type: Union[str, int]
-    while y not in ["0", "1", "yes", "y", "no", "n"]:
-        print(
-            f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a valid entry (0 = No | 1 = Yes){Fore.RESET}"
-        )
-        y = input(f"{Fore.RED}│   ├───USE PROXY: {Fore.RESET}")
-    if y in ["yes", "y"]:
-        y = 1
-    elif y in ["no", "n"]:
-        y = 0
-    return bool(int(y))
+            return target

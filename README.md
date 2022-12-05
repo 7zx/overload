@@ -79,17 +79,17 @@ make run
   <h2> ❔ How To Use</h2><br>
 </div>
 
-Once the application has been opened, choose the attack method (HTTP or Slowloris), for how long the attack will take over (in seconds), how many threads (or sockets) will attack the target, if the attack will use public global proxies for IP spoofing, the sleep time of the sockets (Slowloris only), and the target URL itself.
+Once the application has been opened, choose the attack method, for how long the attack will take over (in seconds), how many threads will attack the target, the sleep time of the sockets (Slowloris only), and the target URL itself.
 <br>
 
 HTTP GET Attack Example:  
 
 ```
 ├───DOS TOOL LAYER 7
-│   ├───METHOD (HTTP or Slowloris): HTTP
+├─── AVAILABLE METHODS: HTTP | HTTP-PROXY | SLOWLORIS | SLOWLORIS-PROXY
+│   ├───METHOD: HTTP
 │   ├───TIME: 600
 │   ├───THREADS: 800
-│   ├───USE PROXY: 1 (True)
 │   └───URL:https://github.com/7zx/overload
 ```
 
@@ -97,15 +97,15 @@ Slowloris Attack Example:
 
 ```
 ├───DOS TOOL LAYER 7
-│   ├───METHOD (HTTP or Slowloris): Slowloris
+├─── AVAILABLE METHODS: HTTP | HTTP-PROXY | SLOWLORIS | SLOWLORIS-PROXY
+│   ├───METHOD: Slowloris
 │   ├───TIME: 300
 │   ├───SOCKETS: 200
 │   ├───SLEEP TIME: 15
-│   ├───USE PROXY: 0 (False)
 │   └───URL:https://github.com/7zx/overload
 ```
 
-If the case, the threads will initialize and connect to elite-anonymity public proxies, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted by volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/).
+If the method uses proxy, then the threads will initialize and connect to elite-anonymity public proxies, and if not, your IP will be used on the requests. We do not own the proxy servers and do not respond for anything that they may do (like leaking your actual IP); they are hosted by volunteers and their addresses are retrieved through the [Proxy Scrape API](https://docs.proxyscrape.com/).
 
 ---
 <br>
@@ -114,4 +114,4 @@ If the case, the threads will initialize and connect to elite-anonymity public p
   <h2>⚠ Disclaimer</h2><br>
 </div>
 
-This application is intended to be used as a testing tool against your own servers. **DO NOT USE IT TO ATTACK OTHER PEOPLE**, we don't take responsability for anything that may come up if you attack someone else.
+This application is intended to be used as a testing tool against your own servers. **DO NOT USE IT TO ATTACK OTHER PEOPLE**, we don't take responsability for anything that may come up if you attack someone else. Also, this project runs a `DoS` attack, if you want to take down well hosted servers, then it's up to you to scale the attack using a `DDoS` approach.
