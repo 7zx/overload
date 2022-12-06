@@ -68,8 +68,8 @@ pkg install python3 git -y
 git clone https://github.com/7zx/overload
 cd overload/
 
-make setup
-make run
+pip install -r requirements.txt
+python3 overload.py
 ```
 
 ---
@@ -100,7 +100,7 @@ Slowloris Attack Example:
 ├─── AVAILABLE METHODS: HTTP | HTTP-PROXY | SLOWLORIS | SLOWLORIS-PROXY
 │   ├───METHOD: Slowloris
 │   ├───TIME: 300
-│   ├───SOCKETS: 200
+│   ├───THREADS: 200
 │   ├───SLEEP TIME: 15
 │   └───URL:https://github.com/7zx/overload
 ```

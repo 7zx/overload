@@ -101,7 +101,6 @@ def create_socket(target: str) -> socket.socket:
     Returns:
         - sock - The socket associated with the communication
     """
-    global proxies
     while True:
         try:
             sock = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
