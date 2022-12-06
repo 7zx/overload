@@ -1,8 +1,9 @@
 import socket
 from random import randint
+from typing import Union
 
 from colorama import Fore
-from scapy.all import *
+from scapy.all import Raw, send
 from scapy.layers.inet import IP, TCP
 
 from tools.addons.ip_tools import get_target_domain

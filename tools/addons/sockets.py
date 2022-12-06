@@ -113,7 +113,7 @@ def create_socket(target: str) -> socket.socket:
 
 
 def connect_socket(target: str, sock: socket.socket):
-    """Connect a socket to a proxy.
+    """Connect the socket to the target.
 
     Args:
         - target - The target's URL
