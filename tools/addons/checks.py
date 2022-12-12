@@ -84,7 +84,7 @@ def check_target_input() -> str:
                 raise requests.exceptions.InvalidURL from exc
         except requests.exceptions.ConnectionError:
             print(
-                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}The device is not connected to the internet!{F.RESET}"
+                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Device is not connected to the internet!{F.RESET}"
             )
         except requests.exceptions.InvalidURL:
             print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Invalid URL!{F.RESET}")

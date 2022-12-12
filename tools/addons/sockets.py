@@ -10,7 +10,7 @@ from typing import Dict, List, Tuple, Union
 import requests
 import socks
 from colorama import Fore as F
-from requests.exceptions import Timeout
+from requests.exceptions import ConnectionError, Timeout
 
 from tools.addons.ip_tools import get_target_domain
 
@@ -43,8 +43,11 @@ def get_socks_proxies() -> List[Dict[str, str]]:
                     proxies.append({"addr": addr, "port": port})
     except Timeout:
         print(
-            f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies.{F.RESET}"
+            f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies!{F.RESET}"
         )
+        sys.exit(1)
+    except ConnectionError:
+        print(f"\n{F.RED}[!] {F.CYAN}Device is not connected to the Internet!{F.RESET}")
         sys.exit(1)
 
     return proxies

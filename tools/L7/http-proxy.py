@@ -8,7 +8,7 @@ from typing import Dict, List
 
 import requests
 from colorama import Fore as F
-from requests.exceptions import Timeout
+from requests.exceptions import ConnectionError, Timeout
 
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 
@@ -37,8 +37,11 @@ def get_http_proxies() -> List[Dict[str, str]]:
                     proxies.append({"http": proxy, "https": proxy})
     except Timeout:
         print(
-            f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies.{F.RESET}"
+            f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies!{F.RESET}"
         )
+        sys.exit(1)
+    except ConnectionError:
+        print(f"\n{F.RED}[!] {F.CYAN}Device is not connected to the Internet!{F.RESET}")
         sys.exit(1)
 
     return proxies
