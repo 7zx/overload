@@ -6,7 +6,7 @@ from time import sleep
 from urllib.parse import urlparse
 
 import requests
-from colorama import Fore
+from colorama import Fore as F
 from requests.exceptions import Timeout
 
 
@@ -27,12 +27,12 @@ def __is_cloud_flare(link: str) -> None:
         for ip in ipv4:
             if ipaddress.ip_address(origin) in ipaddress.ip_network(ip):
                 print(
-                    f"\n{Fore.RED}[!] {Fore.CYAN}This website is protected by CloudFlare, this attack may not produce the desired results.{Fore.RESET}"
+                    f"\n{F.RED}[!] {F.CYAN}This website is protected by CloudFlare, this attack may not produce the desired results.{F.RESET}"
                 )
                 sleep(1)
     except (Timeout, socket.gaierror):
         print(
-            f"{Fore.RED}\n[!] {Fore.CYAN}It was not possible to check for CloudFlare protection!.{Fore.RESET}"
+            f"{F.RED}\n[!] {F.CYAN}It was not possible to check for CloudFlare protection!.{F.RESET}"
         )
         sleep(1)
 
@@ -77,3 +77,24 @@ def get_target_domain(target: str) -> str:
     parsed_uri = urlparse(target)
     domain = parsed_uri.netloc
     return domain
+
+
+def get_host_ip() -> str:
+    """Get host's ip.
+
+    Args:
+        None
+
+    Returns:
+        - IP - The host's IP
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.settimeout(0)
+    try:
+        s.connect(("8.8.8.8", 80))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = "127.0.0.1"
+    finally:
+        s.close()
+    return IP

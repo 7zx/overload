@@ -7,7 +7,7 @@ import warnings
 from typing import Dict, List
 
 import requests
-from colorama import Fore
+from colorama import Fore as F
 from requests.exceptions import Timeout
 
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
@@ -37,7 +37,7 @@ def get_http_proxies() -> List[Dict[str, str]]:
                     proxies.append({"http": proxy, "https": proxy})
     except Timeout:
         print(
-            f"\n{Fore.RED}[!] {Fore.CYAN}It was not possible to connect to the proxies.{Fore.RESET}"
+            f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies.{F.RESET}"
         )
         sys.exit(1)
 
@@ -53,7 +53,7 @@ headers = {
 }
 
 proxies = get_http_proxies()
-color_code = {True: Fore.GREEN, False: Fore.RED}
+color_code = {True: F.GREEN, False: F.RED}
 
 
 def flood(target: str) -> None:
@@ -79,11 +79,9 @@ def flood(target: str) -> None:
         status = (
             f"{color_code[response.status_code == 200]}Status: [{response.status_code}]"
         )
-        payload_size = f"{Fore.RESET} Requested Data Size: {Fore.CYAN}{round(len(response.content)/1024, 2):>6} KB"
-        proxy_addr = f"| {Fore.RESET}Proxy: {Fore.CYAN}{proxy['http']:>21}"
-        print(
-            f"{status}{Fore.RESET} --> {payload_size} {Fore.RESET}{proxy_addr}{Fore.RESET}"
-        )
+        payload_size = f"{F.RESET} Requested Data Size: {F.CYAN}{round(len(response.content)/1024, 2):>6} KB"
+        proxy_addr = f"| {F.RESET}Proxy: {F.CYAN}{proxy['http']:>21}"
+        print(f"{status}{F.RESET} --> {payload_size} {F.RESET}{proxy_addr}{F.RESET}")
         if not response.status_code:
             try:
                 proxies.remove(proxy)
