@@ -4,7 +4,7 @@ import json
 import random
 
 import requests
-from colorama import Fore
+from colorama import Fore as F
 from requests.exceptions import Timeout
 
 with open("tools/L7/user_agents.json", "r") as agents:
@@ -19,7 +19,7 @@ headers = {
     "Accept-Encoding": "gzip, deflate, br",
 }
 
-color_code = {True: Fore.GREEN, False: Fore.RED}
+color_code = {True: F.GREEN, False: F.RED}
 
 
 def flood(target: str) -> None:
@@ -43,5 +43,5 @@ def flood(target: str) -> None:
         status = (
             f"{color_code[response.status_code == 200]}Status: [{response.status_code}]"
         )
-        payload_size = f"{Fore.RESET} Requested Data Size: {Fore.CYAN}{round(len(response.content)/1024, 2):>6} KB"
-        print(f"{status}{Fore.RESET} --> {payload_size} {Fore.RESET}")
+        payload_size = f"{F.RESET} Requested Data Size: {F.CYAN}{round(len(response.content)/1024, 2):>6} KB"
+        print(f"{status}{F.RESET} --> {payload_size} {F.RESET}")

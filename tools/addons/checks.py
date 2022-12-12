@@ -1,9 +1,11 @@
 """This module provides functions to check inputs."""
 
+import os
+import sys
 from typing import Union
 
 import requests
-from colorama import Fore
+from colorama import Fore as F
 
 from tools.addons.ip_tools import set_target_http
 
@@ -17,15 +19,24 @@ def check_method_input() -> str:
     Returns:
         - method - A valid method name
     """
-    while (method := input(f"{Fore.RED}│   ├───METHOD: {Fore.RESET}").lower()) not in [
+    while (method := input(f"{F.RED}│   ├───METHOD: {F.RESET}").lower()) not in [
         "http",
         "http-proxy",
         "slowloris",
         "slowloris-proxy",
-    ]:
+        "syn-flood",
+    ] or (method == "syn-flood" and os.name == "nt"):
+        print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Type a valid method!{F.RESET}")
+
+    if method == "syn-flood" and os.getuid() != 0:
         print(
-            f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Type a valid method!{Fore.RESET}"
+            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}This attack needs Super User privileges!{F.RESET}"
         )
+        print(
+            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Run: {F.GREEN}sudo {os.popen('which python').read()[:-1]} overload.py\n{F.RESET}"
+        )
+        sys.exit(1)
+
     return method
 
 
@@ -38,16 +49,17 @@ def check_number_input(x: str) -> int:
     Returns:
         - y - A valid value
     """
+    y: Union[str, int]
+
     while True:
-        y: Union[str, int]
-        y = input(f"{Fore.RED}│   ├───{x.upper()}: {Fore.RESET}")
+        y = input(f"{F.RED}│   ├───{x.upper()}: {F.RESET}")
         try:
             y = int(y)
             if y <= 0:
                 raise ValueError
         except ValueError:
             print(
-                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}This value must be an integer number greater than zero!{Fore.RESET}"
+                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}This value must be an integer number greater than zero!{F.RESET}"
             )
         else:
             return y
@@ -63,7 +75,7 @@ def check_target_input() -> str:
         - target - A valid URL target
     """
     while True:
-        target = input(f"{Fore.RED}│   └───URL: {Fore.RESET}")
+        target = input(f"{F.RED}│   └───URL: {F.RESET}")
         try:
             requests.get("https://google.com", timeout=4)
             try:
@@ -72,11 +84,9 @@ def check_target_input() -> str:
                 raise requests.exceptions.InvalidURL from exc
         except requests.exceptions.ConnectionError:
             print(
-                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}The device is not connected to the internet!{Fore.RESET}"
+                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}The device is not connected to the internet!{F.RESET}"
             )
         except requests.exceptions.InvalidURL:
-            print(
-                f"{Fore.RED}│   └───{Fore.MAGENTA}[!] {Fore.BLUE}Invalid URL!{Fore.RESET}"
-            )
+            print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Invalid URL!{F.RESET}")
         else:
             return target

