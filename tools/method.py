@@ -143,7 +143,7 @@ class AttackMethod:
     def __run_threads(self) -> None:
         """Initialize the threads and start them."""
         if "slowloris" in self.method_name:
-            self.threads = [thread for thread in self.__slow_threads()]
+            self.threads = list(self.__slow_threads())
         else:
             self.threads = [
                 Thread(target=self.__run_flood) for _ in range(self.threads_count)
@@ -172,7 +172,9 @@ class AttackMethod:
         duration = format_timespan(self.duration)
 
         print(
-            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]} {F.BLUE}({ip}:{port}) using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
+            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]} {F.BLUE}({ip}:{port})"
+            f" using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n"
+            f"[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
         )
         if "slowloris" in self.method_name:
             print(

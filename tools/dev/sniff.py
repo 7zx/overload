@@ -1,4 +1,4 @@
-"""Sniff the packets that are passing through the host"""
+"""Sniff the packets that are passing through the host."""
 
 from sys import argv
 
