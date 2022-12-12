@@ -41,7 +41,7 @@ def main() -> None:
             attack.start()
     except KeyboardInterrupt:
         print(
-            f"\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Program closed.{Fore.RESET}"
+            f"\n\n{Fore.RED}[!] {Fore.MAGENTA}Ctrl+C detected. Program closed.\n\n{Fore.RESET}"
         )
         sys.exit(1)
 
