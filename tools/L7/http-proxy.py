@@ -30,11 +30,12 @@ def get_http_proxies() -> List[Dict[str, str]]:
             "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all",
             verify=False,
         ) as proxy_list:
-            proxies: List[Dict[str, str]]
-            proxies = []
-            for proxy in proxy_list.text.split("\r\n"):
-                if proxy != "":
-                    proxies.append({"http": proxy, "https": proxy})
+            proxies = [
+                {"http": proxy, "https": proxy}
+                for proxy in proxy_list.text.split("\r\n")
+                if proxy != ""
+            ]
+
     except Timeout:
         print(
             f"\n{F.RED}[!] {F.CYAN}It was not possible to connect to the proxies!{F.RESET}"
