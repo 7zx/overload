@@ -18,13 +18,7 @@ def flood(target: str) -> None:
     Returns:
         None
     """
-    try:
-        port: Union[str, int]
-        domain, port = get_target_domain(target).split(":")
-        port = int(port)
-    except ValueError:
-        domain, port = get_target_domain(target), 80
-
+    domain, port = get_target_domain(target)
     ip_addr = socket.gethostbyname(domain)
 
     ip_layer = IP(dst=ip_addr)

@@ -125,13 +125,9 @@ def connect_socket(target: str, sock: socket.socket):
     Returns:
         None
     """
-    try:
-        domain, port = get_target_domain(target).split(":")
-    except ValueError:
-        domain, port = get_target_domain(target), 80
-
+    domain, port = get_target_domain(target)
     ip = socket.gethostbyname(domain)
-    sock.connect((ip, int(port)))
+    sock.connect((ip, port))
 
     sock.send(f"GET /?{random.randint(0, 2000)} HTTP/1.1\r\n".encode("utf-8"))
     sock.send(f"User-Agent: {random.choice(user_agents)}".encode("utf-8"))

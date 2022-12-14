@@ -19,7 +19,7 @@ def __is_cloud_flare(link: str) -> None:
     Returns:
         None
     """
-    domain = get_target_domain(link).split(":")[0]
+    domain, _ = get_target_domain(link)
     try:
         origin = socket.gethostbyname(domain)
         iprange = requests.get("https://www.cloudflare.com/ips-v4", timeout=10).text
@@ -75,8 +75,11 @@ def get_target_domain(target: str) -> str:
         - domain - The target's domain
     """
     parsed_uri = urlparse(target)
-    domain = parsed_uri.netloc
-    return domain
+    try:
+        domain, port = parsed_uri.netloc.split(":")
+    except:
+        domain, port = parsed_uri.netloc, 80
+    return domain, int(port)
 
 
 def get_host_ip() -> str:

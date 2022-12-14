@@ -163,11 +163,7 @@ class AttackMethod:
 
     def start(self) -> None:
         """Start the DoS attack itself."""
-        try:
-            domain, port = get_target_domain(self.target).split(":")
-        except ValueError:
-            domain, port = get_target_domain(self.target), 80
-
+        domain, port = get_target_domain(self.target)
         ip = socket.gethostbyname(domain)
         duration = format_timespan(self.duration)
 
