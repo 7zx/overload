@@ -6,6 +6,7 @@ from typing import Union
 
 import requests
 from colorama import Fore as F
+from requests.exceptions import ConnectionError, InvalidURL, ReadTimeout
 
 from tools.addons.ip_tools import set_target_http
 
@@ -81,12 +82,12 @@ def check_target_input() -> str:
             try:
                 requests.get(set_target_http(target), timeout=4)
             except Exception as exc:
-                raise requests.exceptions.InvalidURL from exc
-        except requests.exceptions.ConnectionError:
+                raise InvalidURL from exc
+        except (ConnectionError, ReadTimeout):
             print(
                 f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Device is not connected to the internet!{F.RESET}"
             )
-        except requests.exceptions.InvalidURL:
+        except InvalidURL:
             print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Invalid URL!{F.RESET}")
         else:
             return target
