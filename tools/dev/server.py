@@ -52,7 +52,7 @@ class Server:
 
 def main():
 
-    # Default HTTP loopback interface
+    # Default HTTP-Proxy interface
     HOST, PORT = "127.0.0.1", 8080
     with Server(HOST, PORT) as server:
         server.start()

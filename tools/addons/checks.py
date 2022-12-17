@@ -67,13 +67,13 @@ def check_number_input(x: str) -> int:
 
 
 def check_target_input() -> str:
-    """Check if the URL is valid.
+    """Check if the target is listening on HTTP port (80).
 
     Args:
         None
 
     Returns:
-        - target - A valid URL target
+        - target - A valid target
     """
     while True:
         target = input(f"{F.RED}│   └───URL: {F.RESET}")

@@ -12,6 +12,6 @@ def start_sniff(filter: str = "tcp", count: int = 50) -> None:
 
 if "__main__" == __name__:
     try:
-        start_sniff(argv[1], argv[2])
+        start_sniff(argv[1], int(argv[2]))
     except IndexError:
         start_sniff()
