@@ -2,6 +2,7 @@
 
 import ipaddress
 import socket
+import sys
 from time import sleep
 from urllib.parse import urlparse
 
@@ -97,7 +98,10 @@ def get_host_ip() -> str:
         s.connect(("8.8.8.8", 80))
         IP = s.getsockname()[0]
     except Exception:
-        IP = "127.0.0.1"
+        print(
+            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Local IP could not be found!{F.RESET}"
+        )
+        sys.exit(0)
     finally:
         s.close()
     return IP
