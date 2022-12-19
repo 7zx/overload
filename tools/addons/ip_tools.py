@@ -11,16 +11,16 @@ from colorama import Fore as F
 from requests.exceptions import Timeout
 
 
-def __is_cloud_flare(link: str) -> None:
+def __is_cloud_flare(target: str) -> None:
     """Check if the target is protected by CloudFlare.
 
     Args:
-        - link - The URL to be checked in the CloudFlare protection networks
+        - target - The URL to be checked in the CloudFlare protection networks
 
     Returns:
         None
     """
-    domain, _ = get_target_domain(link)
+    domain, _ = get_target_domain(target)
     try:
         origin = socket.gethostbyname(domain)
         iprange = requests.get("https://www.cloudflare.com/ips-v4", timeout=10).text
@@ -97,11 +97,10 @@ def get_host_ip() -> str:
     try:
         s.connect(("8.8.8.8", 80))
         IP = s.getsockname()[0]
-    except Exception:
+    except:
         print(
-            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Local IP could not be found!{F.RESET}"
+            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Local IP cannot be found!{F.RESET}"
         )
-        sys.exit(0)
-    finally:
-        s.close()
+        sys.exit(1)
+    s.close()
     return IP

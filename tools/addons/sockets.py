@@ -1,4 +1,4 @@
-"""This module provides a function to create sockets instances."""
+"""This module provides functions to create socket instances."""
 
 import json
 import random
@@ -115,7 +115,7 @@ def create_socket(target: str) -> socket.socket:
     return sock
 
 
-def connect_socket(target: str, sock: socket.socket):
+def connect_socket(target: str, sock: socket.socket) -> None:
     """Connect the socket to the target.
 
     Args:

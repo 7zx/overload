@@ -8,7 +8,7 @@ from colorama import Fore as F
 
 
 def flood(sock: socket.SocketType, proxy: Dict[str, str]) -> None:
-    """Keep alive the sockets in Slowloris flood through proxies.
+    """Keep the sockets alive in Slowloris flood through proxies.
 
     Args:
         - sock - The socket to be kept alive

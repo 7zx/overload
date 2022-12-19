@@ -1,3 +1,5 @@
+"""This module provides the flood function for a SYN-FLOOD attack."""
+
 import socket
 from random import randint
 
@@ -30,6 +32,6 @@ def flood(target: str) -> None:
 
     try:
         if ans[1].flags.flagrepr() == "SA":
-            print(f"--> Socket on Port {F.BLUE}{sport}{F.RESET} sent a SYN packet")
+            print(f"--> Socket on Port {F.BLUE}{sport:<5}{F.RESET} sent a SYN packet")
     except:
         ...
