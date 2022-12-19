@@ -8,7 +8,7 @@ import requests
 from colorama import Fore as F
 from requests.exceptions import ConnectionError, InvalidURL, ReadTimeout
 
-from tools.addons.ip_tools import set_target_http
+from tools.addons.ip_tools import get_local_host_ips, set_target_http
 
 
 def check_method_input() -> str:
@@ -20,21 +20,22 @@ def check_method_input() -> str:
     Returns:
         - method - A valid method name
     """
-    while (method := input(f"{F.RED}│   ├───METHOD: {F.RESET}").lower()) not in [
+    while (method := input(f"{F.RED}│   ├─── METHOD: {F.RESET}").lower()) not in [
         "http",
         "http-proxy",
         "slowloris",
         "slowloris-proxy",
         "syn-flood",
-    ] or (method == "syn-flood" and os.name == "nt"):
-        print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Type a valid method!{F.RESET}")
+        "arp-spoof",
+    ] or (method in ["syn-flood", "arp-spoof"] and os.name == "nt"):
+        print(f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Type a valid method!{F.RESET}")
 
-    if method == "syn-flood" and os.getuid() != 0:
+    if method in ["syn-flood", "arp-spoof"] and os.getuid() != 0:
         print(
-            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}This attack needs Super User privileges!{F.RESET}"
+            f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}This attack needs Super User privileges!"
         )
         print(
-            f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Run: {F.GREEN}sudo {os.popen('which python').read()[:-1]} overload.py\n{F.RESET}"
+            f"{F.RED}│   └───{F.MAGENTA} [!] {F.BLUE}Run: {F.GREEN}sudo {os.popen('which python').read()[:-1]} overload.py\n{F.RESET}"
         )
         sys.exit(1)
 
@@ -53,20 +54,20 @@ def check_number_input(x: str) -> int:
     y: Union[str, int]
 
     while True:
-        y = input(f"{F.RED}│   ├───{x.upper()}: {F.RESET}")
+        y = input(f"{F.RED}│   ├─── {x.upper()}: {F.RESET}")
         try:
             y = int(y)
             if y <= 0:
                 raise ValueError
         except ValueError:
             print(
-                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}This value must be an integer number greater than zero!{F.RESET}"
+                f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}This value must be an integer number greater than zero!{F.RESET}"
             )
         else:
             return y
 
 
-def check_target_input() -> str:
+def check_http_target_input() -> str:
     """Check if the target is listening on HTTP port (80).
 
     Args:
@@ -76,7 +77,7 @@ def check_target_input() -> str:
         - target - A valid target
     """
     while True:
-        target = input(f"{F.RED}│   └───URL: {F.RESET}")
+        target = input(f"{F.RED}│   ├─── URL: {F.RESET}")
         try:
             requests.get("https://google.com", timeout=4)
             try:
@@ -85,9 +86,27 @@ def check_target_input() -> str:
                 raise InvalidURL from exc
         except (ConnectionError, ReadTimeout):
             print(
-                f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Device is not connected to the internet!{F.RESET}"
+                f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Device is not connected to the internet!{F.RESET}"
             )
         except InvalidURL:
-            print(f"{F.RED}│   └───{F.MAGENTA}[!] {F.BLUE}Invalid URL!{F.RESET}")
+            print(f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Invalid URL!{F.RESET}")
         else:
             return target
+
+
+def check_local_target_input() -> str:
+    """Check if the target is in the local network.
+
+    Args:
+        None
+
+    Returns:
+        - target - A valid target
+    """
+    hosts = get_local_host_ips()
+    while (target := input(f"{F.RED}│   ├─── IP: {F.RESET}")) not in hosts:
+        print(
+            f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Cannot connect to {F.CYAN}{target}{F.BLUE} on the local network!{F.RESET}"
+        )
+
+    return target

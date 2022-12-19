@@ -1,9 +1,12 @@
 """This module provides functions to analyze network matters."""
 
 import ipaddress
+import os
 import socket
 import sys
+from functools import cache
 from time import sleep
+from typing import List
 from urllib.parse import urlparse
 
 import requests
@@ -104,3 +107,49 @@ def get_host_ip() -> str:
         sys.exit(1)
     s.close()
     return IP
+
+
+def show_local_host_ips() -> None:
+    """Show all IPs connected on the local network.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    print(f"{F.RED}│   │")
+    print(
+        f"{F.RED}│   ├───{F.MAGENTA} [!] {F.LIGHTCYAN_EX}Scanning Local Network...{F.RESET}"
+    )
+    hosts = get_local_host_ips()
+    print(f"{F.RED}│   │")
+    print(f"{F.RED}│   ├───{F.BLUE} Avaliable Hosts:{F.RESET}")
+    print(f"{F.RED}│   │")
+
+    for host in hosts:
+        print(f"{F.RED}│   │    {F.GREEN} {host}{F.RESET}")
+    print(f"{F.RED}│   │")
+
+
+@cache
+def get_local_host_ips() -> List[str]:
+    """Get all host IPs connected on the local network.
+
+    Args:
+        None
+
+    Returns:
+        - hosts - A list containing all host IPs
+    """
+    report = (
+        os.popen(f"nmap -sP {'.'.join(get_host_ip().split('.')[:3]) + '.1-255'}")
+        .read()
+        .split("\n")
+    )
+    hosts = [
+        line.replace(flag, "")
+        for line in report
+        if (flag := "Nmap scan report for ") in line
+    ]
+    return hosts

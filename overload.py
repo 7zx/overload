@@ -11,10 +11,12 @@ os.system("cls" if os.name == "nt" else "clear")
 
 try:
     from tools.addons.checks import (
+        check_http_target_input,
+        check_local_target_input,
         check_method_input,
         check_number_input,
-        check_target_input,
     )
+    from tools.addons.ip_tools import show_local_host_ips
     from tools.addons.logo import show_logo
     from tools.method import AttackMethod
 except (ImportError, NameError) as err:
@@ -25,11 +27,16 @@ def main() -> None:
     """Run main application."""
     show_logo()
     try:
-        method = check_method_input()
+        if (method := check_method_input()) in "arp-spoof":
+            show_local_host_ips()
         time = check_number_input("time")
-        threads = check_number_input("threads")
+        threads = check_number_input("threads") if method not in ["arp-spoof"] else 1
         sleep_time = check_number_input("sleep time") if "slowloris" in method else 0
-        target = check_target_input()
+        target = (
+            check_http_target_input()
+            if method not in ["arp-spoof"]
+            else check_local_target_input()
+        )
 
         with AttackMethod(
             duration=time,
