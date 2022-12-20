@@ -2,6 +2,7 @@
 
 import ipaddress
 import os
+import re
 import socket
 import sys
 from functools import cache
@@ -122,18 +123,20 @@ def show_local_host_ips() -> None:
     print(
         f"{F.RED}│   ├───{F.MAGENTA} [!] {F.LIGHTCYAN_EX}Scanning Local Network...{F.RESET}"
     )
-    hosts = get_local_host_ips()
     print(f"{F.RED}│   │")
     print(f"{F.RED}│   ├───{F.BLUE} Avaliable Hosts:{F.RESET}")
     print(f"{F.RED}│   │")
 
-    for host in hosts:
-        print(f"{F.RED}│   │    {F.GREEN} {host}{F.RESET}")
-    print(f"{F.RED}│   │")
+    try:
+        for host in __get_local_host_ips()[1:-1]:
+            print(f"{F.RED}│   │    {F.GREEN} {host}{F.RESET}")
+        print(f"{F.RED}│   │")
+    except IndexError:
+        print(f"{F.RED}│   ├───{F.MAGENTA} [!] {F.RED}No Hosts Avaliable!{F.RESET}")
 
 
 @cache
-def get_local_host_ips() -> List[str]:
+def __get_local_host_ips() -> List[str]:
     """Get all host IPs connected on the local network.
 
     Args:
@@ -147,9 +150,12 @@ def get_local_host_ips() -> List[str]:
         .read()
         .split("\n")
     )
-    hosts = [
-        line.replace(flag, "")
-        for line in report
-        if (flag := "Nmap scan report for ") in line
-    ]
+    pattern = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})")
+    hosts: List[str]
+    hosts = []
+    for line in report:
+        try:
+            hosts.append(pattern.search(line)[0])
+        except TypeError:
+            continue
     return hosts
