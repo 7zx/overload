@@ -8,7 +8,7 @@ import requests
 from colorama import Fore as F
 from requests.exceptions import ConnectionError, InvalidURL, ReadTimeout
 
-from tools.addons.ip_tools import get_local_host_ips, set_target_http
+from tools.addons.ip_tools import __get_local_host_ips, set_target_http
 
 
 def check_method_input() -> str:
@@ -103,7 +103,7 @@ def check_local_target_input() -> str:
     Returns:
         - target - A valid target
     """
-    hosts = get_local_host_ips()
+    hosts = __get_local_host_ips()
     while (target := input(f"{F.RED}│   ├─── IP: {F.RESET}")) not in hosts:
         print(
             f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Cannot connect to {F.CYAN}{target}{F.BLUE} on the local network!{F.RESET}"
