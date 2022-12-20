@@ -190,6 +190,14 @@ python-versions = "*"
 flake8 = "*"
 
 [[package]]
+name = "get-mac"
+version = "0.8.3"
+description = "Get MAC addresses of remote hosts and local interfaces"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
 name = "humanfriendly"
 version = "10.0"
 description = "Human friendly output for text interfaces using Python"
@@ -729,7 +737,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<3.12"
-content-hash = "114eded96ba980a287c55b51f58b93654ce8a20ad9053ba96464fc801321301b"
+content-hash = "60675d8b7328807e5519a1740a96693b11d1332980a4868f7bc5da949966838d"
 
 [metadata.files]
 astroid = [
@@ -818,6 +826,10 @@ flake8 = [
 flake8-polyfill = [
     {file = "flake8-polyfill-1.0.2.tar.gz", hash = "sha256:e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"},
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
+]
+get-mac = [
+    {file = "get-mac-0.8.3.tar.gz", hash = "sha256:7ea099cee1dbf4b55829ca3f7e9ee65eaf8c5a422731badbe4cdb812fc37fe57"},
+    {file = "get_mac-0.8.3-py2.py3-none-any.whl", hash = "sha256:b671334547913c148a932b204c7e11a6d0f426da899ee143acf477458e24652d"},
 ]
 humanfriendly = [
     {file = "humanfriendly-10.0-py2.py3-none-any.whl", hash = "sha256:1697e1a8a8f550fd43c2865cd84542fc175a61dcb779b6fee18cf6b6ccba1477"},

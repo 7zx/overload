@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "overload"
 version = "0.1.0"
-description = "DDOS Tool (Layer 7)"
-authors = ["7zx and 8fn"]
+description = "DoS Tool"
+authors = ["7zx, 8fn and João"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -12,6 +12,7 @@ colorama = "^0.4.5"
 humanfriendly = "^10.0"
 PySocks = "^1.7.1"
 scapy = "^2.4.5"
+get-mac = "^0.8.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
