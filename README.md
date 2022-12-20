@@ -46,7 +46,7 @@ If you don't have it, then execute:
 
 ```
 sudo apt update
-sudo apt install python3 git -y
+sudo apt install python3 python3-pip git -y
 git clone https://github.com/7zx/overload
 cd overload/
 
@@ -63,7 +63,7 @@ make run
 
 ```
 pkg update
-pkg install python3 git -y
+pkg install python3 python3-pip git -y
 
 git clone https://github.com/7zx/overload
 cd overload/
@@ -82,7 +82,7 @@ python3 overload.py
 Once the application has been opened, choose the attack method, for how long the attack will take over (in seconds), how many threads will attack the target, the sleep time of the sockets (Slowloris only), and the target itself.
 <br>
 
-HTTP GET Attack Example:  
+`HTTP` attack example:  
 
 ```
 ├─── DOS TOOL
@@ -94,7 +94,7 @@ HTTP GET Attack Example:
 │   └───URL: https://github.com/7zx/overload
 ```
 
-Slowloris Attack Example:  
+`Slowloris` attack example:  
 
 ```
 ...
@@ -105,7 +105,7 @@ Slowloris Attack Example:
 │   └───URL: https://github.com/7zx/overload
 ```
 
-Overload can also perform an L4 attack (SYN-FLOOD) if you're running it on a Posix system:
+Overload can also perform an L4 `SYN-FLOOD` attack if you're running it on a Posix system:
 
 ```
 ...
