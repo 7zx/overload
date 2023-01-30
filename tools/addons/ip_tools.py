@@ -13,6 +13,8 @@ from urllib.parse import urlparse
 import requests
 from colorama import Fore as F
 from requests.exceptions import Timeout
+from scapy.all import srp
+from scapy.layers.l2 import ARP, Ether
 
 
 def __is_cloud_flare(target: str) -> None:
@@ -159,3 +161,26 @@ def __get_local_host_ips() -> List[str]:
         except TypeError:
             continue
     return hosts
+
+
+@cache
+def __get_mac(target: str) -> str:
+    """Get the MAC address of the target.
+
+    Args:
+        - target - The target that we want to get the MAC address
+
+    Returns:
+        - mac_addr - The MAC address itself
+    """
+    while True:
+        try:
+            arp_request = ARP(pdst=target)
+            broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
+            packet = broadcast / arp_request
+            ans = srp(packet, timeout=5, verbose=False)[0]
+            mac_addr = ans[0][1].hwsrc
+        except IndexError:
+            continue
+        else:
+            return mac_addr
