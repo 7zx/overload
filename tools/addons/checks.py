@@ -27,10 +27,11 @@ def check_method_input() -> str:
         "slowloris-proxy",
         "syn-flood",
         "arp-spoof",
-    ] or (method in ["syn-flood", "arp-spoof"] and os.name == "nt"):
+        "disconnect",
+    ] or (method in ["syn-flood", "arp-spoof", "disconnect"] and os.name == "nt"):
         print(f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}Type a valid method!{F.RESET}")
 
-    if method in ["syn-flood", "arp-spoof"] and os.getuid() != 0:
+    if method in ["syn-flood", "arp-spoof", "disconnect"] and os.getuid() != 0:
         print(
             f"{F.RED}│   ├───{F.MAGENTA} [!] {F.BLUE}This attack needs Super User privileges!"
         )
