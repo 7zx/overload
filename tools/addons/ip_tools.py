@@ -1,14 +1,20 @@
 """This module provides functions to analyze network matters."""
 
 import ipaddress
+import os
+import re
 import socket
 import sys
+from functools import cache
 from time import sleep
+from typing import List
 from urllib.parse import urlparse
 
 import requests
 from colorama import Fore as F
 from requests.exceptions import Timeout
+from scapy.all import srp
+from scapy.layers.l2 import ARP, Ether
 
 
 def __is_cloud_flare(target: str) -> None:
@@ -104,3 +110,77 @@ def get_host_ip() -> str:
         sys.exit(1)
     s.close()
     return IP
+
+
+def show_local_host_ips() -> None:
+    """Show all IPs connected on the local network.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    print(f"{F.RED}│   │")
+    print(
+        f"{F.RED}│   ├───{F.MAGENTA} [!] {F.LIGHTCYAN_EX}Scanning Local Network...{F.RESET}"
+    )
+    print(f"{F.RED}│   │")
+    print(f"{F.RED}│   ├───{F.BLUE} Avaliable Hosts:{F.RESET}")
+    print(f"{F.RED}│   │")
+
+    try:
+        for host in __get_local_host_ips()[1:-1]:
+            print(f"{F.RED}│   │    {F.GREEN} {host}{F.RESET}")
+        print(f"{F.RED}│   │")
+    except IndexError:
+        print(f"{F.RED}│   ├───{F.MAGENTA} [!] {F.RED}No Hosts Avaliable!{F.RESET}")
+
+
+@cache
+def __get_local_host_ips() -> List[str]:
+    """Get all host IPs connected on the local network.
+
+    Args:
+        None
+
+    Returns:
+        - hosts - A list containing all host IPs
+    """
+    report = (
+        os.popen(f"nmap -sP {'.'.join(get_host_ip().split('.')[:3]) + '.1-255'}")
+        .read()
+        .split("\n")
+    )
+    pattern = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})")
+    hosts: List[str]
+    hosts = []
+    for line in report:
+        try:
+            hosts.append(pattern.search(line)[0])
+        except TypeError:
+            continue
+    return hosts
+
+
+@cache
+def __get_mac(target: str) -> str:
+    """Get the MAC address of the target.
+
+    Args:
+        - target - The target that we want to get the MAC address
+
+    Returns:
+        - mac_addr - The MAC address itself
+    """
+    while True:
+        try:
+            arp_request = ARP(pdst=target)
+            broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
+            packet = broadcast / arp_request
+            ans = srp(packet, timeout=5, verbose=False)[0]
+            mac_addr = ans[0][1].hwsrc
+        except IndexError:
+            continue
+        else:
+            return mac_addr
