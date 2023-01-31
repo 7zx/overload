@@ -129,7 +129,7 @@ To perform the following attacks you'll need a machine running a POSIX system, l
 
 ```
 ...
-├─── LAYER 4: ARP-SPOOF | DISCONNECT
+├─── LAYER 2: ARP-SPOOF | DISCONNECT
 ├───┐
 │   ├─── METHOD: ARP-SPOOF
 │   │
@@ -144,11 +144,11 @@ To perform the following attacks you'll need a machine running a POSIX system, l
 │   ├─── TIME: 100
 ```
 
-`Disconnect`: It simply blocks the victim's access from the internet on the local network during the time the attack is happening.
+`Disconnect`: It blocks the victim from accessing the internet on the local network during the time the attack is happening.
 
 ```
 ...
-├─── LAYER 4: ARP-SPOOF | DISCONNECT
+├─── LAYER 2: ARP-SPOOF | DISCONNECT
 ├───┐
 │   ├─── METHOD: DISCONNECT
 │   │
