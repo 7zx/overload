@@ -75,7 +75,7 @@ python3 overload.py
 <br>
 
 <div align="center">
-  <h2> ☣ Avaliable Attacks</h2><br>
+  <h2>Avaliable Attacks</h2><br>
 </div>
 
 `HTTP`: This attack consists of exhausting the victim by sending a huge amount of HTTP GET requests, eventually taking it down and preventing others to access its resources.
