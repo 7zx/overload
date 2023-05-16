@@ -17,7 +17,7 @@
 </p>
 
 <div align="center">
-  <h1>🌙 Installation</h1>
+  <h1>Installation</h1>
   <img src="img/windows.png" width="80" height="80">
   <h2>Windows</h2><br>
 </div>
